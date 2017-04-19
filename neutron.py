@@ -9,6 +9,8 @@ def randomGen():
 
 def main():
 
+    print("1D code is running with theta AND phi");
+
     #Initialisation des parametree de la simulation
 
     #Blindage
@@ -74,9 +76,9 @@ def main():
             y1=y+v*freepath;
             z1=z+w*freepath;
             if(z1 >= thickness):
-                iesc=weight;
+                iesc=1; #weight ?
             if(z1 <= 0.):
-                ilost=weight;
+                ilost=1; #weight ?
             else:
                 iscat = iscat + 1;
                 iflux_col = iflux_col + weight*(1/sigmatot)
@@ -124,4 +126,4 @@ def main():
     print("flux_col = " ,flux_col);
     print("flux_abs = " ,flux_abs);
     print("flux_track = " ,flux_track);
-    print("-------------------------------------Program-------Ends-----------------------------")
+    print("---------------------------------Program-------Ends-----------------------------")
