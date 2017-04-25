@@ -1,6 +1,6 @@
 import random
 import math
- 
+import time
 
 def randomGen():
     xi = random.random()
@@ -31,7 +31,7 @@ def main():
 
     # Parametres particule incidente
 
-   
+    initialtime = time.time();
 
     #Initialisation nombres particules perdues, absorbees ou emises */
     global numlost;
@@ -44,6 +44,8 @@ def main():
     global flux_track;
     global freepath;
     global flux_local
+    global s
+    s =[0]*6;
     flux_local = [0]*(thickness+1); # collision between 0 and 1 is in first place, between 1 and 2 is second ...
     numlost=0;
     numabs=0;
@@ -76,11 +78,18 @@ def main():
         iflux_col = 0;
         iflux_abs =0 ;
         iflux_track =0;
+        ilam = 0;
         #weight= 1;
         while((ilost+iesc+ideath)==0): 
             randnum=randomGen();
             if (sigmatot !=0):
                 freepath=-lamb*(math.log(randnum));
+                s[0] = s[0] + freepath;
+                s[1] = s[1] + freepath**2;
+                s[2] = s[2] + freepath**3;
+                s[3] = s[3] + freepath**4;
+                s[4] = s[4] + freepath**5;
+                s[5] = s[5] + freepath**6;
             #x1=x+u*freepath;
             #y1=y+v*freepath;
             z1=z+w*freepath;
@@ -122,6 +131,8 @@ def main():
     flux_col = flux_col/n;
     flux_abs = flux_abs/n;
     flux_local[:] = [x / n for x in flux_local];
+    s[:] = [x / numscattot for x in s];
+    finaltime = time.time();
     print("n =",n);
     print("numscattot = ", numscattot);
     print("numlost =",numlost);
@@ -131,6 +142,8 @@ def main():
     print("flux_abs = " ,flux_abs);
     print("flux_track = " ,flux_track);
     print("flux(z) = ",flux_local);
+    print("s : ",s);
+    print("Time elapsed during the running of the code : ",finaltime - initialtime, "seconds");
     return flux_local;
 def col(liste):
     for i in range(len(liste)):
