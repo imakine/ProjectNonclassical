@@ -24,10 +24,17 @@ def main():
     global lamb;
     if (sigmatot !=0):
         lamb = 1.042533/sigmatot; #mean-free path
+    #Source (discrete)
 
+    Q = float(input("Difusion source (discrete) [neutrons.thickness^-1.s^-1] = "));
+    
     #Number of path
 
     n = int(input("Number of path : "));
+
+    #Step
+
+    step = float(input("Number of the step for flux: "));
 
 
     # Parametres particule incidente
@@ -48,7 +55,7 @@ def main():
     global flux_local
     global s
     s =[0]*6;
-    flux_local = [0]*(thickness+1); # collision between 0 and 1 is in first place, between 1 and 2 is second ...
+    flux_local = [0]*int(thickness/step); # collision between 0 and 1 is in first place, between 1 and 2 is second ...
     numlost=0;
     numabs=0;
     numesc=0;
@@ -106,8 +113,8 @@ def main():
             else:
                 xi = randomGen();
                 if (xi < sigmascat/sigmatot): #that's a scattering
-                    index = int(z1) + 1;
-                    flux_local[index] = flux_local[index] + 1;
+                    index = int(z1/step) + 1;
+                    flux_local[index-1] = flux_local[index-1] + 1;
                     iscat = iscat + 1;
                     iflux_col = iflux_col + 1
                     iflux_track =iflux_track + freepath
@@ -136,7 +143,7 @@ def main():
     flux_track = flux_track/n;    
     flux_col = flux_col/n;
     flux_abs = flux_abs/n;
-    flux_local[:] = [x/n for x in flux_local]; # x/n
+    flux_local[:] = [x/n*Q*thickness/step/sigmatot for x in flux_local]; # x/n
     if (numscattot !=0):
         s[:] = [x / numscattot for x in s];
     finaltime = time.time();
@@ -154,6 +161,9 @@ def main():
     print("s = ",s);
     print("source = ",source);
     print("Time elapsed during the running of the code : ",finaltime - initialtime, "seconds");
+    plt.plot(flux_local)
+    plt.ylabel('Flux(z)')
+    plt.show()
     return flux_local;
 def col(liste):
     for i in range(len(liste)):
