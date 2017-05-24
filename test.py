@@ -9,7 +9,12 @@ import math
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.optimize 
+import scipy.optimize
+
+def randomGen():
+    xi = random.random()
+    xi = float(xi);
+    return xi 
 
 print("1D code is running SP3");
 
@@ -309,6 +314,7 @@ variancePSP3.close()
 fluxPSP3.close();
 coordPSP3.close();          
 
+
 def fsp(x): # function xi - (1+z)exp(-z)
     return (1+x)*np.exp(-x)
 
@@ -335,7 +341,3 @@ def f(x,xi):
 
 
 print("---------------------------------Program-------Ends-----------------------------")
-def randomGen():
-    xi = random.random()
-    xi = float(xi);
-    return xi
