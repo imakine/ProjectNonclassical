@@ -4,6 +4,12 @@ Created on Thu May 25 00:37:55 2017
 
 @author: Ilker
 """
+import random
+import math
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+import scipy.optimize 
 
 print("1D code is running SP3");
 
