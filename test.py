@@ -16,6 +16,29 @@ def randomGen():
     xi = float(xi);
     return xi 
 
+def fsp(x): # function xi - (1+z)exp(-z)
+    return (1+x)*np.exp(-x)
+
+def col(liste):
+    for i in range(len(liste)):
+        split_num = str(liste[i]).split('.');
+        int_part = str(split_num[0]);
+        decimal_part = str(split_num[1]);
+        print(int_part + "," + decimal_part);
+def secante(a,b,prec,xi,sigmatot):
+	while f(a*sigmatot,xi) > prec:
+		a = a-f(a*sigmatot,xi)*(b-a)/(f(b*sigmatot,xi)-f(a*sigmatot,xi))
+	return a     
+
+def f(x,xi):
+    a = 5.642025;
+    b = 0.469086;
+    l = (5+2*(10/3)**(0.5))**(0.5);
+    m = (5-2*(10/3)**(0.5))**(0.5);
+    y = a/(l**2);
+    z = b/(m**2);
+    return (xi - y*(1-fsp(l*x)) - z*(1-fsp(m*x)))
+
 print("1D code is running SP3");
 
     #Initialisation des parametree de la simulation
@@ -313,31 +336,5 @@ deviationPSP3.close()
 variancePSP3.close()      
 fluxPSP3.close();
 coordPSP3.close();          
-
-
-def fsp(x): # function xi - (1+z)exp(-z)
-    return (1+x)*np.exp(-x)
-
-def col(liste):
-    for i in range(len(liste)):
-        split_num = str(liste[i]).split('.');
-        int_part = str(split_num[0]);
-        decimal_part = str(split_num[1]);
-        print(int_part + "," + decimal_part);
-def secante(a,b,prec,xi,sigmatot):
-	while f(a*sigmatot,xi) > prec:
-		a = a-f(a*sigmatot,xi)*(b-a)/(f(b*sigmatot,xi)-f(a*sigmatot,xi))
-	return a     
-
-def f(x,xi):
-    a = 5.642025;
-    b = 0.469086;
-    l = (5+2*(10/3)**(0.5))**(0.5);
-    m = (5-2*(10/3)**(0.5))**(0.5);
-    y = a/(l**2);
-    z = b/(m**2);
-    return (xi - y*(1-fsp(l*x)) - z*(1-fsp(m*x)))
-
-
 
 print("---------------------------------Program-------Ends-----------------------------")
