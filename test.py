@@ -191,7 +191,7 @@ for i in range(len(fluxpic)):
     variancepic[i] = variancepic[i]/(n-1)*((Q*thickness)/step/sigmatot)**2;
     fluxpic[i] = fluxpic[i]/n*(Q*thickness)/step/sigmatot;                                                  
     test[i] = variancepic[i]-(fluxpic[i])**2;
-    test2[i] = test[i]**(0.5);
+    #test2[i] = test[i]**(0.5);
 flux_local[:] = [x/n*Q/step/sigmatot for x in flux_local]; # x/n
 if (numscattot !=0):
     s[:] = [x / (numscattot+numdeath+numesc+numlost) for x in s];
