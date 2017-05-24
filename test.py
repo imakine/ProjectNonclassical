@@ -30,15 +30,6 @@ def secante(a,b,prec,xi,sigmatot):
 		a = a-f(a*sigmatot,xi)*(b-a)/(f(b*sigmatot,xi)-f(a*sigmatot,xi))
 	return a     
 
-def f(x,xi):
-    a = 5.642025;
-    b = 0.469086;
-    l = (5+2*(10/3)**(0.5))**(0.5);
-    m = (5-2*(10/3)**(0.5))**(0.5);
-    y = a/(l**2);
-    z = b/(m**2);
-    return (xi - y*(1-fsp(l*x)) - z*(1-fsp(m*x)))
-
 print("1D code is running SP3");
 
     #Initialisation des parametree de la simulation
@@ -138,7 +129,7 @@ for i in range(1,n+1):
     while((ilost+iesc+ideath)==0):
         randnum=randomGen();
         if (sigmatot !=0):
-            freepath = scipy.optimize.brentq(f,0.0,100,args=((randnum)))/sigmatot
+            freepath = -lamb*(math.log(randnum))
                                                     
                     #freepath = secante(0,1,1e-6,randnum,sigmatot)/(sigmatot)
             s[0] = s[0] + freepath;
