@@ -1,0 +1,27 @@
+\contentsline {chapter}{\numberline {1}Introduction}{4}
+\contentsline {section}{\numberline {1.1}Classical transport equation}{4}
+\contentsline {section}{\numberline {1.2}$P_N$ and $SP_N$ equations}{5}
+\contentsline {subsection}{\numberline {1.2.1}Generality on the equations}{5}
+\contentsline {subsection}{\numberline {1.2.2}$SP_1$ equations}{6}
+\contentsline {subsection}{\numberline {1.2.3}$SP_2$ equations}{7}
+\contentsline {subsection}{\numberline {1.2.4}$SP_3$ equations}{7}
+\contentsline {chapter}{\numberline {2}Nonclassical transport equation}{8}
+\contentsline {section}{\numberline {2.1}Generalities and assumptions}{8}
+\contentsline {section}{\numberline {2.2}Derivation of the Generalized Linear Boltzmann Equation (GLBE)}{9}
+\contentsline {section}{\numberline {2.3}Integral formulation of the Generalized Linear Boltzmann Equation (GLBE) }{10}
+\contentsline {section}{\numberline {2.4}Nonclassical Diffusion and $SP_N$}{12}
+\contentsline {section}{\numberline {2.5}Density probability function for classical case}{13}
+\contentsline {subsection}{\numberline {2.5.1}Classical transport}{14}
+\contentsline {subsection}{\numberline {2.5.2}Classical $SP_1$}{14}
+\contentsline {subsection}{\numberline {2.5.3}Classical $SP_2$}{16}
+\contentsline {subsection}{\numberline {2.5.4}Classical $SP_3$}{17}
+\contentsline {section}{\numberline {2.6}Density probability function for nonclassical case}{19}
+\contentsline {subsection}{\numberline {2.6.1}Nonclassical $SP_1$}{19}
+\contentsline {subsection}{\numberline {2.6.2}Nonclassical $SP_2$}{20}
+\contentsline {subsection}{\numberline {2.6.3}Nonclassical $SP_3$}{23}
+\contentsline {chapter}{\numberline {3}Numerical results}{29}
+\contentsline {chapter}{\numberline {A}Return on the classical case}{30}
+\contentsline {chapter}{\numberline {B}Asymptotic derivation of the $SP_N$ equations}{32}
+\contentsline {chapter}{\numberline {C}Derivation of the angular integral}{34}
+\contentsline {chapter}{\numberline {D}Asymptotic analysis of nonclassical $SP_N$ equations}{36}
+\contentsline {chapter}{\numberline {E}Transport Integral and pdf}{41}

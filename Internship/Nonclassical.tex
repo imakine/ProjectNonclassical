@@ -1,0 +1,2128 @@
+\documentclass[a4paper, 12pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[top=1cm, bottom=1.5cm, left=1cm, right=1cm]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{appendix}
+
+% Logos
+\newcommand{\ulb}{\includegraphics[scale=1.1]{logo_ULB2.pdf}}
+\newcommand{\polytech}{\includegraphics[scale=0.35]{logo_polytech_FR.pdf}}
+\newcommand{\instn}{\includegraphics[scale=0.6]{instn.jpg}}
+\newcommand{\cea}{\includegraphics[scale=0.12]{cea.png}}
+\newcommand{\berkeley}{\includegraphics[scale=0.27]{ucb.png}}
+
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+ \newcommand{\bl}{\big<}
+  \newcommand{\bg}{\big>}
+
+% Polices
+\definecolor{ULBblue}{rgb}{0,0.2196,0.5765}
+\newcommand{\fontTitle}{\sffamily \Huge\selectfont \color{ULBblue}}
+\newcommand{\fontSubtitle}{\sffamily \LARGE \selectfont \color{ULBblue}}
+\newcommand{\fontText}{\sffamily \selectfont}
+\newcommand{\fontColor}{\sffamily \selectfont \color{ULBblue}}
+
+% Titre
+\newcommand{\titleA}{\fontTitle{Nonclassical particle transport in one-}} % Titre identique au titre remis au secrétariat
+\newcommand{\titleB}{\fontTitle{dimensional random periodic media}} % (dans la langue de rédaction a priori)
+% Sous-titre
+\newcommand{\subtitle}{\fontSubtitle{Applied to BWRs And PBRs}}
+% Titre du diplôme
+\newcommand{\diplomaA}{\fontText{Mémoire présenté en vue de l’obtention du diplôme}} % A laisser en Français
+\newcommand{\diplomaB}{\fontText{d'Ingénieur Civil Physicien à finalité \textbf{Génie Nucléaire}}}
+\newcommand{\diplomaC}{\fontText{ainsi que de l'attestation de suivi des cours à l'INSTN}}
+% Etudiant
+\newcommand{\student}{\textbf{\sffamily \large Ilker Makine}}
+
+% Supervision
+\newcommand{\promAa}{\fontColor{Director}}
+\newcommand{\promAb}{\fontText{Professor Rachel Slaybaugh}}
+\newcommand{\promBa}{\fontColor{Co-Promoter}}
+\newcommand{\promBb}{\fontText{Professor Richard Vasques}}
+\newcommand{\promCa}{\fontColor{Supervisor}}
+\newcommand{\promCb}{\fontText{Richard Vasques}}
+\newcommand{\deptA}{\fontColor{Service}}
+\newcommand{\deptB}{\fontText{Nuclear engineering department at UC Berkeley}}
+
+% Année académique
+\newcommand{\yearA}{\fontColor{Academic year}}
+\newcommand{\yearB}{\fontText{2016 - 2017}}
+
+\begin{document}
+
+	\thispagestyle{empty}
+	\newgeometry{top=2.5cm, bottom=1.5cm, left=2.5cm, right=1cm}
+	\setlength{\unitlength}{1mm}
+	\noindent\begin{picture}(175,257)
+	
+		\put(0,245){\polytech}
+		\put(153,139.5){\ulb}
+		\put(0,225){\instn}
+		\put(70,215){\berkeley}
+		\put(85,245){\cea}
+		
+		
+		
+		\put(8,155){\makebox(150,10)[l]{\titleA}}
+		\put(8,145){\makebox(150,10)[l]{\titleB}}
+		\put(8,135){\makebox(150,10)[l]{\subtitle}}
+		
+		\put(0,75){
+		\begin{tikzpicture}[scale=0.1]
+		\fill [fill=ULBblue](0,0) rectangle (0.8,90);
+		\fill [fill=ULBblue](0,57) rectangle (152,57.8);
+		\end{tikzpicture}}
+		
+		\put(8,120){\makebox(150,5)[l]{\diplomaA}}
+		\put(8,115){\makebox(150,5)[l]{\diplomaB}}
+		\put(8,110){\makebox(150,5)[l]{\diplomaC}}
+		
+		\put(8,75){\makebox(150,10)[l]{\selectfont \student}}
+		
+		\put(8,44){\makebox(80,5)[l]{\promAa}}
+		\put(8,39){\makebox(80,5)[l]{\promAb}}
+		\put(8,31){\makebox(80,5)[l]{\promBa}} % Commenter la ligne si pas nécessaire
+		\put(8,26){\makebox(80,5)[l]{\promBb}} % Commenter la ligne si pas nécessaire
+		\put(8,18){\makebox(80,5)[l]{\promCa}} % Commenter la ligne si pas nécessaire
+		\put(8,13){\makebox(80,5)[l]{\promCb}} % Commenter la ligne si pas nécessaire
+		\put(8,5){\makebox(80,5)[l]{\deptA}}
+		\put(8,0){\makebox(80,5)[l]{\deptB}}
+		
+		\put(145,5){\makebox(30,5)[r]{\yearA}}
+		\put(145,0){\makebox(30,5)[r]{\yearB}}
+	
+	\end{picture}
+	\restoregeometry
+	
+\begin{abstract}
+
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\chapter{Introduction}
+\section{Classical transport equation}
+
+In the classical theory, the more general transport equation is given by the following expression:
+
+\begin{equation}\label{classical}
+\frac{1}{v}\frac{\partial}{\partial t} \Phi(\vec{r},E,\vec{\Omega},t) = -\vec{\nabla}. \left[\vec{\Omega}. \Phi(\vec{r},E,\vec{\Omega},t)\right] - \Sigma_t(\vec{r},E)\Phi(\vec{r},E,\vec{\Omega},t) + q(\vec{r},E,\vec{\Omega},t)
+\end{equation}
+
+where;
+\begin{itemize}
+\item $\frac{1}{v}\frac{\partial}{\partial t} \Phi(\vec{r},E,\vec{\Omega},t)d\vec{r}dEd\vec{\Omega}dt$ is the variation of the number of neutron in the box $d\vec{r}dEd\vec{\Omega}dt$ about $(\vec{r},E,\vec{\Omega},t)$ in the diagram of phases.
+\item $\nabla \left[\vec{\Omega} \Phi(\vec{r},E,\vec{\Omega},t)\right]d\vec{r}dEd\vec{\Omega}dt$ is the number of neutron crossing the surface of the volume of the box $d\vec{r}dEd\vec{\Omega}dt$ about $(\vec{r},E,\vec{\Omega},t)$.
+\item $\Sigma_t(\vec{r},E)\Phi(\vec{r},E,\vec{\Omega},t)d\vec{r}dEd\vec{\Omega}dt$ represents all the interactions (scattering, absorption,\dots) possible for the neutrons in the volume of the box $d\vec{r}dEd\vec{\Omega}dt$ about $(\vec{r},E,\vec{\Omega},t)$.
+\item $q(\vec{r},E,\vec{\Omega},t)d\vec{r}dEd\vec{\Omega}dt$ is the source of neutrons in the box $d\vec{r}dEd\vec{\Omega}dt$ about $(\vec{r},E,\vec{\Omega},t)$. This source can be external or a fission source and contains also the scattering.
+\end{itemize}
+
+The equation \ref{classical} is reduced in the case of steady state, mono-energetic, homogeneous and isotropic source to the following equation:
+
+\begin{equation}\label{steadyEnergy}
+ \vec{\nabla}. \left[\vec{\Omega}. \Phi(\vec{r},\vec{\Omega},t)\right] + \Sigma_t \Phi(\vec{r},\vec{\Omega}) = \frac{1}{4\pi} \int \Sigma_s(\vec{\Omega'}.\vec{\Omega}) \Phi(\vec{r},\vec{\Omega}') d\vec{\Omega}' +\frac{Q(\vec{r})}{4\pi} 
+\end{equation}
+
+For this work, we do not care about the energy variable. This variable can be considered by the multi-group method (not done here). The temporal aspect can be done with a classical numerical analysis.
+
+One of the assumptions to obtain the equation \ref{steadyEnergy} is to suppose that the scattering center are uncorrelated. It signifies that the process is markovian. The neutron forgets its past after each collisions. The total cross section is independent of the distance to the next interaction $s$ ($\Sigma_t(s) = \Sigma_t$) and the direction of the flight of the neutron $\vec{\Omega}$ . This assumption implies also that the probability density function for a particle's distance to collision is given by an exponential.
+
+\begin{equation}\label{pdfclass}
+p_{class}(s) = \Sigma_t e^{-\Sigma_t s}
+\end{equation}
+
+By integrating the equation \ref{steadyEnergy} over $\Omega$ by applying $\int (.) d\vec{\Omega}$, we obtain the diffusion equation [REFERENCE].
+
+\begin{equation}\label{eqsp1}
+-\frac{1}{3\Sigma_t}\Delta \phi(\vec{r}) + \Sigma_a \phi (\vec{r}) = Q(\vec{r})
+\end{equation}
+
+The classical transport equation can be noted in integral form which is the following (for isotropic sources);
+
+\begin{equation}
+\phi(\vec{r}) = \int_{R^3} e^{-\tau(\vec{r'},\vec{r})}\frac{Q(\vec{r'})}{4\pi |\vec{r'}-\vec{r}|^2} d\vec{r'}
+\end{equation}
+
+\section{$P_N$ and $SP_N$ equations}
+
+\subsection{Generality on the equations}
+
+The equation \ref{classical} is too much difficult to solve because there are 7 independent variables. The resolution of the 3-D diffusion equation was strained by the computer. To solve the transport equation in three spatial dimension is more complex, it is the reason to introduce some simplifying methods such as $SP_N$. It is a method between diffusion and transport that could be solved using the computational resources.
+
+The $SP_N$ method is born with the idea that the spherical harmonics method ($P_N$ method) can be very nice in general geometry as in slab geometry. In slab geometry, the $P_N$ equations can be written as a system of 1-D diffusion equations. This is impossible in general geometry. It
+was by the process of writing these 1-D equations in a 3-D form that we can obtain formal derivation of the $SP_N$ equations. The derivation of these equations are given in the Annex \ref{asymptotic}.
+
+To arrive to the $SP_N$ equations, we started from the steady and mono-energetic transport equation (Eq. \ref{steadyEnergy}) by restricting this equation to 1-D slab geometry. The equation is the following;
+
+\begin{equation}
+\mu \frac{\partial}{\partial x}\phi(x) + \Sigma_t \phi(x) = \frac{1}{2} \int_{-1}^{1} \Sigma_s(\mu')\phi(x,\mu') d\mu + \frac{Q}{2}  
+\end{equation}
+
+where $\mu' = \vec{\Omega'}.\vec{\Omega}$. The scalar flux and the differential cross-section can be developed on the Legendre polynomial basis as;
+
+\begin{equation}
+\phi(\mu) = \sum_{n=0}^{\infty} \frac{2n+1}{4\pi} \phi_n P_n(\mu)
+\end{equation}
+
+\begin{equation}
+\Sigma_s(\mu',\mu) = \sum_{n=0}^{\infty} \frac{2n+1}{2} P_n(\mu)P_n(\mu')\Sigma_{sn}
+\end{equation}
+
+where $\phi_n(x) = \int_{-1}^{1} \phi(x,\mu) P_n(\mu) d\mu$. We can define $\Sigma_n = \Sigma_t - \Sigma_{sn}$ with $\Sigma_{sn} = \int_{-1}^{1} \Sigma_s(\mu_0) P_n(\mu) d\mu$.
+
+Theses equations bring the $P_N$ equation which is the following;
+
+\begin{equation}
+\frac{n}{2n+1} \frac{d\phi_{n-1}}{dx} + \frac{n+1}{2n+1} \frac{d \phi_{n+1}}{dx} + \Sigma_n\phi_n = 0
+\end{equation}
+
+The $P_N$ equation are solved by truncation at order $N$\footnote{For indication; $\Sigma_0 = \Sigma_a$}. Thus, we impose that $\phi_{N+1}=0$ and $\phi_{-1} = 0$. The extension of these equations in three dimensions is not easy. For that, we must expand the angular variable in spherical harmonics. The reason of that the inclusion of the second angular variable is needed in the expansion. This element increase the number of equation to solve ($N^2$ against $N$ in slab geometry). Also, the streaming operator looses its simplicity.
+
+It is the reason to find an easy way to use having same complexity than $P_N$ in slab geometry but for multi-dimensional problem. To do this operation, firstly, the odd value of $n$, $\phi_n$ is replaced by a vector.
+
+\begin{equation}
+\phi_n \rightarrow \vec{\phi}_n = (\phi_n^x,\phi_n^y,\phi_n^z)^t
+\end{equation}
+
+And also, for the odd value of $n$, we replace the $x$ derivative by a gradient;
+
+\begin{equation}
+\frac{d}{dx}\rightarrow \nabla.
+\end{equation}
+
+then, for the even value of $n$, we replace the $x$ derivative by a divergence;
+
+\begin{equation}
+\frac{d}{dx}\rightarrow \nabla \cdot
+\end{equation}
+
+This gives the $SP_N$ equations;
+
+For $n =0$;
+\begin{equation}
+\vec{\nabla}.\vec{\phi_1} + \Sigma_0 \phi_0 = Q
+\end{equation}
+
+For odd $n$;
+\begin{equation}
+\frac{n}{2n+1} \vec{\nabla}.\phi_{n-1} + \frac{n+1}{2n+1} \vec{\nabla}\phi_{n+1} + \Sigma_n\vec{\phi}_n = 0
+\end{equation}
+
+For even $n$;
+\begin{equation}
+\frac{n}{2n+1} \vec{\nabla}.\vec{\phi}_{n-1} + \frac{n+1}{2n+1} \vec{\nabla}.\vec{\phi}_{n+1} + \Sigma_n\phi_n = 0
+\end{equation}
+
+This simple structure permits us to eliminate the vector unknowns $\vec{\phi_n}$ (for $n$ odd).
+Thus, we obtain (if $\Sigma_n \neq 0$);
+
+\begin{equation}
+\vec{\phi}_n = -\frac{1}{\Sigma_n} \left( \frac{n}{2n+1} \vec{\nabla}\phi_{n-1} + \frac{n+1}{2n+1} \vec{\nabla}\phi_{n+1}   \right)
+\end{equation}
+
+By using this equality, we can obtain the second order equation $SP_N$.
+
+\begin{equation}
+-\vec{\nabla}\frac{1}{3\Sigma_1}\vec{\nabla} \phi_0 -\vec{\nabla}\frac{2}{3\Sigma_1}\vec{\nabla}\phi_2 + \Sigma_0\phi_0 = Q
+\end{equation}
+
+For even $n$;
+
+\begin{multline}
+-\vec{\nabla}\left(\frac{n(n-1)}{(2n-1)(2n+1)\Sigma_{n-1}}\right) \vec{\nabla}\phi_{n-2}  -\vec{\nabla}\left(\frac{(n+1)(n+2)}{(2n+1)(2n+3)\Sigma_{n+1}}\right) \vec{\nabla}\phi_{n+2}\\ - \vec{\nabla}\left(\frac{n^2}{(2n-1)(2n+1)\Sigma_{n-1}} + \frac{(n+1)^2}{(2n+1)(2n+3)\Sigma_{n+1}}\right) \vec{\nabla}\phi_{n} + \Sigma_n \phi_n = 0
+\end{multline}
+
+The second-order $SP_N$ form is useful because it looks like a set of coupled diffusion equations.
+
+\subsection{$SP_1$ equations}
+
+In the first order form, the $SP_1$ equations are the following;
+
+\begin{align}
+\vec{\nabla}\vec{\phi}_1 + \Sigma_a\phi_0 = Q \\
+\frac{1}{3}\vec{\nabla}\phi_0 + \Sigma_1 \vec{\phi}_1 = 0
+\end{align}
+
+where $\Sigma_1 = \Sigma_{tr} = \Sigma_t - \Sigma_{s,1}$.
+
+In the second order form, the equation is the following;
+
+\begin{equation}
+-\vec{\nabla}\frac{1}{3\Sigma_t}\vec{\nabla}\phi_0 + \Sigma_a \phi_0 = Q
+\end{equation}
+
+which is the equation of the diffusion approximation in general geometry implying that $SP_1$ and $P_1$ are the same in a general geometry.
+
+\subsection{$SP_2$ equations}
+
+In the first order form, the $SP_2$ equations are the following;
+
+\begin{align}
+\vec{\nabla}\vec{\phi}_1 + \Sigma_a\phi_0 = Q \\
+\frac{2}{3}\vec{\nabla}\phi_2 + \frac{1}{3}\vec{\nabla}\phi_0 + \Sigma_1 \vec{\phi}_1 = 0\\
+\frac{2}{5}\vec{\nabla}\vec{\phi}_1 + \Sigma_2 \phi_2 = 0
+\end{align}
+
+In the second order form, the equations are the following;
+
+\begin{equation}\label{eqsp2}
+-\frac{1}{3\Sigma_t}\Delta \left[ \phi(x) + \frac{4}{5\Sigma_t}(\Sigma_a \phi(x) - Q) \right] + \Sigma_a\phi(x) = Q
+\end{equation}
+
+\subsection{$SP_3$ equations}
+
+In the first order form, the $SP_3$ equations are the following;
+
+\begin{align}
+\vec{\nabla}\vec{\phi}_1 + \Sigma_a\phi_0 = Q \\
+\frac{2}{3}\vec{\nabla}\phi_2 + \frac{1}{3}\vec{\nabla}\phi_0 + \Sigma_1 \vec{\phi}_1 = 0\\
+\frac{3}{5}\vec{\nabla}\vec{\phi}_3+\frac{2}{5}\vec{\nabla}\vec{\phi}_1 + \Sigma_2 \phi_2 = 0\\
+\frac{3}{7}\vec{\nabla}\phi_2 + \Sigma_3 \vec{\phi}_3 = 0
+\end{align}
+
+In the second order form, the equations are the following;
+
+\begin{align}\label{eqsp3}
+-\vec{\nabla}\left(\frac{1}{3\Sigma_1}\right)\vec{\nabla}\phi_0 -  \vec{\nabla}\left(\frac{2}{3\Sigma_1}\right)\vec{\nabla}\phi_2 + \Sigma_a \phi_0 = Q\\
+-\vec{\nabla}\left(\frac{2}{15\Sigma_1}\right)\vec{\nabla}\phi_0 -  \vec{\nabla}\left(\frac{4}{15\Sigma_1}+\frac{9}{15\Sigma_3}\right)\vec{\nabla}\phi_2 + \Sigma_2 \phi_2 = 0
+\end{align}
+
+The first of these equations are the diffusion equation with a correction term $\phi_2$. If we pose that $\hat{\phi}_0 = \phi_0 + 2\phi_2$, these equations look like two-group diffusion equations. With this new variable, the system becomes;
+
+\begin{align}
+-\vec{\nabla}\left(\frac{1}{3\Sigma_t}\right)\vec{\nabla}\hat{\phi}_0  + \Sigma_a \hat{\phi}_0 = 2 \Sigma_a \phi_2 + Q\\
+-\vec{\nabla}\left(\frac{9}{35\Sigma_1}\right)\vec{\nabla}\phi_2 +  \left(\Sigma_2+\frac{4}{5}\Sigma_a\right)\phi_2  = \frac{2}{5}\left(\Sigma_a\hat{\phi}_0 - Q\right)
+\end{align}
+
+These are diffusion equation for $\hat{\phi}_0$ coupled to $\phi_2$ through an interaction
+term. These equations can be solved with a two-group diffusion code.
+
+\chapter{Nonclassical transport equation}
+\section{Generalities and assumptions}
+
+In the classical theory of linear particle transport, the incremental probability (on a distance $ds$) of an interaction is given by;
+
+\begin{equation}
+dp = \Sigma_t ds
+\end{equation}
+
+In the classical theory, the probability density function is given by a simple exponential giving by the equation \ref{pdfclass}.
+
+However, in an inhomogeneous random medium, the particles will cross different materials with randomly located interfaces like in the case of PBRs (Pebble Bed Reactor) or BWRs (Boiled Water Reactor). For the photons, experimental studies have shown that the behaviour follows a non-exponential attenuation law in atmospheric clouds. It has been suggested that the locations of the scattering centers are spatially correlated in ways that measurably affect radiative transfer within the cloud. In this case, the locations of the water droplets in clouds are correlated.
+
+If we take account this correlation, the total cross section $\Sigma_t$ becomes dependent of the path travelled by the neutron giving the following dependence;
+
+\begin{equation}
+\Sigma_t = \Sigma_t(s).
+\end{equation}
+
+With this element, the linear particle transport given by the equation (\ref{classical}) must be generalized.
+
+To simplify the problem, some assumptions are done;
+
+\begin{itemize}
+\item The considered media is infinite and homogeneous.
+\item The particles are considered mono-energetic. After an interaction, the energy of the particle does not change.
+\item The source of particles is considered as isotropic. This source tends to zero when the position tends to infinite. The flux also is finite. Mathematically;
+$Q(x) \rightarrow 0$ and $\phi(x) \rightarrow 0$ when $|x|\rightarrow \infty$.
+\item The definition of the total cross section is the following; $\Sigma(s)ds$ is the probability that a particle born or scattered at a point $\vec{x}$ and travelling at any direction $\vec{\Omega}$ will have an interaction between $\vec{x}+s\vec{\Omega}$ and $\vec{x}+(s+ds)\vec{\Omega}$. In general, the total cross section depends also on the position $\vec{x}$ and $\Omega$ but we have considered in the first assumption that the media is homogeneous and infinite and independent of the direction of the flight. Thus, we have only a dependence with $s$.
+\item The distribution function $P(\vec{\Omega}.\vec{\Omega}')$ for scattering from $\vec{\Omega}'$ to $\vec{\Omega}$ is independent of $s$.
+\item This nonclassical theory is valid only if all the moment for $s$ is finite. We must not have that $\bl s^{2n} \bg \rightarrow \infty $. If not this theory becomes invalid.
+\end{itemize}
+
+\section{Derivation of the Generalized Linear Boltzmann Equation (GLBE)}
+\begin{itemize}
+\item $n(\vec{x},\vec{\Omega},s) dsd\vec{x}d\vec{\Omega}$ represents the number of particles in a box $dsd\vec{x}d\vec{\Omega}$ about $(\vec{x},\vec{\Omega},s)$.
+\item $\psi(\vec{x},\vec{\Omega},s) = v n(\vec{x},\vec{\Omega},s)$ is defined as the angular flux.
+\item $\Sigma_t(\vec{\Omega},s)ds$ represents the probability that the particle having travelled a distance $s$ in the direction $\vec{\Omega}$, will have an interaction in the distance $ds$ in the same direction.
+\item $c$ represents the probability of scattering when an interaction occurs. This is independent of $s$ or $\vec{\Omega}$.
+\item $P(\vec{\Omega}'.\vec{\Omega})d\vec{\Omega}$ represents the probability that a particle coming in the direction $\vec{\Omega}'$, will scatter in a direction in $\vec{\Omega}$ about $\vec{\Omega}$.
+\item $Q(\vec{x})dV$ represents the rate at which source particles are isotropically
+emitted by an internal source $Q(\vec{x})$ in $dV$ about $x$.
+\item $v$ is the velocity of the particle, defined by $v = \frac{ds}{dt}$.
+\end{itemize}
+ 
+We have these different equalities;
+ 
+\begin{equation}
+ \frac{\partial \psi (\vec{x},\vec{\Omega},s)}{\partial s} dVdsd\vec{\Omega} = \frac{1}{v}  \frac{\partial v n (\vec{x},\vec{\Omega},s)}{\partial t} dVdsd\vec{\Omega} = \frac{\partial n (\vec{x},\vec{\Omega},s)}{\partial t} dVdsd\vec{\Omega}
+\end{equation}
+
+Thus, this quantity represents the rate of variation of the particles in the box $dVdsd\vec{\Omega}$ about $(\vec{x},\vec{\Omega},s)$.
+
+The second term to analyse is the following;
+
+\begin{equation}
+\int |\vec{\Omega}.\vec{n}| \psi dSdsd\vec{\Omega} = \int \vec{\Omega}.\vec{\nabla}[\psi] dVdsd\vec{\Omega}
+\end{equation}
+
+We have used the Ostrogradski law here. This term represents the leakage which a particle in $dsd\vec{\Omega}$ flows through the surface $dS$ with the direction $\vec{n}$.
+
+Next term is the following;
+
+\begin{equation}
+\Sigma_t(\vec{\Omega},s)\psi(\vec{x},\vec{\Omega},s)dVdsd\vec{\Omega} =  \Sigma_t(\vec{\Omega},s)v n(\vec{x},\vec{\Omega},s)dVdsd\vec{\Omega} = \Sigma_t(\vec{\Omega},s)\frac{ds}{dt}n(\vec{x},\vec{\Omega},s)dVdsd\vec{\Omega}
+\end{equation} 
+
+This is rewritten like this;
+
+\begin{equation}
+\frac{1}{dt}[\Sigma_t(\vec{\Omega},s)ds][n(\vec{x},\vec{\Omega},s)dVdsd\vec{\Omega}]
+\end{equation}
+
+We are going to use this equation for the scattering term;
+
+\begin{equation}
+\left[ \int_0^\infty \Sigma_t(\vec{\Omega}',s')\psi(\vec{x},\vec{\Omega}',s')ds' \right]d\vec{\Omega}'dV
+\end{equation}
+
+This term is the rate of the collision for the particles in the box $d\vec{\Omega}' dV$ around $(\vec{x},\vec{\Omega}')$. We multiply this expression by $cP(\vec{\Omega}'.\vec{\Omega})d\vec{\Omega}$ to obtain the rate of the scattering in the box $d\vec{\Omega} dV$ about $(\vec{x},\vec{\Omega})$ from the box $d\vec{\Omega}' dV$ about $(\vec{x},\vec{\Omega}')$.
+
+By integrating over $d\vec{\Omega}$, we obtain;
+
+\begin{equation}
+\left[ c \int_{4\pi} \int_0^\infty \Sigma_t(\vec{\Omega}',s')\psi(\vec{x},\vec{\Omega}',s')ds'd\vec{\Omega}' \right]d\vec{\Omega}dV
+\end{equation}
+
+Finally, when particles "are born" from a scattering event their value of $s$ is equal to $0$. Therefore, the path-length spectrum of particles that emerge from scattering events is the delta function $\delta(s)$. We Multiply the precedent equation by $\delta(s)ds$; this gives:
+
+\begin{equation}
+\delta(s) \left[ c \int_{4\pi} \int_0^\infty \Sigma_t(\vec{\Omega}',s')\psi(\vec{x},\vec{\Omega}',s')ds'd\vec{\Omega}' \right]d\vec{\Omega}dVds
+\end{equation}
+
+This one gives the rate at which particles scatter into $dV d\vec{\Omega} ds$
+about $(\vec{x},\vec{\Omega},s)$.
+
+The last term is the term of source; this one is the following expression for a isotropic source;
+
+\begin{equation}
+\frac{\delta(s)}{4\pi} Q(\vec{x}) dV d\vec{\Omega} ds
+\end{equation}
+
+By using of these elements and a conservation law on the neutrons, we obtain the Generalized Linear Boltzmann Equation (GLBE).
+
+\begin{equation}
+\frac{\partial \psi}{\partial s} (s,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi(s,\vec{x},\vec{\Omega}) + \Sigma_t(s,\vec{x})\psi(s,\vec{x},\vec{\Omega}) = \delta(s)\left[ c \int_{4\pi} \int_0^\infty \Sigma_t(\vec{\Omega}',s')\psi(\vec{x},\vec{\Omega}',s')ds'd\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} \right]
+\end{equation}
+
+This equation can be written in a mathematically equivalent form by this system;
+
+\begin{align}
+\frac{\partial \psi}{\partial s} (s,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi(s,\vec{x},\vec{\Omega}) + \Sigma_t(s,\vec{x})\psi(s,\vec{x},\vec{\Omega})=0 \ \text{for} \ s>0 \\
+\psi(0,\vec{x},\vec{\Omega}) = \left[ c \int_{4\pi} \int_0^\infty \Sigma_t(\vec{\Omega}',s')\psi(\vec{x},\vec{\Omega}',s')ds'd\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} \right]
+\end{align}
+
+To return to classical quantity, we must integrate over $s$. For example, to obtain the classical density of neutron is given by;
+
+\begin{equation}
+n_{class}(\vec{x},\vec{\Omega}) = \int n(s,\vec{x},\vec{\Omega})ds
+\end{equation}
+
+Or the classical angular flux;
+
+\begin{equation}
+\psi_{class} (\vec{x},\vec{\Omega}) = v n_{class}(\vec{x},\vec{\Omega}) = \int \psi(s,\vec{x},\vec{\Omega})ds
+\end{equation}
+
+\section{Integral formulation of the Generalized Linear Boltzmann Equation (GLBE) }
+
+An integral formulation of this new equation can be found.
+We define the collision rate density and the inscattering rate density as;
+
+\begin{equation}
+f(\vec{x},\vec{\Omega}) = \int_0^\infty \Sigma_t(\vec{\Omega},s)\psi(\vec{x},\vec{\Omega},s)ds
+\end{equation}
+
+\begin{equation}\label{gg}
+g(\vec{x},\vec{\Omega}) = c \int_{4\pi} P(\vec{\Omega}'.\vec{\Omega})f(\vec{x},\vec{\Omega}')d\vec{\Omega}'
+\end{equation}
+
+If we use these definition in the GLBE, we obtain the following system;
+
+\begin{align}
+\frac{\partial \psi}{\partial s} (s,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi(s,\vec{x},\vec{\Omega}) + \Sigma_t(s,\vec{x})\psi(s,\vec{x},\vec{\Omega})=0 \ \text{for} \ s>0 \\
+\psi(0,\vec{x},\vec{\Omega}) = \left[ c \int_{4\pi} P(\vec{\Omega}.\vec{\Omega}')f(\vec{x},\vec{\Omega}')d\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} \right]
+\end{align}
+
+The solution of this system is the following equality;
+
+\begin{equation}
+\psi(s,\vec{x},\vec{\Omega}) = \psi(0,\vec{x}-s\vec{\Omega},\vec{\Omega}) e^{\int_0^s \Sigma_t(s,\vec{\Omega}')d\vec{\Omega}'}
+\end{equation}
+
+\begin{equation}\label{complexe}
+\psi(s,\vec{x},\vec{\Omega}) = \left[ c \int_{4\pi} P(\vec{\Omega}.\vec{\Omega}')f(\vec{x}-s\vec{\Omega},\vec{\Omega}')d\vec{\Omega}' + \frac{Q(\vec{x}-s\vec{\Omega})}{4\pi} \right] e^{\int_0^s \Sigma_t(s',\vec{\Omega}')d\vec{\Omega}'}
+\end{equation}
+
+We note that;
+
+\begin{equation}
+F(\vec{\Omega},s) = e^{\int_0^s \Sigma_t(s',\vec{\Omega})ds'}
+\end{equation}
+
+This quantity is the probability that the particle will travel the distance $s$ in a given direction $\vec{\Omega}$ without interacting.
+
+The probability of a collision between $s$ and $s + ds$ in a given direction $\vec{\Omega}$ is:
+
+\begin{equation}
+\Sigma_t(s,\vec{\Omega})F(s,\vec{\Omega}) ds = q(s,\vec{\Omega})ds
+\end{equation}
+
+where $q$ is the conditional distribution function for the distance to collision in a given direction.
+
+Thus, this one is defined,
+
+\begin{equation}
+q(s,\vec{\Omega}) = \Sigma_t(s,\vec{\Omega})e^{\int_0^s \Sigma_t(s',\vec{\Omega})ds'}
+\end{equation}
+
+We can determine $\Sigma_t$ in function of $q$ by integrating this equation and then inverting this equation. This gives;
+
+\begin{equation}
+\Sigma_t(s,\vec{\Omega}) = \frac{q(s,\vec{\Omega})}{1-\int_0^s q(s',\vec{\Omega})}ds'
+\end{equation}
+
+We use the operator $\int \Sigma_t(s,\vec{\Omega})(.)ds$ on the equation (\ref{complexe}), we can obtain thanks to definition of $q$;
+
+\begin{equation}
+f(\vec{x},\vec{\Omega}) = \int_0^\infty \left[ c \int_{4\pi} P(\vec{\Omega}.\vec{\Omega}')f(\vec{x}-s\vec{\Omega},\vec{\Omega}')d\vec{\Omega}' + \frac{Q(\vec{x}-s\vec{\Omega})}{4\pi} \right] q(s,\vec{\Omega})ds
+\end{equation}
+
+By using the equation (\ref{gg}), we obtain;
+
+\begin{equation}
+f(\vec{x},\vec{\Omega}) = \int_0^\infty \left[  g(\vec{x}-s\vec{\Omega},\vec{\Omega}) + \frac{Q(\vec{x}-s\vec{\Omega})}{4\pi} \right] q(s,\vec{\Omega})ds
+\end{equation}
+
+By using the operator $ c \int P(\vec{\Omega}'.\vec{\Omega})(.) d\vec{\Omega}'$ on this equation, we obtain;
+
+\begin{equation}\label{chau}
+g(\vec{x},\vec{\Omega}) = c \int P(\vec{\Omega}'.\vec{\Omega}) \int_0^\infty \left[  g(\vec{x}-s\vec{\Omega},\vec{\Omega}') + \frac{Q(\vec{x}-s\vec{\Omega})}{4\pi} \right] q(s,\vec{\Omega})d\vec{\Omega}'ds
+\end{equation}
+
+By a changing of variables, which is the following;
+
+\begin{align}\label{change}
+\vec{x}' = \vec{x}-s\vec{\Omega} \\
+s = |\vec{x}-\vec{x}'| \\
+\vec{\Omega}' = \frac{\vec{x}-\vec{x}'}{|\vec{x}-\vec{x}'|}
+\end{align}
+
+The equation (\ref{chau}) gives;
+
+\begin{equation}\label{impossible}
+g(\vec{x},\vec{\Omega}) = c \int P\left(\frac{\vec{x}-\vec{x}'}{|\vec{x}-\vec{x}'|}.\vec{\Omega}\right) \int_0^\infty \left[  g\left(\vec{x}',\frac{\vec{x}-\vec{x}'}{|\vec{x}-\vec{x}'|}\right) + \frac{Q(\vec{x}')}{4\pi} \right] \frac{1}{|\vec{x}-\vec{x}'|^2}\hat{q}(|\vec{x}-\vec{x}'|)dV'
+\end{equation}
+
+In this equation appears the quantity $\hat{q}(|\vec{x}-\vec{x}'|)dV'$ which is the conditional probability that, given the direction defined by $\vec{x}-\vec{x}'$ , a particle moving from a point x to a point being in $dV$ around $\vec{x}$ will experience a collision.
+
+Also the classical flux can be found by integrating over $ds$ the quantity given by the equation (\ref{complexe}) by using the definition of $g$;
+
+\begin{equation}
+\psi_{class}(\vec{x},\vec{\Omega}) = \int_0^\infty \left[ g(\vec{x}-s\vec{\Omega},\vec{\Omega}) + \frac{Q(\vec{x}-s\vec{\Omega})}{4\pi} \right] e^{\int_0^s \Sigma_t(s',\vec{\Omega}')d\vec{\Omega}'}ds
+\end{equation}
+
+In the case of isotropic scattering, we use the following equality;
+
+\begin{equation}
+P(\vec{\Omega}'.\vec{\Omega}) = \frac{1}{4\pi}
+\end{equation}
+
+This equality implies that $g$ becomes independent of $\vec{\Omega}$.
+
+\begin{equation}
+g(\vec{x},\vec{\Omega}) = g(\vec{x}) = \frac{c}{4\pi}\int f(\vec{x},\vec{\Omega}')d\vec{\Omega}' = \frac{c F(\vec{x})}{4\pi}
+\end{equation}
+
+Finally the expression of the equation (\ref{impossible}) becomes;
+
+\begin{equation}
+F(\vec{x}) = \int \left[cF(\vec{x}') + Q(\vec{x}') \right] \frac{\hat{q}(|\vec{x}-\vec{x}'|)}{4\pi |\vec{x}-\vec{x}'|^2}dV'
+\end{equation}
+
+The classical flux becomes;
+
+\begin{equation}
+\psi_{class}(\vec{x},\vec{\Omega}) = \frac{1}{4\pi}\int_0^\infty \left[ cF(\vec{x}-s\vec{\Omega}) + Q(\vec{x}-s\vec{\Omega}) \right] e^{\int_0^s \Sigma_t(s',\vec{\Omega}')d\vec{\Omega}'}ds
+\end{equation}
+
+To obtain the classical scalar flux, we integrate this equation over $\vec{\Omega}$. 
+This gives the integral form of the GLBE;
+
+\begin{equation}
+\phi_{class}(\vec{x}) = \int \left[ cF(\vec{x}') + Q(\vec{x}') \right]\frac{1}{4\pi |\vec{x}-\vec{x}'|^2} e^{\int_0^{|\vec{x}-\vec{x}'|} \Sigma_t(s',\frac{\vec{x}-\vec{x}'}{|\vec{x}-\vec{x}'|})ds'} dV'
+\end{equation}
+
+We can prove that the GLBE becomes the classical Boltzmann equation if we use the correct assumptions. This prove is given in Annex \ref{return}.
+
+
+\section{Nonclassical Diffusion and $SP_N$}
+
+From the GLBE, we can find the expression for diffusion and $SP_N$ equations. The appendix \ref{B} shows the way to find these equations.
+
+The nonclassical diffusion (nonclassical $SP_1$) equation is the following;
+
+\begin{equation}
+\label{eq1.6}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \phi_0(x) + \frac{1-c}{\bl s\bg} \phi_0(x) = Q(x)
+\end{equation}
+
+We note than the $m-$th moment of $s$ is given by this expression in the classical case;
+
+\begin{equation}
+\bl s^m\bg = \int s^m p(s) ds = \int s^m \Sigma_t e^{-\Sigma_t s} ds = \frac{m!}{\Sigma_t^m}
+\end{equation}
+
+By using this equality and injecting in the equation (\ref{eq1.6}), we obtain the classical diffusion equation.
+
+The nonclassical $SP_2$ equation is given by the following expression;
+
+\begin{equation}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \left[ \phi(x) + \lambda_1\left[(1-c)\phi(x) - \bl s\bg Q(x) \right]\right] + \frac{1-c}{\bl s\bg}\left[1-\beta_1(1-c)\right] \phi(x) = \left[1-\beta_1(1-c)\right] Q(x)
+\end{equation}
+
+where;
+
+\begin{align}
+\lambda_1 = \frac{3}{10}\frac{\bl s^4\bg}{\left(\bl s^2\bg \right)^2} - \frac{1}{3}\frac{\bl s^3\bg}{\bl s^2\bg\bl s\bg}\\
+\beta_1 = \frac{1}{3}\frac{\bl s^3\bg}{\bl s^2\bg\bl s\bg} - 1
+\end{align}
+
+$\lambda_1$ and $\beta_1$ are constant.
+
+The nonclassical $SP_3$ equations are given by the following expressions;
+
+\begin{align}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \left[ \left[1-\beta_1(1-c)\right] \phi(x) + 2 v(x) \right] + \frac{1-c}{\bl s\bg}] \phi(x) = Q(x) \\
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \left[ \frac{\lambda_1}{2} \phi(x) + \lambda_2 v(x) \right] + \frac{1-\beta_2(1-c)}{\bl s\bg} \phi(x) = 0.
+\end{align}
+
+Where;
+
+\begin{equation}
+\lambda_2 = \frac{\left[ \frac{9}{5}\bl s^5\bg -\frac{27}{21}\frac{\bl s\bg\bl s^6\bg}{\bl s^2\bg} + 3\frac{\bl s^3\bg\bl s^4\bg}{\bl s^2\bg}  - \frac{10}{3}\frac{\bl s^3\bg^2}{\bl s\bg}\right]}{10\bl s^2\bg\bl s^3\bg-9\bl s\bg\bl s^4\bg}
+\end{equation}
+
+and;
+
+\begin{equation}
+\beta_2 = \frac{\left[  \frac{10}{3}\frac{\bl s^3\bg^2}{\bl s\bg}-\frac{9}{5}\bl s^5\bg \right]}{10\bl s^2\bg\bl s^3\bg-9\bl s\bg\bl s^4\bg}-1
+\end{equation}
+
+In the classical case, we can find a value for the different constants introduced here.
+
+\begin{align}
+\beta_1 = \beta_2 = 0\\
+\lambda_1 = \frac{4}{5}\\
+\lambda_2 = \frac{11}{7}
+\end{align}
+
+\section{Density probability function for classical case}
+
+The GLBE is a very powerful equation because we can obtain classical transport, classical $SP_1$, $SP_2$ and $SP_3$ with a proper choice of $p(s)$, the density probability function. In this section, we are interested for the classical case, the next section expand this theory at nonclassical $SP_1$, $SP_2$ and $SP_3$. This analysis was not done before, the obtained results are new.
+
+The general expression of $p(s)$ is given by;
+
+\begin{equation}
+p(s) = \Sigma_t(s) e^{-\int_0^s \Sigma_t(s')ds'} 
+\end{equation}
+
+To find the expression for each cases, we are going to try to write the collision rate density like this;
+
+\begin{equation}\label{123}
+f(\vec{x}) = \int S(\vec{x}') \frac{p(|\vec{x}-\vec{x}'|)}{4\pi|\vec{x}-\vec{x}'|^2}dV'
+\end{equation}
+
+After that, we will be able to deduce the expression of $p(s)$.
+
+\subsection{Classical transport}
+
+Some reminders are given in Annex \ref{class}. The probability function to obtain the equation of transport is a simple exponential.
+
+\begin{equation}
+p(s) = \Sigma_t e ^{-\Sigma_t s}
+\end{equation}
+
+The sampling of this function gives;
+
+\begin{equation}
+\xi = \int_0^s p(s') ds' = 1 - e^{-\Sigma_t s} \Longrightarrow s = -\frac{1}{\Sigma_t}ln(1-\xi) = -\frac{1}{\Sigma_t}ln(\xi)
+\end{equation}
+
+The different moments of $s$ is given by this expression;
+
+\begin{equation}
+\bl s^m \bg = \int s^m \Sigma_t e ^{-\Sigma_t s} = \frac{m!}{\Sigma_t^m}
+\end{equation}
+
+The table (\ref{momenttransport}) gives the theoretical values of the different moment of $s$ (until the sixth).
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+moment & value & exact value if $\Sigma_t = 1$ \\ \hline
+$\bl s \bg$ &$ \frac{1}{\Sigma_t}$ & 1.0000  \\ \hline
+$\bl s^2 \bg$ & $\frac{2!}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg$ &$ \frac{3!}{\Sigma_t^3}$ & 6.0000\\ \hline
+$\bl s^4 \bg$ &$ \frac{4!}{\Sigma_t^4}$ & 24.000\\ \hline
+$\bl s^5 \bg$ &$ \frac{5!}{\Sigma_t^5}$ & 120.0000 \\ \hline
+$\bl s^6 \bg$ &$ \frac{6!}{\Sigma_t^6}$ & 720.0000 \\ \hline
+\end{tabular}
+\caption{\label{momenttransport} Table of the theoretical value of the moment of $s$ (until sixth). for transport equation}
+\end{center}
+\end{table}
+\end{center}
+
+
+\subsection{Classical $SP_1$}
+
+We start from the equation of classical $SP_1$ given by the equation (\ref{eqsp1}), we write $\Sigma_a = \Sigma_t - \Sigma_s$; giving;
+
+\begin{equation}
+-\frac{1}{3\Sigma_t}\Delta \phi(\vec{x}) + \Sigma_t \phi (\vec{x}) = \Sigma_s \phi (\vec{x}) + Q(\vec{x}).
+\end{equation}
+
+We define the right-hand side like;
+
+\begin{equation}
+S(\vec{x}) = \Sigma_s \phi (\vec{x}) + Q(\vec{x}).
+\end{equation}
+
+The diffusion equation can be rewritten like this;
+
+\begin{equation}
+-\Delta \phi(\vec{x}) + \Sigma_t^2 \lambda^2 \phi (\vec{x}) = 3\Sigma_t S(\vec{x}).
+\end{equation}
+
+Where;
+
+$$\lambda^2 = 3$$
+
+The Green function of the operator in the left-hand side has the following expression;
+
+\begin{equation}
+G(|\vec{x}-\vec{x}'|) = \frac{e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|}
+\end{equation}
+
+Therefore, the solution of the diffusion equation is the following;
+
+\begin{equation}
+\phi(\vec{x}) = \int G(|\vec{x}-\vec{x}'|) 3 \Sigma_t S(\vec{x}') dV'
+\end{equation}
+
+By injecting the expression of $G$ in this equation, we obtain;
+
+\begin{equation}
+\phi(\vec{x}) = \int \frac{3\Sigma_t e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|} S(\vec{x}')dV' = \int \frac{3\Sigma_t |\vec{x}-\vec{x}'| e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|^2} S(\vec{x}') dV'
+\end{equation}
+
+And the collision rate density is;
+
+\begin{equation}
+f(\vec{x}) = \Sigma_t \phi(\vec{x}) = \int \frac{3\Sigma_t^2 |\vec{x}-\vec{x}'| e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|^2} S(\vec{x}') dV'
+\end{equation}
+
+If we compare this expression with equation (\ref{123}), we conclude that;
+
+\begin{equation}
+p(s) = 3\Sigma_t^2 se^{-\sqrt{3}\Sigma_t s}
+\end{equation}
+
+We can verify that this expression is really a probability density function, because it is always positive and its integral over $s$ is equal to 1.
+
+From this expression, we can deduce the $s$-dependant cross-section $\Sigma_t(s)$ given by;
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{1-\int_0^s p(s')ds'} = \frac{3 \Sigma_t^2 s}{1+ \sqrt{3}\Sigma_t s}
+\end{equation}
+
+The	m-moment of $s$ for this pdf\footnote{probability density function} is given by this expression;
+
+\begin{equation}
+\bl s^m \bg = \int_0^\infty s^m p(s)ds =  \int_0^\infty s^m 3\Sigma_t^2 se^{-\sqrt{3}\Sigma_t s} ds = \frac{(m+1)!}{\left(\sqrt{3}\Sigma_t\right)^m}
+\end{equation}
+
+The table (\ref{momentsp1}) gives the theoretical values of the different moment of $s$ (until the sixth).
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+moment & value & exact value if $\Sigma_t = 1$ \\ \hline
+$\bl s \bg$ &$ \frac{2}{\sqrt{3}\Sigma_t}$ & 1.1547  \\ \hline
+$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg$ &$ \frac{8}{\sqrt{3}\Sigma_t^3}$ & 4.6188\\ \hline
+$\bl s^4 \bg$ &$ \frac{40}{3 \Sigma_t^4}$ & 13.3333\\ \hline
+$\bl s^5 \bg$ &$ \frac{80}{\sqrt{3}\Sigma_t^5}$ & 46.1880 \\ \hline
+$\bl s^6 \bg$ &$ \frac{560}{3 \Sigma_t^6}$ & 186.6667 \\ \hline
+\end{tabular}
+\caption{\label{momentsp1} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_1$ equation.}
+\end{center}
+\end{table}
+\end{center}
+
+The sampling of this function gives;
+
+\begin{equation}
+\xi = \int_0^s p(s') ds' = \int_0^s 3\Sigma_t s' e^{-\sqrt{3}\Sigma_t s'} ds' = 1 - (1 + \sqrt{3}\Sigma_t s)e^{-\sqrt{3}\Sigma_t s}
+\end{equation}
+
+We define the following function;
+
+\begin{equation}
+f(z) = (1+z)e^{-z}
+\end{equation}
+
+So we obtain the following expression from the sampling;
+
+\begin{equation}
+s = \frac{1}{\sqrt{3}\Sigma_t}f^{-1}(\xi)
+\end{equation}
+
+\subsection{Classical $SP_2$}
+
+We start from the equation of classical $SP_2$ given by the equation (\ref{eqsp2}). We remind the equation;
+
+\begin{equation}
+-\frac{1}{3\Sigma_t}\Delta \left[ \phi(x) + \frac{4}{5\Sigma_t}(\Sigma_a \phi(x) - Q) \right] + \Sigma_a\phi(x) = Q
+\end{equation}
+
+By manipulating on this expression; we have the following development;
+
+$$
+-\frac{1}{3\Sigma_t}\Delta \left[ 1 + \frac{4\Sigma_a}{5\Sigma_t} \right]\phi(x) + \Sigma_t\phi(x) = (\Sigma_s\phi(x) + Q) -\frac{4}{15\Sigma_t^2}\Delta Q
+$$
+
+$$
+= S - \frac{4}{15\Sigma_t^2}\Delta ((Q+\Sigma_s \phi(x)) - \Sigma_s\phi(x)) = S - \frac{4}{15\Sigma_t^2}\Delta S + \frac{4\Sigma_s \Delta\phi(x)}{15\Sigma_t^2}
+$$
+
+\begin{equation}
+-\frac{3}{5\Sigma_t}\Delta \phi(x) + \Sigma_t\phi(x) =  S - \frac{4}{15\Sigma_t^2}\Delta S
+\end{equation}
+
+We multiply this expression by $\frac{5\Sigma_t}{3}$, we obtain;
+
+\begin{equation}
+-\Delta \phi(x) + \frac{5}{3}\Sigma_t^2\phi(x) = \frac{5}{3}\Sigma_t S + \frac{4}{9\Sigma_t}\left[ \Delta S + \frac{5\Sigma_t^2}{3}S -\frac{5\Sigma_t^2}{3}S  \right]
+\end{equation}
+
+By defining;
+
+\begin{equation}
+\lambda^2 = \frac{5}{3}
+\end{equation}
+
+We obtain finally, the following expression;
+
+\begin{equation}
+(-\Delta + \Sigma_t^2 \lambda^2)\phi(x) = \frac{25}{27}\Sigma_t S + \frac{4}{9\Sigma_t}(-\Delta + \Sigma_t^2 \lambda^2)S
+\end{equation}
+
+We know the Green function of the operator $-\Delta + \Sigma_t^2 \lambda^2$. By using this Green function, we obtain;
+
+\begin{equation}
+\phi(x) = \frac{25\Sigma_t}{27} \int G(|\vec{x}-\vec{x}'|) S(\vec{x}') dV' + \frac{4}{9\Sigma_t}S
+\end{equation}
+
+The collision rate density is given by the following expression;
+
+\begin{equation}
+f(x) = \Sigma_t \phi = \frac{5}{9}(\Sigma_t \lambda)^2 \int G(|\vec{x}-\vec{x}'|) S(\vec{x}') dV' +  \frac{4}{9}S 
+\end{equation}
+
+We must work on the second term of the right-hand side;
+
+\begin{equation}
+S(\vec{x}) = \int S(\vec{x}+s\vec{\Omega}) \delta(s) ds = \frac{1}{4\pi} \int_{4\pi} \int S(\vec{x}+s\vec{\Omega})\delta(s) dsd\vec{\Omega} = \int_{4\pi} \int \frac{\delta(|\vec{x}-\vec{x}'|)S(\vec{x}')}{4\pi |\vec{x}-\vec{x}'|^2}dV'
+\end{equation}
+
+The expression of the collision rate density becomes;
+
+\begin{equation}
+f(\vec{x}) = \int \left[\frac{5}{9}(\Sigma_t \lambda)^2 \frac{|\vec{x}-\vec{x}'| e^{-\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi|\vec{x}-\vec{x}'|^2} + \frac{4}{9} \frac{\delta(|\vec{x}-\vec{x}'|)}{4\pi |\vec{x}-\vec{x}'|^2}\right]S(\vec{x}')dV'
+\end{equation}
+
+If we compare this expression with equation (\ref{123}), we conclude that;
+
+\begin{equation}
+p(s) =\frac{5}{9} \Sigma_t^2 \lambda^2 s e^{-\Sigma_t \lambda s} + \frac{4}{9} \delta(s)
+\end{equation}
+
+where
+
+\begin{equation}
+\lambda = \sqrt{\frac{5}{3}}
+\end{equation}
+
+We can deduce the expression of $s$-dependant cross-section;
+
+\begin{equation}
+\Sigma_t(s) = \frac{\frac{4}{9}\delta(s)+ (\Sigma_t \lambda)^2s}{1+\Sigma_t \lambda s}
+\end{equation}
+
+The	m-moment of $s$ for this pdf\footnote{probability density function} is given by this expression;
+
+\begin{equation}
+\bl s^m \bg = \int_0^\infty s^m p(s)ds =  \frac{5}{9}\frac{(m+1)!}{(\sqrt{\frac{5}{3}})^m \Sigma_t^m}
+\end{equation}
+
+The table (\ref{momentsp2}) gives the theoretical values of the different moment of $s$ (until the sixth).
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+moment & value & exact value if $\Sigma_t = 1$ \\ \hline
+$\bl s \bg$ &$ \frac{\sqrt{20}}{\sqrt{27}\Sigma_t}$ & 0.8606  \\ \hline
+$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg$ &$ \frac{8\sqrt{3}}{\sqrt{5}\Sigma_t^3}$ & 6.1968\\ \hline
+$\bl s^4 \bg$ &$ \frac{24}{ \Sigma_t^4}$ & 24.0000\\ \hline
+$\bl s^5 \bg$ &$ \frac{144\sqrt{3}}{\sqrt{5}\Sigma_t^5}$ & 111.5419 \\ \hline
+$\bl s^6 \bg$ &$ \frac{3024}{5 \Sigma_t^6}$ & 604.8000 \\ \hline
+\end{tabular}
+\caption{\label{momentsp2} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_2$ equation. }
+\end{center}
+\end{table}
+\end{center}
+
+The sampling for this function is given by the following expression;
+
+\begin{equation}
+\xi = \int_0^s p(s')ds' = \int_0^s \left[ \frac{4}{9}\delta(s') + \frac{5}{9}(\Sigma_t \lambda)^2s'e^{-\Sigma_t \lambda s'} \right]ds' = 1 - \frac{5}{9}f(\Sigma_t \lambda s)
+\end{equation}
+Where $f$ is the same function than for the $SP_1$ case.
+
+For $\xi \in [0,4/9]$, $s= 0$ and for $\xi > 4/9$; the previous expression gives us:
+
+\begin{equation}
+s = \frac{\sqrt{3}}{\sqrt{5}}\frac{1}{\Sigma_t}f^{-1}\left(\frac{9}{5}(1-\xi)\right)
+\end{equation}
+In summary, we have;
+\begin{center}
+\begin{equation}
+s = \begin{cases}
+ 0  \ \ \text{ for } 0 < \xi < \frac{4}{9} \\ 
+ \frac{\sqrt{3}}{\sqrt{5}}\frac{1}{\Sigma_t}f^{-1}\left(\frac{9}{5}(1-\xi)\right) \ \ \text{ for }  \xi > \frac{4}{9} 
+\end{cases}
+\end{equation}
+\end{center}
+\subsection{Classical $SP_3$}
+By defining $S(x) = \Sigma_s \phi(x) + Q(x)$; we transform the SP3 equations (equation (\ref{eqsp3})) in the following form;
+
+\begin{align}
+-\left(\frac{1}{3\Sigma_t}\right)\Delta\phi_0 -  \left(\frac{2}{3\Sigma_t}\right)\Delta\phi_2 + \Sigma_t \phi_0 = S(x)\\
+-\left(\frac{9}{35\Sigma_1}\right)\Delta\phi_2  + \Sigma_t \phi_2 = \frac{2}{5}(\Sigma_t \phi_0 - S(x))
+\end{align}
+
+The Green functions of this system must be found; these functions are given by this system;
+
+\begin{align}
+-\left(\frac{1}{3\Sigma_t}\right)\Delta G_0 -  \left(\frac{2}{3\Sigma_t}\right)\Delta G_2 + \Sigma_t G_0 = \delta(x)\\
+-\left(\frac{9}{35\Sigma_1}\right)\Delta G_2  + \Sigma_t G_2 - \frac{2}{5}\Sigma_t G_0 = -\frac{2}{5} \delta(x)
+\end{align}
+
+In a spherical geometry, these equation become;
+
+\begin{align}
+-\left(\frac{1}{3\Sigma_t}\right)\frac{1}{r^2} \partial_r r^2 \partial_r (G_0+2G_2) + \Sigma_t G_0 = 0\\
+-\left(\frac{9}{35\Sigma_1}\right)\frac{1}{r^2} \partial_r r^2 \partial_r  G_2  + \Sigma_t G_2 - \frac{2}{5}\Sigma_t G_0 =0
+\end{align}
+
+The form of these functions is the following;
+
+\begin{equation}
+G_0 = \frac{e^{-\Sigma_t \lambda r}}{4\pi r} \ \text{and} \ G_2 = a\frac{e^{-\Sigma_t \lambda r}}{4\pi r}
+\end{equation}
+
+By injecting these expressions in the system and after some simplifications, we obtain the following system (where $a$ and $\lambda$ are unknown).
+
+\begin{align}
+-\frac{1}{3}(1+2a)\lambda^2 + 1 = 0 \\
+-\frac{9}{35}a\lambda^2 + a = \frac{2}{5}
+\end{align}
+
+This system gives two acceptable solutions, respectively $(a^+,\lambda^+)$ and $(a^-,\lambda^-)$;
+
+The solutions are;
+
+\begin{equation}
+(a^+ = -0.326619,\lambda^+ = 2.94164) \ \text{and} \ (a^- = 0.612334,\lambda^- = 1.161256)
+\end{equation}
+
+We deduce the global solution by using the linear combination of these solution;
+
+\begin{align}
+G_0 = A^+\frac{e^{-\Sigma_t \lambda^+ r}}{4\pi r} + A^- \frac{e^{-\Sigma_t \lambda^- r}}{4\pi r} \\
+G_2 = A^+a^+\frac{e^{-\Sigma_t \lambda^+ r}}{4\pi r} + A^-a^-\frac{e^{-\Sigma_t \lambda^- r}}{4\pi r}
+\end{align} 
+
+To determine $A^+$ and $A^-$ we use the following conditions;
+
+\begin{align}
+-\frac{1}{3\Sigma_t} \underset{\epsilon \rightarrow 0}{lim}\left[ (4\pi \epsilon^2) \left( \partial_r G_0(\epsilon) + 2\partial_r G_2(\epsilon) \right)\right] = 1 \\
+ -\frac{9}{35\Sigma_t} \underset{\epsilon \rightarrow 0}{lim}\left[ (4\pi \epsilon^2) \partial_r G_2(\epsilon) \right] = -\frac{2}{5}
+\end{align}
+
+By injecting the general solutions in these equations, we obtain;
+
+\begin{equation}
+A^+ = 5.642025\ \ \text{and}\ \ A^- = 0.469086 
+\end{equation}
+
+Thus the main Green function ($G_0$) is known, and we deduce the value of collision rate density;
+
+\begin{equation}
+\Sigma_t \phi(x) = \int \Sigma_t^2 |x-x'| G_0(|x-x'|)\frac{S(x')}{4\pi |x-x'|^2}dV'
+\end{equation}
+
+Finally, we deduce the expression of $p(s)$ for the distribution of mean-free-path;
+
+\begin{equation}
+p(s) = \Sigma_t^2s \left(A^+ e^{-\Sigma_t \lambda^+ s} + A^- e^{-\Sigma_t \lambda^- s}  \right)
+\end{equation}
+
+We deduce the expression of the cross section;
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{1-\int_0^sp(s')ds'} = \frac{A^+(\Sigma_t^2s)e^{-\Sigma_t \lambda^+ s} + A^-(\Sigma_t^2s)e^{-\Sigma_t \lambda^- s} }{A^+(\frac{1+\Sigma_t\lambda^+s}{(\lambda^+)^2})e^{-\Sigma_t \lambda^+ s} + A^-(\frac{1+\Sigma_t\lambda^-s}{(\lambda^-)^2})e^{-\Sigma_t \lambda^- s}}
+\end{equation}
+
+The different moment associated at this expression of $p(s)$ is given in the table \ref{eqsp3}.
+
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+moment & value & exact value if $\Sigma_t = 1$ \\ \hline
+$\bl s \bg$ &$ \frac{1.042533}{\Sigma_t}$ & 1.042533  \\ \hline
+$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg$ &$ \frac{5.94625}{\Sigma_t^3}$ & 5.94625\\ \hline
+$\bl s^4 \bg$ &$ \frac{24}{ \Sigma_t^4}$ & 24.0000\\ \hline
+$\bl s^5 \bg$ &$ \frac{120.734028}{\Sigma_t^5}$ & 120.734028 \\ \hline
+$\bl s^6 \bg$ &$ \frac{720}{ \Sigma_t^6}$ & 720.0000 \\ \hline
+\end{tabular}
+\caption{\label{momentsp3} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
+\end{center}
+\end{table}
+\end{center}
+
+The sampling of this pdf is given by;
+
+\begin{equation}
+\xi = \int_0^s p(\tau) d\tau = \frac{A^+}{(\lambda^+)^2}\left[1 - (1+\Sigma_t\lambda^+s)e^{-\Sigma_t\lambda^+s} \right] + \frac{A^-}{(\lambda^-)^2}\left[1 - (1+\Sigma_t\lambda^-s)e^{-\Sigma_t\lambda^-s} \right] = F(\Sigma_t s) 
+\end{equation}
+
+Thus,
+
+\begin{equation}
+ s = \frac{1}{\Sigma_t} F^{-1}(\xi)
+\end{equation}
+\section{Density probability function for nonclassical case}
+\subsection{Nonclassical $SP_1$}
+We start from the nonclassical diffusion equation giving by equation (\ref{eq1.6}). For the general case in which $p(s)$ is \textit{not} assumed to be an exponential, we define 
+
+\begin{equation}
+S(x) = c\bl s\bg^{-1}\phi(x)+Q(x)
+\end{equation} 
+and rewrite the equation (\ref{eq1.6}) as:
+\begin{subequations}\label{eq3.2}
+\begin{align}
+-\Delta\phi(x) + \lambda^2 \phi(x) = \lambda^2 \bl s \bg S(x),\label{eq3.2a}
+\end{align}
+where
+\begin{align}
+\lambda^2=\frac{6}{\bl s^2 \bg}.
+\end{align}
+\end{subequations}
+The Green's function for the operator on the left hand side of equation (\ref{eq3.2a}) is:
+\begin{equation}
+\label{eq3.3}
+G(|x-x'|) = \frac{e^{-\lambda |x-x'|}}{4\pi |x-x'|};
+\end{equation}
+therefore, we can transform equation (\eqref{eq3.2a}) into an integral equation for $\phi(\bf x)$ by taking
+\begin{align}\label{eq3.4}
+\phi_0(x) &= \int G(|x-x'|) \lambda^2\bl s \bg S(x') dV' \\
+&= \int \frac{\lambda^2\bl s \bg e^{-\lambda |x-x'|}}{4\pi  |x-x'|} S(x') dV'  \nonumber \\
+&= \int \frac{\lambda^2 \bl s \bg |x-x'| e^{-\lambda |x-x'|}}{4\pi |x-x'|^2} S(x') dV'.\nonumber
+\end{align}
+Bearing in mind that $\bl s\bg$ represents the mean free path of a particle (i.e. the average distance between collisions), the collision-rate density can be written as $f(x)=\bl s\bg^{-1} \phi(x)$, such that
+\begin{equation}
+\label{eq3.5}
+f(x)=\frac{\phi(x)}{\bl s \bg} = \int \frac{\lambda^2 |x-x'| e^{-\lambda |x-x'|}}{4\pi |x-x'|^2} S(x') dV'.
+\end{equation}
+This result agrees with equation (\ref{123}) if and only if;
+\begin{equation}
+\label{eq3.6}
+p(s) = \lambda^2se^{-\lambda s}=\frac{6se^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg}.
+\end{equation}
+It is easy to verify that is always positive and its integral over $s$ is equal to 1.
+This distribution implies;
+\begin{equation}
+\label{eq3.8}
+\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s')ds'} = \frac{\lambda^2 s}{1+\lambda s}.
+\end{equation}
+This shows that the nonclassical transport equation reproduces the nonclassical diffusion approximation given by equation  (\ref{eq1.6}) if $p(s)$ and $\Sigma_t(s)$ are defined by equations (\ref{eq3.6}) and (\ref{eq3.8}) respectively. Moreover, if $p(s)$ is exponential, this results agrees with the $p(s)$ and $\Sigma_t(s)$ obtained for the classical diffusion equation.  
+
+The m-moment of $s$ is given by;
+\begin{subequations}\label{eq3.9}
+\begin{equation}
+\bl s^m \bg =\int_0^\infty \frac{6s^{m+1}e^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg} ds = \frac{(m+1)! \bl s^2 \bg^{m/2}}{6^{m/2}}
+\end{equation}
+\end{subequations}
+The first moment of $p(s)$ only approximates the mean free path $\bl s \bg$, as can be seen in equation (\ref{eq3.9a}).
+
+The different moment associated at this expression of $p(s)$ is given in the table \ref{momentnsp1}. If we replace $\bl s^2 \bg$ by its classical value, we come back to the classical table given in Table \ref{momentsp1}.
+
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+moment & value  \\ \hline
+$\bl s \bg$ &$ \frac{2}{\sqrt{6}}{\bl s^2 \bg}^{1/2}$  \\ \hline
+$\bl s^2 \bg$ & $\bl s^2 \bg$ (conserved) \\ \hline
+$\bl s^3 \bg$ &$ \frac{4}{\sqrt{6}}{\bl s^2 \bg^{3/2}}$ \\ \hline
+$\bl s^4 \bg$ &$ \frac{10}{3}\bl s^2 \bg^2$ \\ \hline
+$\bl s^5 \bg$ &$ \frac{10\sqrt{6}}{3}{\bl s^2 \bg^{5/2}}$ \\ \hline
+$\bl s^6 \bg$ &$ \frac{70}{3}\bl s^2 \bg^3$  \\ \hline
+\end{tabular}
+\caption{\label{momentnsp1} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
+\end{center}
+\end{table}
+\end{center}
+
+\subsection{Nonclassical $SP_2$}
+The nonclassical $SP_2$ formulation is presented by the following equation;
+\begin{equation}\label{sp2}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\phi(x)+\lambda_1\left[(1-c)\phi(x) - \bl s \bg Q(x)\right]\right] + \frac{1-c}{\bl s \bg}\left[1-\beta_1(1-c)\right] \phi(x) = \left[1-\beta_1(1-c)\right]Q(x).
+\end{equation}
+
+We know that the Green function associated to the operator $\left(-\nabla^2 + \alpha^2\right)$, is
+
+\begin{equation}
+G(|x-x'|) = \frac{e^{-\alpha|x-x'|}}{4\pi |x-x'|}
+\end{equation}
+
+We define like before;
+
+\begin{equation}\label{source}
+S(x) = \frac{c}{\bl s \bg} \phi(x) + Q(x)
+\end{equation}
+
+By injecting the equation (\ref{source}) in the equation (\ref{sp2}), we obtain the following equation (after some manipulations);
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[(1+\lambda_1)\phi(x)\right]+ \left[1-\beta_1(1-c)\right]\frac{\phi(x)}{\bl s \bg} = \left[1-\beta_1(1-c)\right] S(x) - \frac{\lambda_1}{6} \bl s^2 \bg \nabla^2 S(x).
+\end{equation}
+
+We multiply this equation by $6\frac{\bl s \bg}{\bl s^2 \bg}\frac{1}{1+\lambda_1}$;
+
+\begin{equation}\label{youp}
+- \nabla^2 \left[\phi(x)\right]+ \frac{6}{\bl s^2 \bg}\frac{1}{1+\lambda_1}\left[1-\beta_1(1-c)\right]\phi(x) = \frac{6\bl s \bg}{\bl s^2 \bg}\frac{1}{1+\lambda_1}\left[1-\beta_1(1-c)\right] S(x) - \frac{\lambda_1}{1+\lambda_1} \bl s \bg \nabla^2 S(x).
+\end{equation}
+
+So, we can define;
+
+\begin{equation}
+\alpha^2 = \frac{6}{\bl s^2 \bg}\frac{1}{1+\lambda_1}\left[1-\beta_1(1-c)\right]
+\end{equation}
+
+The equation (\ref{youp}) becomes;
+
+\begin{equation}
+- \nabla^2 \left[\phi(x)\right]+ \alpha^2\phi(x) = \alpha^2 \bl s \bg S(x) - \frac{\lambda_1}{1+\lambda_1} \bl s \bg \nabla^2 S(x).
+\end{equation}
+
+With some manipulations to obtain the same operator on $S(x)$, we obtain the following equation;
+
+\begin{equation}
+- \nabla^2 \left[\phi(x)\right]+ \alpha^2\phi(x) = \frac{\lambda_1 +1}{\lambda_1 +1}\alpha^2 \bl s \bg S(x) - \frac{\lambda_1}{1+\lambda_1} \bl s \bg \nabla^2 S(x).
+\end{equation}
+
+\begin{equation}
+\left[- \nabla^2 + \alpha^2\right]\phi(x) = \frac{1}{\lambda_1 +1}\alpha^2 \bl s \bg S(x) + \frac{\lambda_1}{1+\lambda_1} \bl s \bg \left(-\nabla^2 + \alpha^2 \right) S(x).
+\end{equation}
+
+Finally, we use the Green of the operator to have the flux;
+
+\begin{equation}
+\phi = \frac{\alpha^2 \bl s \bg }{1+\lambda_1}\int GS dV' + \frac{\lambda_1}{1+\lambda_1} \bl s \bg S(x)
+\end{equation}
+
+This equality gives;
+
+\begin{equation}
+f(x) = \frac{\phi(x)}{\bl s \bg} = \frac{\alpha^2 }{1+\lambda_1}\int GS dV' + \frac{\lambda_1}{1+\lambda_1}S(x)
+\end{equation}
+
+The Green function is the following;
+
+\begin{equation}
+G(s) = \frac{e^{-\alpha s}}{4 \pi s}
+\end{equation}
+
+The source can be manipulated like in the classical case. So, we can obtain the following expression;
+
+\begin{equation}
+\frac{\phi(x)}{\bl s \bg} = \frac{\alpha^2}{1+\lambda_1} \int \frac{|x-x'|e^{-\alpha|x-x'|}}{4\pi |x-x'|^2}S(x')dV' + \frac{\lambda_1}{1+\lambda_1} \int \frac{\delta(|x-x'|)}{4\pi |x-x'|^2}S(x')dV' 
+\end{equation}
+
+Thus, we obtain the expression of $p(s)$;
+
+\begin{equation}
+p(s) = \frac{\alpha^2 se^{-\alpha s}}{1+\lambda_1} + \frac{\lambda_1}{1+\lambda_1}\delta(s)
+\end{equation}
+
+We can verify that this equation is normalized;
+
+\begin{equation}
+\int_0^\infty p(s) ds = \frac{1}{1+\lambda_1} + \frac{\lambda_1}{1+\lambda_1} = 1.
+\end{equation}
+
+The m-moment of $s$ is given by the following expression
+
+\begin{equation}
+\bl s^m \bg = \int_0^\infty s^m p(s) ds = \frac{(m+1)!}{\alpha^m (1+\lambda_1)}
+\end{equation}
+
+The different moment associated at this expression of $p(s)$ is given in the table \ref{momentnsp2}. If we replace $\bl s^2 \bg$ by its classical value, we come back to the classical table given in Table \ref{momentsp2}.
+
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+moment & value & with solution $\lambda_1,\beta_1$ \\ \hline
+$\bl s \bg$ &$ \frac{2\sqrt{\bl s^2 \bg}}{\sqrt{6}\sqrt{1+\lambda_1}\sqrt{1-\beta_1(1-c)}}$& $ \frac{2}{3}{\bl s^2 \bg}^{1/2}$ \\ \hline
+$\bl s^2 \bg$ & $\dfrac{\bl s^2 \bg}{1-\beta_1(1-c)}$ &$\bl s^2 \bg$\\ \hline
+$\bl s^3 \bg$ &$ \frac{4\sqrt{1+\lambda_1}}{\sqrt{6}\sqrt{(1-\beta_1(1-c))^3}}{\bl s^2 \bg^{3/2}}$&$ 2{\bl s^2 \bg^{3/2}}$ \\ \hline
+$\bl s^4 \bg$ &$ \frac{10(1+\lambda_1)}{3(1-\beta_1(1-c))^2}\bl s^2 \bg^2$& $ 5\bl s^2 \bg^2$ \\ \hline
+$\bl s^5 \bg$ &$ \frac{10\sqrt{6}(1+\lambda_1)^{3/2}}{3(1-\beta_1(1-c))^{5/2}}\bl s^2 \bg^{5/2}$& $ 15\bl s^2 \bg^{5/2}$ \\ \hline
+$\bl s^6 \bg$ &$ \frac{70(1+\lambda_1)^{2}}{3(1-\beta_1(1-c))^{3}}\bl s^2 \bg^3$&$\frac{105}{2}\bl s^2 \bg^3$  \\ \hline
+\end{tabular}
+\caption{\label{momentnsp2} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
+\end{center}
+\end{table}
+\end{center}
+
+With these expressions of the moments, we can find the values of $\beta_1$ and $\lambda_1$ which is given by the following expressions;
+
+\begin{equation}
+\beta_1 = \frac{1}{3} \frac{\bl s^3 \bg}{\bl s^2 \bg\bl s \bg} - 1
+\end{equation}
+
+And;
+
+\begin{equation}
+\lambda_1 = \frac{3}{10} \frac{\bl s^4 \bg}{\left(\bl s^2 \bg \right)^2} - \frac{1}{3} \frac{\bl s^3 \bg}{\bl s^2 \bg\bl s \bg}
+\end{equation}
+
+By injecting the precedent expressions in these equations, we obtain;
+
+\begin{equation}
+\beta_1 = \frac{2}{3}(1+\lambda_1) - 1
+\end{equation}
+
+\begin{equation}
+\lambda_1 = \frac{1}{3}(1+\lambda_1) 
+\end{equation}
+
+The solution of these equations is;
+
+\begin{equation}
+(\beta_1,\lambda_1) = (0,1/2)
+\end{equation}
+
+We can determine the total cross section depending of the path travelled.
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s') ds'}
+\end{equation}
+
+For $s>0$, we obtain;
+
+\begin{equation}
+\int_s^\infty p(s')ds' = \left(\frac{\alpha^2}{1+\lambda_1}\right)\left(\frac{-1}{\alpha}\right)\left[se^{-\alpha s}\right]_s^\infty + \left(\frac{\alpha^2}{1+\lambda_1}\right)\left(\frac{-1}{\alpha^2}\right)\left[e^{-\alpha s}\right]_s^\infty 
+\end{equation}
+
+Finally, we can write;
+
+\begin{equation}\label{1}
+\Sigma_t(s>0) = \frac{\alpha^2s}{1+\alpha s}
+\end{equation}
+
+For $s \simeq 0$; we obtain;
+
+\begin{equation}\label{22}
+\Sigma_t(s\simeq 0) = \frac{\lambda_1}{1+\lambda_1}\delta(s)
+\end{equation}
+
+By adding the equations (\ref{1}) and (\ref{22});
+
+\begin{equation}
+\Sigma_t(s) = \frac{\frac{\lambda_1}{\lambda_1 + 1}\delta(s) + \alpha^2 s}{1+\alpha s}
+\end{equation}
+
+The sampling for this function is the following;
+
+\begin{equation}
+\xi = \int_0^s p(s')ds' = \frac{\lambda_1}{1+\lambda_1} + \frac{1}{1+\lambda_1}\left(1-(1+\alpha s)e^{-\alpha s}\right)
+\end{equation}
+
+This gives;
+
+\begin{equation}
+\xi = 1 - \frac{1}{1+\lambda_1}f(\alpha s)
+\end{equation}
+
+where;
+
+\begin{equation}
+f(z) = (1+z)e^{-z}
+\end{equation}
+
+Finally the sampling is given by (if $\xi \in [\frac{\lambda_1}{1+\lambda_1},1]$, if not s is null);
+
+\begin{center}
+\begin{equation}
+s = \begin{cases}
+0  \ \ \text{ for } 0 < \xi < \frac{\lambda_1}{1+\lambda_1} \\ 
+\frac{1}{\alpha}f^{-1}((\lambda+1)(1-\xi)) \ \ \text{ for }  \xi > \frac{\lambda_1}{1+\lambda_1} 
+\end{cases}
+\end{equation}
+\end{center}
+\subsection{Nonclassical $SP_3$}
+
+We start with the nonclassical $SP_3$ coupled equations presented in equation (\ref{eqsp3}).
+We use the same definition than the precedent cases ($S(x) = c\bl s \bg^{-1} \phi(x) + Q(x)$).
+By injecting in the equations (\ref{eqsp3}); we obtain the following coupled equations;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1}{\bl s \bg} \phi(x) = S(x). \\
+-\frac{\lambda_2 \bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) = \frac{1}{2}\frac{\lambda_1}{6}\frac{\bl s^2 \bg}{\bl s \bg} \nabla^2 \phi(x)
+\end{align}
+
+With the first equation, we can change the second. So we obtain;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1}{\bl s \bg} \phi(x) = S(x). \\
+\end{equation}
+
+\begin{multline}
+-\frac{\lambda_2 \bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) \\= \frac{1}{2}\left[-\frac{\lambda_1}{6}\frac{\bl s^2 \bg}{\bl s \bg} \nabla^2\left(\frac{2v(x)}{1+\beta_1(1-c)}\right) + \frac{\lambda_1}{\bl s \bg}\phi(x)\frac{1}{1+\beta_1(1-c)}-S(x)\frac{\lambda_1}{1+\beta_1(1-c)}\right]
+\end{multline}
+
+These equations can be written like the following;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1}{\bl s \bg} \phi(x) = S(x). \\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \nabla^2 \left[v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) \\= \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)}\left[\frac{\phi}{\bl s \bg} - S(x)\right]
+\end{align}
+
+We must find $G_0$ and $G_2$, the Green functions associated to this system. These functions are solutions of the system;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]G_0(x)+ 2G_2(x)\right] + \frac{1}{\bl s \bg}G_0(x) = \delta(x). \\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \nabla^2 \left[G_2(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} G_2(x) \\= \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)}\left[\frac{G_0}{\bl s \bg} - \delta(x)\right]
+\end{align}
+
+For $x>0$; we obtain;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]G_0(x)+ 2G_2(x)\right] + \frac{1}{\bl s \bg}G_0(x) = 0. \\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \nabla^2 \left[G_2(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} G_2(x) - \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)}\left[\frac{G_0}{\bl s \bg}\right] = 0.
+\end{align}
+
+The Green function must respect these boundary condition;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \underset{\epsilon \rightarrow 0}{lim} \left[4\pi \epsilon^2\left(\frac{\partial G_0(\epsilon)}{\partial r} + 2\frac{\partial G_2(\epsilon)}{\partial r} \right)\right]=1.\\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \underset{\epsilon \rightarrow 0}{lim} \left(4\pi \epsilon^2 \frac{\partial G_2(\epsilon)}{\partial r}\right) = \frac{-1}{2}\frac{\lambda_1}{1+\beta_1(1-c)}
+\end{align}
+
+We are looking for the Green function having the following form;
+
+\begin{align}
+G_0 = \frac{e^{-\alpha r}}{4\pi r}\\
+G_2 = a\frac{e^{-\alpha r}}{4\pi r}
+\end{align}
+
+We know that;
+\begin{equation}
+\nabla^2 G_0 = \alpha^2 G_0
+\end{equation}
+
+By injection in the system, we obtain;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6} \left[\left[1+\beta_1(1-c)\right]\alpha^2+ 2a\alpha^2\right] + 1 = 0. \\
+-\frac{\bl s^2 \bg}{6}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right)\alpha^2a+ (1-\beta_2(1-c))a - \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)} = 0.
+\end{align}
+
+with the second equation, we find $a$;
+
+\begin{equation}
+a = \frac{\frac{1}{2}\frac{\lambda_1}{1+\beta_1(1-c)}}{(1-\beta_2(1-c)) - \frac{\bl s^2 \bg}{6} \left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right)\alpha^2 } 
+\end{equation}
+
+We define;
+
+\begin{align}
+z_1 = 1+\beta_1(1-c)\\
+z_2 = 1- \beta_2(1-c)
+\end{align}
+
+By injecting $a$ in the first equation, we obtain;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6} \left[z_1+\frac{\frac{\lambda_1}{z_1}}{{z_2 - \frac{\bl s^2 \bg}{6} \left(\lambda_2 - \frac{\lambda_1}{z_1}\right)\alpha^2 }}  \right]\alpha^2 + 1 = 0
+\end{equation}
+
+After some manipulations, we obtain the following equation;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6} z_1z_2 \alpha^2 - \left(\frac{\bl s^2 \bg}{6}\right)^2z_1\left(\lambda_2-\frac{\lambda_1}{z_1}\right)\alpha^4-\frac{\bl s^2 \bg}{6}\frac{\lambda_1}{z_1}\alpha^2+\left(z_2-\frac{\bl s^2 \bg}{6}(\lambda_2-\frac{\lambda_1}{z_1})\alpha^2\right)=0
+\end{equation}
+
+we can regroup each terms according to the power of $\alpha$.
+
+\begin{equation}
+-\left(\frac{\bl s^2 \bg}{6}\right)^2z_1\left(\lambda_2-\frac{\lambda_1}{z_1}\right)\alpha^4-\frac{\bl s^2 \bg}{6}\left(\lambda_2+z_1z_2\right)\alpha^2+z_2 = 0.
+\end{equation}
+
+We define;
+
+\begin{equation}
+\gamma^2 = \frac{\bl s^2 \bg}{2}\alpha^2
+\end{equation}
+
+This gives;
+
+\begin{equation}
+\frac{1}{9}\left(\lambda_2z_1-\lambda_1\right)\gamma^4-\frac{1}{3}\left(\lambda_2+z_1z_2\right)\gamma^2+z_2 = 0.
+\end{equation}
+
+We can find the two solutions;
+
+\begin{equation}
+\left(\gamma^{\pm}\right)^2= \frac{\frac{1}{3}(\lambda_2+z_1z_2) \pm \sqrt{\frac{1}{9}(\lambda_2+z_1z_2)^2 - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}}{ \frac{2}{9}(\lambda_2z_1-\lambda_1)}
+\end{equation}
+
+So;
+
+\begin{equation}
+\left(\alpha^{\pm}\right)^2= \frac{2}{\bl s^2 \bg} \frac{\frac{1}{3}(\lambda_2+z_1z_2) \pm \sqrt{\frac{1}{9}(\lambda_2+z_1z_2)^2 - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}}{ \frac{2}{9}(\lambda_2z_1-\lambda_1)}
+\end{equation}
+We can deduce the expression for $a$; two solutions (accepted) are possible;
+
+\begin{equation}
+a^+ = \frac{\frac{1}{2}\frac{\lambda_1}{z_1}}{z_2-\frac{3}{2z_1}\left(\frac{1}{3}\left(\lambda_2+z_1z_2\right) + \sqrt{\frac{1}{9}(\lambda_2+z_1z_2)^2 - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}\right)}
+\end{equation}
+
+\begin{equation}
+a^- = \frac{\frac{1}{2}\frac{\lambda_1}{z_1}}{z_2-\frac{3}{2z_1}\left(\frac{1}{3}\left(\lambda_2+z_1z_2\right) - \sqrt{\frac{1}{9}(\lambda_2+z_1z_2)^2 - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}\right)}
+\end{equation}
+
+To be able to find the most general equation, we take the superposition of the different possibilities;
+
+\begin{equation}
+G_0(r) = \frac{A^+}{\bl s \bg} \left(\frac{e^{-\alpha^+ r}}{4\pi r}\right) +  \frac{A^-}{\bl s \bg} \left(\frac{e^{-\alpha^- r}}{4\pi r}\right)
+\end{equation}
+
+\begin{equation}
+G_2(r) = \frac{A^+a^+}{\bl s \bg} \left(\frac{e^{-\alpha^+ r}}{4\pi r}\right) +  \frac{A^-a^-}{\bl s \bg} \left(\frac{e^{-\alpha^- r}}{4\pi r}\right)
+\end{equation}
+
+We must find $A^+$ and $A^-$. We use the boundary conditions for the Green function;
+
+\begin{align}
+A^+a^+ + A^-a^- = \frac{-\lambda_1 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}}{\lambda_2z_1-\lambda_1}\\
+A^+ + A^- = \left( 1 + \frac{\lambda_1}{\lambda_2z_1-\lambda_1} \right)6\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}
+\end{align}
+
+We define;
+
+\begin{align}
+A'^+ = A^+ 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+A'^- = A^- 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+\end{align}
+
+So we obtain;
+
+\begin{align}
+A'^+a^+ + A'^-a^- = \frac{-\lambda_1}{\lambda_2z_1-\lambda_1}\\
+A'^+ + A'^- = 2\left( 1 + \frac{\lambda_1}{\lambda_2z_1-\lambda_1} \right)
+\end{align}
+
+We define;
+
+\begin{equation}
+b = \frac{\lambda_1}{\lambda_2z_1-\lambda_1}
+\end{equation}
+
+So, we obtain;
+
+\begin{align}
+A'^+a^+ + A'^-a^- =-b\\
+A'^+ + A'^- = 2\left( 1 + b \right)
+\end{align}
+
+The solution of this is;
+
+\begin{align}
+A'^- = \frac{2a^+(1+b)+b}{a^+-a^-}\\
+A'^+ = \frac{2a^-(1+b)+b}{a^--a^+}
+\end{align}
+
+And thus;
+\begin{align}
+A^- = \frac{2a^+(1+b)+b}{a^+-a^-} 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+A^+ = \frac{2a^-(1+b)+b}{a^--a^+} 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}
+\end{align}
+
+We note;
+
+\begin{align}
+A^- = \eta\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+A^+ = \mu\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}
+\end{align}
+
+Finally the Green function that we search is given by this;
+
+\begin{equation}
+G_0(r) = \frac{1}{4\pi r} \frac{{\bl s \bg}}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ r} + \eta e^{-\alpha^- r} \right]
+\end{equation}
+
+We can write the density;
+
+\begin{equation}
+f(x) = \frac{\phi(x)}{{\bl s \bg}} = \frac{1}{{\bl s \bg}} \int G_0(|x-x'|) S(x') dV' 
+\end{equation}
+
+With the expression of $G_0$, it gives;
+
+\begin{equation}
+f(x) = \int \frac{1}{4\pi |x-x'|^2} \frac{|x-x'|}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ |x-x'|} + \eta e^{-\alpha^- |x-x'|} \right]  S(x') dV' 
+\end{equation}
+
+We can deduce the expression of $p(s)$;
+
+\begin{equation}
+p(s) = \frac{s}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ s} + \eta e^{-\alpha^- s}\right]
+\end{equation}
+
+
+We can deduce the total cross section;
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s')ds'}
+\end{equation}
+
+With $p(s)$, it gives;
+
+\begin{equation}
+\Sigma_t(s) = \frac{\frac{s}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ s} + \eta e^{-\alpha^- s}\right]}{\left[\mu \left( \frac{1+ \alpha^+\frac{s}{{{\bl s^2 \bg}}}}{\left(\alpha^+\right)}\right)e^{-\alpha^+ s} + \eta \left( \frac{1+ \alpha^-\frac{s}{{{\bl s^2 \bg}}}}{\left(\alpha^-\right)}\right)e^{-\alpha^- s}\right]}
+\end{equation}
+
+The mean-free path is given by;
+
+\begin{equation}
+{\bl s\bg} = \int_0^\infty sp(s) ds = \frac{2}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^3} + \frac{\eta}{\left(\alpha^-\right)^3}\right]
+\end{equation}
+
+The m-moment of $s$ is given by;
+
+\begin{equation}
+{\bl s^m \bg} = \int_0^\infty s^m p(s) ds = \frac{(m+1)!}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{(m+2)}} + \frac{\eta}{\left(\alpha^-\right)^{(m+2)}}\right]
+\end{equation}
+
+The second moment is the following;
+
+\begin{equation}
+{\bl s^2 \bg} = \frac{6}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{4}} + \frac{\eta}{\left(\alpha^-\right)^{4}}\right]
+\end{equation}
+
+The fourth moment is the following;
+
+\begin{equation}
+{\bl s^4 \bg} = \frac{120}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{6}} + \frac{\eta}{\left(\alpha^-\right)^{6}}\right]
+\end{equation}
+
+The sixth moment is the following;
+
+\begin{equation}
+{\bl s^6 \bg} = \frac{5040}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{8}} + \frac{\eta}{\left(\alpha^-\right)^{8}}\right]
+\end{equation}
+
+In the classical case;
+
+\begin{multline}
+\\
+(\gamma^+)^2 \approx 2.94 \\
+(\gamma^-)^2 \approx 1.16 \\
+a^+ \approx -0.33 \\
+a^- \approx 0.61 \\
+b \approx 1.037 \\
+\mu \approx 0.98\\
+\eta \approx 11.24 \\
+\end{multline} 
+
+\chapter{Numerical results}
+
+
+
+\begin{appendix}
+
+\chapter{Return on the classical case}\label{return}
+
+A question that we can ask is the following; "Can we fund the classical Boltzmann equation from the GLBE equation with the good assumptions ?". Here we are going to show that with adding some assumptions we return to the classical equation. In the classical case, the scattering centers are uncorrelated and independent of the direction $\vec{\Omega}$.
+
+The assumption is the following;
+
+\begin{equation}\label{hypo}
+\Sigma_t(s) = \Sigma_t = \text{constant}.
+\end{equation} 
+
+With this assumption; the GLBE becomes;
+
+\begin{equation}
+\frac{\partial \psi}{\partial s} (s,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi(s,\vec{x},\vec{\Omega}) + \Sigma_t\psi(s,\vec{x},\vec{\Omega}) = \delta(s)\left[  \Sigma_s \int_{4\pi} \int_0^\infty P(\vec{\Omega}'.\vec{\Omega})\psi(\vec{x},\vec{\Omega}',s')ds'd\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} \right]
+\end{equation}
+
+We integrate this equation over $ds$ from zero to infinity. This gives;
+
+\begin{equation}
+\psi (\infty,\vec{x},\vec{\Omega}) - \psi (0,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi_{class}(\vec{x},\vec{\Omega}) + \Sigma_t\psi_{class}(\vec{x},\vec{\Omega}) =  \Sigma_s \int_{4\pi} \int_0^\infty P(\vec{\Omega}'.\vec{\Omega})\psi_{class}(\vec{x},\vec{\Omega}')d\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} 
+\end{equation}
+
+By using the fact that $\psi (\infty,\vec{x},\vec{\Omega}) = \psi (0,\vec{x},\vec{\Omega}) = 0$, we obtain;
+
+\begin{equation}
+\vec{\Omega}\vec{\nabla}\psi_{class}(\vec{x},\vec{\Omega}) + \Sigma_t\psi_{class}(\vec{x},\vec{\Omega}) =  \Sigma_s \int_{4\pi} \int_0^\infty P(\vec{\Omega}'.\vec{\Omega})\psi_{class}(\vec{x},\vec{\Omega}')d\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} 
+\end{equation}
+
+This equation is the classical Boltzmann equation.
+
+The assumption of the equation (\ref{hypo}) implies also that;
+
+\begin{equation}
+q(\vec{\Omega},s) = \Sigma_t e^{-\Sigma_t s} = p(s)
+\end{equation}
+
+So with this probability density function, we obtain the classical value of the mean-free path and the second order of the travelled distance.
+
+\begin{equation}
+\bar{s} = \int_0^\infty s p(s) ds = \frac{1}{\Sigma_t}
+\end{equation}
+
+\begin{equation}
+\bl s^2 \bg = \int_0^\infty s^2 p(s) ds = \frac{2}{\Sigma_t^2}
+\end{equation}
+
+The collision rate becomes its classical expression;
+
+\begin{equation}
+f(\vec{x},\vec{\Omega}) = \Sigma_t \int_0^\infty \psi(\vec{x},\vec{\Omega},s)ds = \Sigma_t \psi_{class}(\vec{x},\vec{\Omega})
+\end{equation}
+
+And;
+
+\begin{equation}
+F(\vec{x}) = \int f(\vec{x},\vec{\Omega}) d\vec{\Omega} = \Sigma_t \phi_{class}.
+\end{equation}
+
+We obtain also the classical form of the integral Boltzmann equation;
+\begin{equation}
+\phi_{class}(\vec{x}) = \int \left[Q(\vec{x}') + \Sigma_s\phi_{class}(\vec{x}') \right] \frac{e^{-|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|^2}dV'
+\end{equation}
+
+\chapter{Asymptotic derivation of the $SP_N$ equations}\label{asymptotic}
+
+When the $SP_N$ equations were first introduced in the 1960, the equations were not accepted directly as an approximate transport method because of the lack of a true theoretical foundation.
+This theoretical background came in the 1990 with analyses showing that the method is an asymptotic correction to the standard diffusion theory and asymptotically related to the slab geometry $P_N$ equations.
+
+We are going to expose these development. We remind the steady-state transport equations with an isotropic source and a mono-energetic analysis;
+
+\begin{equation}\label{transport}
+\vec{\Omega}. \vec{\nabla} \Phi + \Sigma_t \Phi = \frac{1}{4\pi}  \Sigma_s \phi +\frac{Q}{4\pi}(\vec{r}) 
+\end{equation}
+
+We scale this equation by a small and positive parameter without dimension ($\epsilon$). The first assumption is that the media is optically thick.
+
+We assume that the total cross section is large;
+
+\begin{equation}
+\Sigma_t \rightarrow \frac{\Sigma_t}{\epsilon}.
+\end{equation}
+
+The scattering cross section has the same order than the total cross section; this implies the following transformation;
+
+\begin{equation}
+\Sigma_s \rightarrow \frac{\Sigma_s}{\epsilon}.
+\end{equation}
+
+The absorption cross section is small; this implies the following scaling;
+
+\begin{equation}
+\Sigma_a \rightarrow \epsilon^2 \Sigma_a
+\end{equation}
+
+The sources are considered as small. The scaling is the following;
+
+\begin{equation}
+Q \rightarrow \epsilon Q
+\end{equation}
+
+The equation (\ref{transport}) becomes with these transformations;
+
+\begin{equation}
+\left( 1 + \frac{\epsilon}{\Sigma_t} \vec{\Omega}.\vec{\nabla}\right)\Phi = \frac{1-\epsilon^2\frac{\Sigma_a}{\Sigma_t}}{4\pi}\phi + \frac{\epsilon^2S}{4\pi \Sigma_t}
+\end{equation}
+
+We obtain the solution of this equation by inverting the operator in front of $\Phi$. The solution is written like the following;
+
+\begin{equation}
+\Phi = \left( 1 + \frac{\epsilon}{\Sigma_t} \vec{\Omega}.\vec{\nabla}\right)^{-1} \times \left(\frac{1-\epsilon^2\frac{\Sigma_a}{\Sigma_t}}{4\pi}\phi + \frac{\epsilon^2S}{4\pi \Sigma_t}\right)
+\end{equation}
+
+We can expand the inverse of the operator by a power series.
+
+\begin{multline}
+\Phi = \left( 1 - \frac{\epsilon}{\Sigma_t} \vec{\Omega}.\vec{\nabla} + \epsilon^2 \left(\frac{1}{\Sigma_t} \vec{\Omega}.\vec{\nabla}\right)^2 - \epsilon^3 \left(\frac{1}{\Sigma_t} \vec{\Omega}.\vec{\nabla}\right)^3 +  \dots + \epsilon^6 \left(\frac{1}{\Sigma_t} \vec{\Omega}.\vec{\nabla}\right)^6  + O(\epsilon^7)\right) \times\\ \left(\frac{1-\epsilon^2\frac{\Sigma_a}{\Sigma_t}}{4\pi}\phi + \frac{\epsilon^2S}{4\pi \Sigma_t}\right)
+\end{multline}
+
+The following identity will be helpful for next steps.
+
+\begin{equation}
+\frac{1}{4\pi}\int_{4\pi} \left(\frac{1}{\Sigma_t}\vec{\Omega}\vec{\nabla}\right)^m d\vec{\Omega} = \frac{1+(-1)^m}{2}\frac{1}{m+1} \left(\frac{1}{\Sigma_t}\vec{\nabla}\right)^m
+\end{equation}
+
+This identity is proven in Annex \ref{Annex}.
+
+By using integrating and dividing by $4\pi$, we obtain the following equation (we have already used the precedent identity);
+
+\begin{equation}
+\frac{\phi}{4\pi} = \left( 1  + \frac{\epsilon^2}{3} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^2 + \frac{\epsilon^4}{5} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^4 + \frac{\epsilon^6}{7} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^6  + O(\epsilon^8)\right) \times \left(\frac{1-\epsilon^2\frac{\Sigma_a}{\Sigma_t}}{4\pi}\phi + \frac{\epsilon^2S}{4\pi \Sigma_t}\right)
+\end{equation}
+
+By inverting the operator at the right side, we obtain;
+
+\begin{equation}
+\left(\left(1-\epsilon^2\frac{\Sigma_a}{\Sigma_t}\right)\phi + \frac{\epsilon^2S}{ \Sigma_t}\right)= \left( 1  + \frac{\epsilon^2}{3} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^2 + \frac{\epsilon^4}{5} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^4 + \frac{\epsilon^6}{7} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^6  + O(\epsilon^8)\right)^{-1} \times \phi
+\end{equation}
+
+By expanding a new time this operator, we obtain;
+
+\begin{equation}
+\left(\left(1-\epsilon^2\frac{\Sigma_a}{\Sigma_t}\right)\phi + \frac{\epsilon^2S}{ \Sigma_t}\right)= \left( 1  - \frac{\epsilon^2}{3} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^2 + \frac{4\epsilon^4}{45} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^4 - \frac{44\epsilon^6}{945} \left(\frac{1}{\Sigma_t} \vec{\nabla}\right)^6 \right) \times \phi + O(\epsilon^8)
+\end{equation}
+
+In this equation, if we keep only the term up to second order, we obtain the $SP_1$ equation.
+If we keep up to fourth order, we obtain the $SP_2$ equations. if we keep up to the sixth order, we obtain the $SP_3$ equations. In general, if we keep up to the $2N$ order, we obtain the $SP_N$ equations. This derivation is one way to obtain the $SP_N$ equations, there are several other possibilities to find this equation. The interested reader can find some references in [...].
+
+\chapter{Derivation of the angular integral}\label{Annex}
+
+
+We want to calculate the following integral;
+
+\begin{equation}
+\int_{4\pi} \left(\frac{1}{\Sigma_t}\vec{\Omega}\vec{\nabla}\right)^m d\vec{\Omega}
+\end{equation}
+
+Firstly, we define the following expression;
+
+\begin{equation}
+\vec{X} =  \left(\frac{1}{\Sigma_t}\vec{\nabla}\right)
+\end{equation}
+
+The integral to calculate is the following;
+
+\begin{equation}
+\int_{4\pi} \left(\vec{\Omega}\vec{X}\right)^m d\vec{\Omega} = \left(\vec{X}\right)^m\int_{4\pi} \left(\vec{\Omega}\right)^m d\vec{\Omega}
+\end{equation}
+
+Like $d\vec{\Omega}$ is a vector, we can write the integral like this;
+
+\begin{equation}
+\int_{4\pi} \left(\vec{\Omega}\right)^m d\vec{\Omega} = \int_{4\pi} \left(\vec{\Omega}\right)^{m}  d\Omega_x + \int_{4\pi} \left(\vec{\Omega}\right)^{m} d\Omega_y + \int_{4\pi} \left(\vec{\Omega}\right)^{m}  d\Omega_z
+\end{equation}
+
+This integral takes the following form;
+
+\begin{equation}
+ \int_{4\pi} \left(\vec{\Omega}\right)^{m}  d\vec{\Omega} =  \int_{4\pi}\left( \sum_{(k,j)}^{(m,m)} \Omega_x^k\Omega_y^j\Omega_z^{m-k-j} \right) d\vec{\Omega} =  \sum_{(k,j)|{(k+j\leq m)}} \int_{4\pi}\left( \Omega_x^k\Omega_y^j\Omega_z^{m-k-j} \right) d\vec{\Omega}
+\end{equation}
+
+We must calculate the integral;
+
+\begin{equation}
+\int_{4\pi}\left( \Omega_x^k\Omega_y^j\Omega_z^{m-k-j} \right) d\vec{\Omega}
+\end{equation}
+
+We know that;
+\begin{align}
+\Omega_x= ||\vec{\Omega}|| \cos(\theta) = \cos(\theta)\\
+\Omega_y= ||\vec{\Omega}|| \cos(\theta) = \cos(\theta)\\
+\Omega_z= ||\vec{\Omega}|| \cos(\theta) = \cos(\theta)
+\end{align}
+
+Also, the elementary solid angle is known;
+
+\begin{equation}
+d\vec{\Omega} = \sin(\theta) d\theta d\phi
+\end{equation}
+
+The integral gives;
+
+\begin{equation}
+\int_{4\pi}\left(\cos(\theta) \right)^m \sin(\theta) d\theta d\phi = -\frac{2\pi \left[\cos^{m+1}(\theta)\right]^\pi_0}{m+1} = 2\pi\frac{1-(-1)^m}{m+1}
+\end{equation}
+
+Finally;
+
+\begin{equation}
+\frac{1}{4\pi}\int_{4\pi} \left(\frac{1}{\Sigma_t}\vec{\Omega}\vec{\nabla}\right)^m d\vec{\Omega} = \frac{1+(-1)^m}{2}\frac{1}{m+1} \left(\frac{1}{\Sigma_t}\vec{\nabla}\right)^m
+\end{equation}
+
+\chapter{Asymptotic analysis of nonclassical $SP_N$ equations}\label{B}
+
+We start the reasoning by rewriting the Generalized Linear Boltzmann Equation in the system form;
+
+\begin{align}
+\frac{\partial \psi}{\partial s} (s) + \vec{\Omega}\vec{\nabla}\psi(s) + \Sigma_t(s)\psi(s)=0 \ \text{for} \ s>0 \\
+\psi(0) = \left[ c \int_{4\pi} \int_0^\infty \Sigma_t(s')\psi(\vec{\Omega}',s')ds'd\vec{\Omega}' + \frac{Q(\vec{x})}{4\pi} \right]
+\end{align}
+
+We choose a factor $\epsilon$ as the scaling of our parameters;
+
+\begin{equation}
+\Sigma_t(s) = \frac{\Sigma_t(s/\epsilon)}{\epsilon}
+\end{equation} 
+
+\begin{equation}
+c = 1 - \epsilon^2\kappa
+\end{equation}
+\begin{equation}
+Q(x) = \epsilon q(x)
+\end{equation}
+
+where $q(x)$ and $\kappa$ are not small.
+
+We can define the m-th order of $s$ as;
+
+\begin{equation}
+\bl s^m\bg = \epsilon^m \int_0^\infty \left(\frac{s}{\epsilon}\right)^m \frac{\Sigma_t(s/\epsilon)}{\epsilon}e^{-\int_0^s\frac{\Sigma_t(s'/\epsilon)}{\epsilon}ds'}ds
+\end{equation}
+
+\begin{equation}
+\bl s^m\bg = \epsilon^m \int_0^\infty s^m \Sigma_t(s)e^{-\int_0^s\Sigma_t(s')ds'}ds = \epsilon^m \bl s^m\bg_\epsilon
+\end{equation}
+
+where $\bl s^m\bg_\epsilon$ is not small.
+
+This scaling implies the following assumptions;
+
+\begin{itemize}
+\item The system is optically thick.
+\item The transport is dominated by the scattering (order inverse of $\epsilon$).
+\item Absorption and sources are small
+\item The infinite media solution and the diffusion length are not small. We remind their definitions; $ \phi_\infty = \frac{Q}{\Sigma_a}$ and $L = \frac{1}{\sqrt{3\Sigma_t\Sigma_a}}$.
+\item The nonclassical and classical equations are $\epsilon-$invariant.
+\end{itemize}
+
+With this scaling, the GLBE becomes;
+
+\begin{align}
+\frac{\partial \psi}{\partial s} (s) + \vec{\Omega}\vec{\nabla}\psi(s) + \frac{1}{\epsilon}\Sigma_t(s/\epsilon)\psi(s)=0 \ \text{for} \ s>0 \\
+\psi(0) = \frac{1}{4\pi}\left[  \int_{4\pi} \int_0^\infty \frac{(1-\epsilon^2 \kappa)}{\epsilon}\Sigma_t(s')\psi(\vec{\Omega}',s')ds'd\vec{\Omega}' + \epsilon q(\vec{x}) \right]
+\end{align}
+
+We define the following equality;
+
+\begin{equation}
+\psi(\vec{x},\vec{\Omega},\epsilon s) = \psi_\epsilon(\vec{x},\vec{\Omega},s)
+\end{equation}
+
+This quantity is the solution of the following system;
+
+\begin{align}
+\frac{\partial \psi_\epsilon}{\partial s} (s) + \epsilon \vec{\Omega}\vec{\nabla}\psi_\epsilon(s) + \frac{1}{\epsilon}\Sigma_t(s/\epsilon)\psi_\epsilon(s)=0 \ \text{for} \ s>0 \\
+\psi_\epsilon(0) = \frac{1}{4\pi}\left[  \int_{4\pi} \int_0^\infty (1-\epsilon^2 \kappa)\Sigma_t(s')\psi_\epsilon(\vec{\Omega}',s')ds'd\vec{\Omega}' + \epsilon q(\vec{x}) \right]
+\end{align}
+
+At this point, we define the following quantity;
+
+\begin{equation}
+\psi(\vec{x},\vec{\Omega},s) = \psi_\epsilon \frac{e^{-\int_0^s \Sigma_t(s')ds'}}{\epsilon \bl s\bg_\epsilon}
+\end{equation}
+
+The previous system becomes;
+
+\begin{align}
+\frac{\partial \psi}{\partial s} (s) + \epsilon \vec{\Omega}\vec{\nabla}\psi(s)=0 \ \text{for} \ s>0 \\
+\psi(0) = \frac{1}{4\pi}\left[  \int_{4\pi} \int_0^\infty (1-\epsilon^2 \kappa)p(s')\psi(\vec{\Omega}',s')ds'd\vec{\Omega}' + \epsilon^2 \bl s \bg_\epsilon q(\vec{x}) \right]
+\end{align}
+
+We integrate the first of these equations over $s$ (between 0 and s);
+
+\begin{equation}
+\left( I + \epsilon \vec{\Omega} \vec{\nabla} \int_0^s (.) ds' \right)\psi = \frac{1}{4\pi} \left[  \int_{4\pi} \int_0^\infty (1-\epsilon^2 \kappa)p(s')\varphi(s')ds' + \epsilon^2 \bl s \bg_\epsilon q(\vec{x}) \right]
+\end{equation}
+
+where $\varphi$ is defined like this;
+
+\begin{equation}
+\varphi(\vec{x},s) = \int_{4\pi} \psi(\vec{x},\vec{\Omega},s)d\vec{\Omega}
+\end{equation}
+
+We invert the operator of the previous equation and expand in a serie;
+
+\begin{equation}\label{eq}
+\psi = \left( \sum_0^\infty (-\epsilon)^n \left(\vec{\Omega}\vec{\nabla}\int_0^s (.) ds' \right)^n \right)\frac{1}{4\pi} \left[  \int_0^\infty (1-\epsilon^2 \kappa)p(s')\varphi(s')ds' + \epsilon^2 \bl s \bg_\epsilon q(\vec{x}) \right]
+\end{equation}
+
+We define the following operators;
+
+\begin{equation}
+\Delta_0 = \frac{1}{3}\nabla^2
+\end{equation}
+
+\begin{equation}
+B = \Delta_0\left( \int_0^s (.) ds \right)
+\end{equation}
+
+By using the identity of the appendix \ref{Annex}, we have;
+
+\begin{equation}
+\frac{1}{4\pi}\int_{4\pi} \left( \vec{\Omega}\vec{\nabla}\int_0^s (.)ds \right)^n d\vec{\Omega} = \frac{1-(-1)^n}{2}\frac{(3B)^{n/2}}{n+1}
+\end{equation}
+
+We integrate the equation (\ref{eq}) over the unity sphere, this gives;
+
+\begin{equation}\label{eq2}
+\varphi = \left( \sum_{n=0}^\infty \frac{1}{2n+1} (3\epsilon^2B)^n \right)\frac{1}{4\pi} \left[   \int_0^\infty (1-\epsilon^2 \kappa)p(s')\varphi(s')ds' + \epsilon^2 \bl s \bg_\epsilon q(\vec{x}) \right]
+\end{equation}
+
+By inverting the operator once again, we obtain;
+
+\begin{equation}\label{2}
+\left( I - \epsilon^2B - \frac{4\epsilon^4}{5}B^2 -\frac{44\epsilon^6}{35}B^3 + O(\epsilon^8) \right)\varphi = \int_0^\infty (1-\epsilon^2 \kappa)p(s')\varphi(s')ds' + \epsilon^2 \bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+The solution of this equation is the following;
+
+\begin{equation}
+\varphi (\vec{x},s) = \left( I + \epsilon^2 \frac{s^2}{2!}\Delta_0 + \frac{9\epsilon^4}{5} \frac{s^4}{4!}\Delta_0^2 + \frac{27\epsilon^6}{7}\frac{s^6}{6!}\Delta_0^3 + O(\epsilon^8) \right) \Phi(\vec{x})
+\end{equation}
+
+where;
+
+\begin{equation}
+\Phi(\vec{x}) = \sum_{n=0}^{\infty} \epsilon^{2n} \phi_{2n}(\vec{x})
+\end{equation}
+
+For the moment, we don't know the functions $ \phi_{2n}(\vec{x})$. We must find an equation for that.
+
+We multiply this equation by $ \frac{e^{-\int_0^s\Sigma_t(s')ds'}}{\bl s \bg_\epsilon}$ and integrate over $s$.
+
+We find the scalar flux giving by the following expression;
+
+\begin{equation}
+\varphi_{class}(\vec{x}) = \left( I + \epsilon^2 \frac{\bl s^3 \bg_\epsilon}{3!\bl s \bg_\epsilon}\Delta_0 +  \frac{9\epsilon^4}{5} \frac{\bl s^5 \bg_\epsilon}{5!\bl s \bg_\epsilon}\Delta_0^2 + \frac{27\epsilon^6}{7}\frac{\bl s^7 \bg_\epsilon}{7!\bl s \bg_\epsilon}\Delta_0^3 + O(\epsilon^8) \right) \Phi(\vec{x})
+\end{equation}
+
+
+Thus, we can write;
+
+\begin{equation}
+\int p(s) \varphi(\vec{x},s) ds = \left( \sum_0^\infty \epsilon^{2n} U_{n} \Delta_0^n \right) \varphi_{class}(\vec{x})
+\end{equation}
+
+With,
+
+\begin{align}
+U_0 = 0 \\
+U_1 = \frac{\bl s^2 \bg_\epsilon}{2!} - \frac{\bl s^3 \bg_\epsilon}{3!\bl s \bg_\epsilon}\\
+U_2 = \frac{9}{5}\left[ \frac{\bl s^4 \bg_\epsilon}{4!} - \frac{\bl s^5 \bg_\epsilon}{4!\bl s \bg_\epsilon} \right] - \frac{\bl s^3 \bg_\epsilon}{3! \bl s \bg_\epsilon}U_1 \\
+...
+\end{align}
+
+The equation (\ref{2}) can be rewritten like the following;
+
+\begin{equation}
+\left(\sum_0^\infty \epsilon^{2n}V_n\Delta_0^n \right)\varphi_{class}(\vec{x}) = (1-\epsilon^2\kappa)\left(\sum_0^\infty \epsilon^{2n}U_n\Delta_0^n \right) \varphi_{class}(\vec{x}) + \epsilon^2 \bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+Where;
+\begin{align}
+V_0 = 1 \\
+V_1 = \frac{-\bl s^3 \bg_\epsilon}{3!\bl s \bg_\epsilon} V_0 \\
+V_2 = -\frac{9}{5}\frac{\bl s^5 \bg_\epsilon}{5!\bl s \bg_\epsilon}V_0 - \frac{\bl s^3 \bg_\epsilon}{3! \bl s \bg_\epsilon}V_1 \\
+...
+\end{align}
+
+The previous equation can be rewritten like the following;
+
+\begin{equation}
+\left( \sum_0^\infty \epsilon^{2n} \left[W_{n+1} \Delta_0^{n+1} + \kappa U_n \Delta_0^n \right] \right)\varphi_{class} = \bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+Where $W_n = V_n - U_n$.
+
+This equation is the general equation of nonclassical $SP_n$ equation by stopping at the $2n$ degree of $\epsilon$.
+
+By neglecting all term superior to the second order, we obtain;
+
+\begin{equation}
+W_1 \Delta_0 \varphi_{class}(\vec{x}) + \kappa \varphi_{class}(\vec{x}) =\bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+By using the definition of $W_1$, we obtain;
+
+\begin{equation}
+-\frac{\bl s^2\bg_\epsilon}{6\bl s\bg_\epsilon} \nabla^2 \varphi_{class}(x) + \frac{\kappa}{\bl s\bg_\epsilon} \varphi_{class}(x) = q(x)
+\end{equation}
+
+This equation is invariant by scaling, so the following equation is also true;
+
+\begin{equation}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \varphi_{class}(x) + \frac{1-c}{\bl s\bg} \varphi_{class}(x) = Q(x)
+\end{equation}
+
+which is the nonclassical diffusion equation (nonclassical $SP_1$).
+
+By neglecting all term superior to the fourth order, we obtain;
+
+\begin{equation}
+\left(W_1 \Delta_0 + \epsilon^2\left[W_2 \Delta_0^2 + \kappa U_1 \Delta_0 \right] \right) \varphi_{class}(\vec{x}) + \kappa \varphi_{class}(\vec{x}) =\bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+By rearranging the terms, we obtain;
+
+\begin{equation}
+- \left( I + \epsilon^2 \frac{W_2 \Delta_0 + \kappa U_1 }{W_1} \right) W_1 \Delta_0 \varphi_{class}(\vec{x}) = \kappa \varphi_{class} (\vec{x}) - \bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+We multiply this equation by $(I - \epsilon^2 \frac{W_2 \Delta_0 + \kappa U_1 }{W_1})$, it gives (by neglecting all terms superior to 4);
+
+\begin{equation}
+W_1\Delta_0 \left[\varphi_{class}(\vec{x}) - \epsilon^2\frac{W_2}{W_1^2}\left[\kappa \varphi_{class}(\vec{x}) - \bl s \bg_\epsilon q(\vec{x}) \right] \right] + \kappa \left[1-\epsilon^2\kappa\frac{U_1}{W_1}\right]\varphi_{class}(\vec{x}) = \left[1-\epsilon^2\kappa\frac{U_1}{W_1}\right]\bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+We see that this equation is $\epsilon-$ invariant, we return to unscaled terms.
+By using the definition of different constants, we obtain the nonclassical $SP_2$,
+
+\begin{equation}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \left[ \phi(x) + \lambda_1\left[(1-c)\phi(x) - \bl s\bg Q(x) \right]\right] + \frac{1-c}{\bl s\bg}\left[1-\beta_1(1-c)\right] \phi(x) = \left[1-\beta_1(1-c)\right] Q(x)
+\end{equation}
+
+By neglecting all term superior to the sixth order, we obtain;
+
+\begin{equation}
+\left(W_1 \Delta_0 + \epsilon^2\left[W_2 \Delta_0^2 + \kappa U_1 \Delta_0 \right] + \epsilon^4 \left[W_3 \Delta_0^3 + \kappa U_2 \Delta_0^2 \right] \right) \varphi_{class}(\vec{x}) + \kappa \varphi_{class}(\vec{x}) =\bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+We define;
+
+\begin{equation}
+v(x) = \left( \frac{\epsilon^2}{2} \frac{W_2}{W_1} \Delta_0 + \frac{\epsilon^4}{2} \frac{W_3 \Delta_0^2 + \kappa U_2 \Delta_0}{W_1} \right)\varphi_{class}(\vec{x})
+\end{equation}
+
+\begin{equation}
+v(x) = \left( I + \epsilon^2 \frac{W_3 \Delta_0 + \kappa U_2 }{W_2} \right) \frac{\epsilon^2}{2}\frac{W_2}{W_1}\Delta_0\varphi_{class}(\vec{x})
+\end{equation}
+
+With this definition, the previous equation becomes;
+
+\begin{equation}
+W_1 \Delta_0 \left[\varphi_{class}(x) + 2v(x) + \epsilon^2\kappa\frac{U_1}{W_1}\varphi_{class}(x) \right] + \kappa \varphi_{class}(x) = \bl s \bg_\epsilon q(\vec{x})
+\end{equation}
+
+
+We multiply this equation by $(I - \epsilon^2 \frac{W_3 \Delta_0 + \kappa U_2 }{W_2})$, it gives (by neglecting all terms superior to 6);
+
+\begin{equation}
+-\epsilon^2 \Delta_0 \left[\frac{W_3}{W_2}v(x) + \frac{1}{2}\frac{W_2}{W_1}\varphi_{class}(x) \right]  + \left[1-\epsilon^2\kappa\frac{U_2}{W_2} \right] v(x) = 0.
+\end{equation}
+
+This equation is $\epsilon-$invariant. By deleting this scaling, we obtain with the definitions of the constants;
+
+\begin{align}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \left[ \left[1-\beta_1(1-c)\right] \phi(x) + 2 v(x) \right] + \frac{1-c}{\bl s\bg}] \phi(x) = Q(x) \\
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \left[ \frac{\lambda_1}{2} \phi(x) + \lambda_2 v(x) \right] + \frac{1-\beta_2(1-c)}{\bl s\bg} \phi(x) = 0.
+\end{align}
+
+which is the system for $SP_3$ equations.
+
+\chapter{Transport Integral and pdf}\label{class}
+We know already the probability density function for the classical transport which one is a simple exponential. However we are going to show the way to determine this function.
+
+We define here the scattering plus the external source as the following;
+
+\begin{equation}
+S(\vec{x}) = c \int_{4\pi}\int_0^\infty \Sigma_t(s') \psi(\vec{x},\vec{\Omega}',s') ds'd\vec{\Omega}' + Q(\vec{x})
+\end{equation}
+
+This expression can be written as:
+\begin{equation}
+S(\vec{x}) = c \int_{4\pi}\int_0^\infty \Sigma_t(s') \phi(\vec{x},s') ds' + Q(\vec{x}) = cf(\vec{x}) + Q(\vec{x})
+\end{equation}
+
+Where we define the nonclassical scalar flux and the collision rate density as:
+
+\begin{equation}
+\phi(\vec{x},s) = \int_{4\pi} \psi(\vec{x},\vec{\Omega}',s') d\vec{\Omega}'
+\end{equation}
+
+\begin{equation}
+f(\vec{x}) = \int_0^\infty \Sigma_t(s') \phi(\vec{x},s') ds'
+\end{equation}
+
+The GLBE becomes;
+
+\begin{equation}
+\frac{\partial \psi}{\partial s} (s,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi(s,\vec{x},\vec{\Omega}) + \Sigma_t(s,\vec{x})\psi(s,\vec{x},\vec{\Omega}) = \frac{\delta(s)}{4\pi}S(\vec{x})
+\end{equation}
+
+This equation is equivalent to the following;
+
+\begin{align}
+\frac{\partial \psi}{\partial s} (s,\vec{x},\vec{\Omega}) + \vec{\Omega}\vec{\nabla}\psi(s,\vec{x},\vec{\Omega}) + \Sigma_t(s,\vec{x})\psi(s,\vec{x},\vec{\Omega}) = 0 \ \ \text{for} \ \ s =0 \\
+\psi(0,\vec{x},\vec{\Omega})=\frac{S(\vec{x})}{4\pi}
+\end{align}
+
+The solution of this problem is the following nonclassical flux;
+
+\begin{equation}
+\psi(s,\vec{x},\vec{\Omega}) = \frac{S(\vec{x}-s\vec{\Omega})}{4\pi} e^{-\int_0^s \Sigma_t(s')ds'}
+\end{equation}
+
+From this expression, we can found the collision rate density;
+
+\begin{equation}
+f(\vec{x}) = \frac{1}{4\pi} \int_0^\infty S(\vec{x}-s\vec{\Omega}) p(s) ds
+\end{equation}
+
+By the changing of variable given by the equations (\ref{change}), we obtain;
+
+\begin{equation}
+f(\vec{x}) = \int S(\vec{x}') \frac{p(|\vec{x}-\vec{x}'|)}{4\pi|\vec{x}-\vec{x}'|^2}dV'
+\end{equation}
+
+In this case, $\Sigma_t$ is a constant, we have;
+
+\begin{equation}
+f(\vec{x}) = \int S(\vec{x}') \frac{\Sigma_t e^{-\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi|\vec{x}-\vec{x}'|^2}dV'
+\end{equation}
+\end{appendix}
+\end{document}
+
+% Template conçu par Benjamin Vanhemelryck et revu par François Bronchart - Mai 2013
