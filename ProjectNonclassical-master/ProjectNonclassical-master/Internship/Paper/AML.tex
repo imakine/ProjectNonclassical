@@ -1,0 +1,853 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{subcaption}
+
+
+\renewcommand{\baselinestretch}{1.0} 
+\setlength{\topmargin}{-0.5in} 
+\setlength{\oddsidemargin}{0.25in} 
+\setlength{\evensidemargin}{0.25in} 
+\setlength{\textwidth}{6.0in} 
+\setlength{\textheight}{9.0in} 
+\setlength{\parskip}{0pt}    
+
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+ \newcommand{\bl}{\big<}
+  \newcommand{\bg}{\big>}
+  
+  \newcommand{\R}{\mathbb{R}}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\ux}{{\bf x}}
+\newcommand{\un}{{\bf n}}
+\newcommand{\uomega}{{\bf \Omega}}
+\newcommand{\unabla}{{\bf \nabla}}
+\newcommand{\ul}{\underline}
+
+ 
+\biboptions{sort&compress}
+
+\journal{ArXiv}
+
+\begin{document}
+
+\begin{frontmatter}
+
+
+\title{The Nonclassical Diffusion Approximation to the Nonclassical Linear Boltzmann Equation}
+
+\author[ucb]{Richard Vasques\corref{cor1}}
+\cortext[cor1]{Corresponding author: richard.vasques@fulbrightmail.org\\
+Postal address: 4103 Etcheverry Hall, MC 1730, University of California, Berkeley\\
+Berkeley, CA 94720-1730, United States of America}
+\address[ucb]{Department of Nuclear Engineering, University of California, Berkeley}
+
+\begin{abstract}
+
+We show that, by correctly selecting the probability distribution function $p(s)$ for a particle's distance-to-collision, the nonclassical diffusion equation can be represented exactly by the nonclassical linear Boltzmann equation for an infinite homogeneous medium. This choice of $p(s)$ preserves the \textit{true} mean-squared free path of the system, which sheds new light on the results obtained in previous work.
+
+\end{abstract}
+
+
+
+\end{frontmatter}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}\label{sec1}
+\setcounter{section}{1}
+\setcounter{equation}{0} 
+
+A \textit{nonclassical linear Boltzmann equation} has been recently proposed to address particle transport problems in which the particle flux experiences a nonexponential attenuation law \cite{larsen_11, frank_10, vasques_14a}. This nonexponential behavior arises in certain inhomogeneous random media in which the locations of the scattering centers are spatially correlated, such as in a Pebble Bed reactor core \cite{larsen_11, vasques_13, vasques_14b}. 
+
+Independent of these developments, a similar kinetic equation has been
+rigorously derived for the periodic Lorentz gas in a series of papers by Golse (cf. \cite{golse_12}), and by Marklof and Str\" ombergsson \cite{marklof_11, marklof_15}. Related work has also been performed by Grosjean \cite{grosjean_51}, considering a generalization of
+neutron transport that includes arbitrary path-length distributions.
+
+For the case of monoenergetic particle transport with isotropic scattering, the nonclassical linear Boltzmann equation is written as
+\begin{equation}
+\label{eq1.1}
+\begin{split}
+\frac{\partial\psi}{\partial s}(\ux,\uomega,s) &+ \uomega\cdot\unabla \psi(\ux,\uomega,s) + \Sigma_t(s)\psi(\ux,\uomega,s)\\
+&= \frac{\delta(s)}{4\pi}\left[ c\int_{4\pi}\int_0^\infty \Sigma_t(s')\psi(\ux,\uomega',s')ds' d\Omega' + Q(\ux) \right],
+\end{split}
+\end{equation}
+where $\psi$ is the nonclassical angular flux, $c$ is the scattering ratio (probability of scattering), and $Q(\bf x)$ is a source. Here, the total cross section $\Sigma_t$ is a function of the path length $s$ (distance traveled by the particle since its previous interaction), such that the path length distribution  
+\begin{equation}\label{eq1.2}
+p(s) = \Sigma_t(s)e^{-\int_0^s \Sigma_t(s')ds'}
+\end{equation}
+does not have to be exponential. If $p(s)$ is exponential, Eq.\ (\ref{eq1.1}) reduces to the classical linear Boltzmann equation
+\begin{equation}
+\label{eq1.3}
+\uomega\cdot\unabla \psi(\ux,\uomega) + \Sigma_t \psi(\ux,\uomega) = \frac{\Sigma_s}{4\pi}\int_{4\pi}\psi(\ux,\uomega')d\Omega'+ \frac{Q(\ux)}{4\pi}
+\end{equation}
+for the classical angular flux 
+\begin{equation}
+\label{eq1.4}
+\psi(\ux,\uomega) = \int_0^\infty \psi(\ux,\uomega,s)ds.
+\end{equation} 
+It has been shown \cite{siap15} that, by selecting $\Sigma_t(s)$ in a proper way, Eq.\ \eqref{eq1.1} can be converted to an integral equation for the scalar flux
+\begin{equation}
+\label{eq1.5}
+\phi_0(\ux) = \int_{4\pi} \psi(\ux,\uomega)d\Omega
+\end{equation}
+that is identical to the integral equation that can be constructed for certain diffusion-based approximations to Eq.\ \eqref{eq1.3} in the hierarchy of the $SP_N$ equations \cite{mcclarren_11}.
+
+The work in this paper shows that this is also the case for the \textit{nonclassical diffusion equation} \cite{larsen_11}
+\begin{equation}
+\label{eq1.6}
+-\frac{\bl s^2\bg}{6\bl s\bg} \nabla^2 \phi_0(\ux) + \frac{1-c}{\bl s\bg} \phi_0(\ux) = Q(\ux),
+\end{equation}
+which is an asymptotic approximation of Eq.\ (\ref{eq1.1}) when $\bl s^2\bg < \infty$.
+Here,
+\begin{equation}
+\label{eq1.7}
+\bl s\bg = \int_0^{\infty} sp(s)ds \,\,\,\, \text{and} \,\,\,\, \bl s^2\bg = \int_0^{\infty} s^2p(s)ds.
+\end{equation}
+Specifically, we find $p(s)$ and the corresponding $\Sigma_t(s)$ such that the integral equation for Eq.\ (\ref{eq1.6}) is identical to the integral equation for Eq.\ (\ref{eq1.1}). We also show that the second moment of $p(s)$ for nonclassical diffusion preserves the \textit{true} mean-squared free path $\bl s^2\bg$, which gives a new insight on the results obtained in \cite{siap15} for the classical diffusion approximations.
+
+The remainder of this paper is organized as follows. In section \ref{sec2} we convert Eq.\ \eqref{eq1.1} to an integral equation for the scalar flux given in Eq.\ \eqref{eq1.5}. In section \ref{sec3} we convert Eq.\ \eqref{eq1.6} to an integral equation for the scalar flux, and find the correct choice of $p(s)$ such that the integral equation obtained in section \ref{sec2} is identical to this nonclassical diffusion integral equation. We also present a numerical example illustrating the differences on $p(s)$ and $\Sigma_t(s)$ for classical transport, classical diffusion, and nonclassical diffusion. The paper concludes with a discussion in section \ref{sec4}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Integral Equation Formulation}\label{sec2}
+\setcounter{section}{2}
+\setcounter{equation}{0} 
+
+Let $S(\ux)$ be given by
+\begin{subequations}
+\begin{align}\label{eq2.1a}
+S(\ux) &= c\int_{4\pi}\int_0^\infty \Sigma_t(s')\psi(\ux,\uomega',s')ds'd\Omega'+Q(\ux) \\
+% &= c\int_0^\infty \Sigma_t(s')\phi_0(\ux,s')ds' + Q(\ux) \nonumber \\
+&= cf(\ux) + Q(\ux), \nonumber
+\end{align}
+where 
+\begin{align}
+%\phi_0(\ux,s) &= \int_{4\pi} \psi(\ux,\uomega,s)d\Omega = \text{non-classical scalar flux}\\
+f(\ux) &= \int_0^\infty \Sigma_t(s')\phi_0(\ux,s')ds' = \text{collision-rate density}\label{eq2.1b}
+\end{align}
+and
+\begin{align}
+\phi_0(\ux,s) &= \int_{4\pi} \psi(\ux,\uomega,s)d\Omega = \text{nonclassical scalar flux}.\label{eq2.1c}
+\end{align}
+\end{subequations}
+We can now write Eq.\ \eqref{eq1.1} as the initial value problem
+\begin{subequations}
+\label{eq2.2}
+\begin{align}
+&\frac{\partial\psi}{\partial s}(\ux,\uomega,s) + \uomega\cdot\unabla\psi(\ux,\uomega,s) + \Sigma_t(s)\psi(\ux,\uomega,s) = 0, \;\; 0 < s ,\\
+& \psi(\ux,\uomega,0) = \frac{S(\ux)}{4\pi}.
+\end{align}
+\end{subequations}
+Following the steps presented in \cite{larsen_11} and \cite{siap15}, we: (i) use the method of characteristics to calculate the solution of Eqs.\ \eqref{eq2.2}; (ii) operate on this solution by $\int_{4\pi}\int_0^\infty \Sigma_t(s) (\cdot )dsd\Omega$; and (iii) perform the change of spatial variables from the 3-D spherical $(\uomega,s)$ to the 3-D Cartesian $\ux'$ defined by $\ux'= \ux-s\uomega$. This yields
+\begin{equation}
+\label{eq2.3}
+f(\ux) = \int\int\int S(\ux') \frac{p(|\ux'-\ux|)}{4\pi |\ux'-\ux|^2} dV',
+\end{equation}
+where $p(|\ux'-\ux|)$ and $S(\ux)$ are given by Eqs.\ \eqref{eq1.2} and \eqref{eq2.1a}, respectively.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Nonclassical Diffusion}\label{sec3}
+\setcounter{section}{3}
+\setcounter{equation}{0} 
+
+The nonclassical diffusion formulation presented in Eq.\ \eqref{eq1.6} is an asymptotic approximation of Eq.\ \eqref{eq1.1} in the case of $\bl s^2\bg<\infty$. In this formulation, $\bl s \bg$ and $\bl s^2\bg$ as given by Eq.\ \eqref{eq1.7} represent the first and second moments of the \textit{true} path length distribution $p(s)$.
+ If $p(s)$ is exponential, then $\bl s\bg = 1/\Sigma_t$, $\bl s^2\bg = 2/\Sigma_t^2$, and Eq.\ \eqref{eq1.6} reduces to the classical diffusion equation
+\begin{equation}
+\label{eq3.1}
+-\frac{1}{3\Sigma_t} \nabla^2 \phi_0(\ux) + (1-c)\Sigma_t \phi_0(\ux) = Q(\ux).
+\end{equation}
+
+For the general case in which $p(s)$ is \textit{not} assumed to be an exponential, we define $S(\ux) = c\bl s\bg^{-1}\phi_0(\ux)+Q(\ux)$ and rewrite 
+Eq.\ \eqref{eq1.6} as:
+\begin{subequations}\label{eq3.2}
+\begin{align}
+-\nabla^2\phi_0(\ux) + \lambda^2 \phi_0(\ux) = \lambda^2 \bl s \bg S(\ux),\label{eq3.2a}
+\end{align}
+where
+\begin{align}
+\lambda^2=\frac{6}{\bl s^2 \bg}.
+\end{align}
+\end{subequations}
+The Green's function for the operator on the left hand side of Eq.\ \eqref{eq3.2a} is:
+\begin{equation}
+\label{eq3.3}
+G(|\ux-\ux'|) = \frac{e^{-\lambda |\ux-\ux'|}}{4\pi |\ux-\ux'|};
+\end{equation}
+therefore, we can transform Eq.\ \eqref{eq3.2a} into an integral equation for $\phi_0(\bf x)$ by taking
+\begin{align}\label{eq3.4}
+\phi_0(\ux) &= \int\int\int G(|\ux-\ux'|) \lambda^2\bl s \bg S(\ux') dV' \\
+&= \int\int\int \frac{\lambda^2\bl s \bg e^{-\lambda |\ux-\ux'|}}{4\pi  |\ux-\ux'|} S(\ux') dV'  \nonumber \\
+&= \int\int\int \frac{\lambda^2 \bl s \bg |\ux-\ux'| e^{-\lambda |\ux-\ux'|}}{4\pi |\ux-\ux'|^2} S(\ux') dV'.\nonumber
+\end{align}
+Bearing in mind that $\bl s\bg$ represents the mean free path of a particle (i.e. the average distance between collisions), the collision-rate density can be written as $f(\ux)=\bl s\bg^{-1} \phi_0(\ux)$, such that
+\begin{equation}
+\label{eq3.5}
+f(\ux)=\frac{\phi_0}{\bl s \bg} = \int\int\int \frac{\lambda^2 |\ux-\ux'| e^{-\lambda |\ux-\ux'|}}{4\pi |\ux-\ux'|^2} S(\ux') dV'.
+\end{equation}
+This result agrees with Eq.\ \eqref{eq2.3} iff
+\begin{equation}
+\label{eq3.6}
+p(s) = \lambda^2se^{-\lambda s}=\frac{6se^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg}.
+\end{equation}
+It is easy to verify that
+\begin{equation}\label{eq3.7}
+\int_0^\infty p(s)ds = \int_0^\infty \frac{6se^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg} ds = 1,
+\end{equation}
+which shows that Eq.\ \eqref{eq3.6} is a distribution function. Furthermore, $\Sigma_t(s)$ is given by
+\begin{equation}
+\label{eq3.8}
+\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s')ds'} = \frac{\lambda^2 s}{1+\lambda s}.
+\end{equation}
+This shows that the nonclassical transport equation reproduces the nonclassical diffusion approximation given by Eq.\ \eqref{eq1.6} if $p(s)$ and $\Sigma_t(s)$ are defined by Eqs.\ \eqref{eq3.6} and \eqref{eq3.8}. Moreover, if $p(s)$ is exponential, this results agrees with the $p(s)$ and $\Sigma_t(s)$ obtained for the classical diffusion equation in \cite{siap15}.  
+
+We also point out that
+\begin{subequations}\label{eq3.9}
+\begin{align}
+\int_0^\infty sp(s)ds &=\int_0^\infty \frac{6s^2e^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg} ds = \frac{\sqrt{6\bl s^2\bg}}{3},\label{eq3.9a}\\
+\int_0^\infty s^2p(s)ds &=\int_0^\infty \frac{6s^3e^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg} ds = \bl s^2\bg\label{eq3.9b}.
+\end{align}
+\end{subequations}
+The first moment of $p(s)$ only approximates the mean free path $\bl s \bg$, as can be seen in Eq.\ \eqref{eq3.9a}. However, Eq.\ \eqref{eq3.9b} shows that the \textit{true} mean-squared free path $\bl s^2\bg$ is preserved. This sheds new light on the results presented in \cite{siap15}, where the second moments of the path length distributions obtained for all (classical) diffusion approximations give the exact (classical) transport value $2/\Sigma_t^2$.
+
+Figures \ref{fig1} and \ref{fig2} show the functions $\Sigma_t(s)$ and $p(s)$ for the transport of neutrons taking place in the interior of a homogenized 3-D Pebble Bed reactor core system, as described in \cite{vasques_14b}. The system consists of fuel spheres (pebbles) randomly packed in a background void with packing fraction $0.5934$. The parameters for the material of the fuel pebbles are: diameter $d=1$; total cross section $\Sigma_t=1$; and scattering ratio $c=0.99$. As discussed in detail in \cite{vasques_14b}, the \textit{classically homogenized} system (using the Atomic Mix model) has total cross section $\overline \Sigma_t  = 0.5934\Sigma_t = 0.5934$, and its \textit{true} mean-squared free path is numerically calculated to be $\bl s^2 \bg = 6.2898$. We note that nonclassical transport occurs due to the spatial correlations of the fuel pebbles in the system, and therefore $\bl s^2 \bg \neq 2/\overline\Sigma_t^2$.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Nonclassical $SP_2$}\label{sec4}
+
+The nonclassical $SP_2$ formulation is presented by the following equation;
+\begin{equation}\label{sp2}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\phi(x)+\lambda_1\left[(1-c)\phi(x) - \bl s \bg Q(x)\right]\right] + \frac{1-c}{\bl s \bg}\left[1-\beta_1(1-c)\right] \phi(x) = \left[1-\beta_1(1-c)\right]Q(x).
+\end{equation}
+
+We know that the Green function associated to the operator $\left(-\nabla^2 + \alpha^2\right)$, is
+
+\begin{equation}
+G(|x-x'|) = \frac{e^{-\alpha|x-x'|}}{4\pi |x-x'|}
+\end{equation}
+
+We pose that the source is given by the following expression;
+
+\begin{equation}\label{source}
+S(x) = \frac{c}{\bl s \bg} \phi(x) + Q(x)
+\end{equation}
+
+By injecting the equation (\ref{source}) in the equation (\ref{sp2}), we obtain the following equation;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\phi(x)+\lambda_1\phi(x)- \lambda_1 \bl s \bg S(x)\right] = \frac{c-1}{\bl s \bg}\left[1-\beta_1(1-c)\right] \phi(x) + \left[1-\beta_1(1-c)\right]Q(x).
+\end{equation}
+
+This equation becomes the following;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\phi(x)+\lambda_1\phi(x)- \lambda_1 \bl s \bg S(x)\right] = \left[1-\beta_1(1-c)\right] S(x) - \left[1-\beta_1(1-c)\right]\frac{\phi(x)}{\bl s \bg}.
+\end{equation}
+
+By reordering this equation, we obtain;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[(1+\lambda_1)\phi(x)\right]+ \left[1-\beta_1(1-c)\right]\frac{\phi(x)}{\bl s \bg} = \left[1-\beta_1(1-c)\right] S(x) - \frac{\lambda_1}{6} \bl s^2 \bg \nabla^2 S(x).
+\end{equation}
+
+We multiply this equation by $6\frac{\bl s \bg}{\bl s^2 \bg}\frac{1}{1+\lambda_1}$;
+
+\begin{equation}\label{youp}
+- \nabla^2 \left[\phi(x)\right]+ \frac{6}{\bl s^2 \bg}\frac{1}{1+\lambda_1}\left[1-\beta_1(1-c)\right]\phi(x) = \frac{6\bl s \bg}{\bl s^2 \bg}\frac{1}{1+\lambda_1}\left[1-\beta_1(1-c)\right] S(x) - \frac{\lambda_1}{1+\lambda_1} \bl s \bg \nabla^2 S(x).
+\end{equation}
+
+So, we can define;
+
+\begin{equation}
+\alpha^2 = \frac{6}{\bl s^2 \bg}\frac{1}{1+\lambda_1}\left[1-\beta_1(1-c)\right]
+\end{equation}
+
+The equation (\ref{youp}) becomes;
+
+\begin{equation}
+- \nabla^2 \left[\phi(x)\right]+ \alpha^2\phi(x) = \alpha^2 \bl s \bg S(x) - \frac{\lambda_1}{1+\lambda_1} \bl s \bg \nabla^2 S(x).
+\end{equation}
+
+With some manipulations to obtain the same operator on $S(x)$, we obtain the following equation;
+
+\begin{equation}
+- \nabla^2 \left[\phi(x)\right]+ \alpha^2\phi(x) = \frac{\lambda_1 +1}{\lambda_1 +1}\alpha^2 \bl s \bg S(x) - \frac{\lambda_1}{1+\lambda_1} \bl s \bg \nabla^2 S(x).
+\end{equation}
+
+\begin{equation}
+\left[- \nabla^2 + \alpha^2\right]\phi(x) = \frac{1}{\lambda_1 +1}\alpha^2 \bl s \bg S(x) + \frac{\lambda_1}{1+\lambda_1} \bl s \bg \left(-\nabla^2 + \alpha^2 \right) S(x).
+\end{equation}
+
+Finally, we use the Green of the operator to have the flux;
+
+\begin{equation}
+\phi = \frac{\alpha^2 \bl s \bg }{1+\lambda_1}\int GS dV' + \frac{\lambda_1}{1+\lambda_1} \bl s \bg S(x)
+\end{equation}
+
+This equality gives;
+
+\begin{equation}
+f(x) = \frac{\phi(x)}{\bl s \bg} = \frac{\alpha^2 }{1+\lambda_1}\int GS dV' + \frac{\lambda_1}{1+\lambda_1}S(x)
+\end{equation}
+
+The Green function is the following;
+
+\begin{equation}
+G(s) = \frac{e^{-\alpha s}}{4 \pi s}
+\end{equation}
+
+The source can be manipulated like;
+
+\begin{multline}
+S(x) = \int_0^\infty S(x+s\Omega)\delta(s) ds \\
+	 = \frac{1}{4\pi} \int_{4\pi} \int \delta(s) S(x+s\Omega)dsd\Omega \\
+	 = \int_{4\pi} \int \frac{\delta(|x-x'|)}{4\pi}\frac{S(x')}{|x-x'|^2}dV'
+\end{multline}
+
+So, we can obtain the following expression;
+
+\begin{equation}
+\frac{\phi(x)}{\bl s \bg} = \frac{\alpha^2}{1+\lambda_1} \int \frac{|x-x'|e^{-\alpha|x-x'|}}{4\pi |x-x'|^2}S(x')dV' + \frac{\lambda_1}{1+\lambda_1} \int \frac{\delta(|x-x'|)}{4\pi |x-x'|^2}S(x')dV' 
+\end{equation}
+
+Thus, we obtain the expression of $p(s)$;
+
+\begin{equation}
+p(s) = \frac{\alpha^2 se^{-\alpha s}}{1+\lambda_1} + \frac{\lambda_1}{1+\lambda_1}\delta(s)
+\end{equation}
+
+We can verify that this equation is normalized;
+
+\begin{equation}
+\int_0^\infty p(s) ds = \frac{1}{1+\lambda_1} + \frac{\lambda_1}{1+\lambda_1} = 1.
+\end{equation}
+
+The first moment gives the following expression;
+
+\begin{equation}
+\bar{s}= \int_0^\infty sp(s)ds = \frac{2}{1+\lambda_1}\frac{1}{\alpha}
+\end{equation}
+
+The m-moment gives the following expression
+
+\begin{equation}
+\bl s^m \bg = \int_0^\infty s^m p(s) ds = \frac{(m+1)!}{\alpha^m (1+\lambda_1)}
+\end{equation}
+
+The second moment gives the following expression;
+
+\begin{equation}
+\bl s^2 \bg = \frac{6}{\alpha^2 (1+\lambda_1)} = \frac{\bl s^2 \bg}{1-\beta_1(1-c)} 
+\end{equation}
+
+The third moment gives the following expression;
+
+\begin{equation}
+\bl s^3 \bg = \frac{24}{\alpha^3 (1+\lambda_1)} 
+\end{equation}
+
+
+The fourth moment gives the following expression;
+
+\begin{equation}
+\bl s^4 \bg = \frac{120}{\alpha^4 (1+\lambda_1)} = \frac{120 \left(\bl s^2 \bg\right)^2 (1+\lambda_1)}{36 (1-\beta_1(1-c))^2} 
+\end{equation}
+
+We see that the even moment are not conserved. But if we return to classical case, it is conserved ! But not for the nonclassical case.
+
+With these expressions of the moments, we can find the values of $\beta_1$ and $\lambda_1$ which is given by the following expressions;
+
+\begin{equation}
+\beta_1 = \frac{1}{3} \frac{\bl s^3 \bg}{\bl s^2 \bg\bl s \bg} - 1
+\end{equation}
+
+And;
+
+\begin{equation}
+\lambda_1 = \frac{3}{10} \frac{\bl s^4 \bg}{\left(\bl s^2 \bg \right)^2} - \frac{1}{3} \frac{\bl s^3 \bg}{\bl s^2 \bg\bl s \bg}
+\end{equation}
+
+By injecting the precedent expressions in these equations, we obtain;
+
+\begin{equation}
+\beta_1 = \frac{2}{3}(1+\lambda_1) - 1
+\end{equation}
+
+\begin{equation}
+\lambda_1 = \frac{1}{3}(1+\lambda_1) 
+\end{equation}
+
+The solution of these equations is;
+
+\begin{equation}
+(\beta_1,\lambda_1) = (0,1/2)
+\end{equation}
+
+This implies that the second moment is conserved also in the nonclassical case. For the 4-th moment, we find the following expression (only for our $p(s)$);
+
+\begin{equation}
+\bl s^4 \bg = 5 \left(\bl s^2 \bg \right)^2
+\end{equation}
+We can determine the total cross section depending of the path travelled.
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s') ds'}
+\end{equation}
+
+For $s>0$, we obtain;
+
+\begin{equation}
+\int_s^\infty p(s')ds' = \left(\frac{\alpha^2}{1+\lambda_1}\right)\left(\frac{-1}{\alpha}\right)\left[se^{-\alpha s}\right]_s^\infty + \left(\frac{\alpha^2}{1+\lambda_1}\right)\left(\frac{-1}{\alpha^2}\right)\left[e^{-\alpha s}\right]_s^\infty 
+\end{equation}
+
+Finally, we can write;
+
+\begin{equation}\label{1}
+\Sigma_t(s>0) = \frac{\alpha^2s}{1+\alpha s}
+\end{equation}
+
+For $s \simeq 0$; we obtain;
+
+\begin{equation}\label{2}
+\Sigma_t(s\simeq 0) = \frac{\lambda_1}{1+\lambda_1}\delta(s)
+\end{equation}
+
+By adding the equations (\ref{1}) and (\ref{2});
+
+\begin{equation}
+\Sigma_t(s) = \frac{\frac{\lambda_1}{\lambda_1 + 1}\delta(s) + \alpha^2 s}{1+\alpha s}
+\end{equation}
+
+We can also give some element on the sampling;
+
+\begin{equation}
+\xi = \int_0^s p(s')ds' = \frac{\lambda_1}{1+\lambda_1} + \frac{1}{1+\lambda_1}\left(1-(1+\alpha s)e^{-\alpha s}\right)
+\end{equation}
+
+This gives;
+
+\begin{equation}
+\xi = 1 - \frac{1}{1+\lambda_1}f(\alpha s)
+\end{equation}
+
+where;
+
+\begin{equation}
+f(z) = (1+z)e^{-z}
+\end{equation}
+
+Finally the sampling is given by (if $\xi \in [\frac{\lambda_1}{1+\lambda_1},1]$, if not s is null);
+
+\begin{equation}
+s =\frac{1}{\alpha}f^{-1}((\lambda+1)(1-\xi)) 
+\end{equation}
+
+\section{Nonclassical $SP_3$}\label{sec5}
+The nonclassical $SP_3$ formulation is presented by the following coupled equations;
+
+\begin{align}\label{syst}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1-c}{\bl s \bg} \phi(x) = Q(x). \\
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\frac{\lambda_1}{2}\phi(x)+ \lambda_2v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) = 0. 
+\end{align}
+
+We define the sources like in the precedent case;
+
+\begin{equation}
+S(x) = \frac{c}{\bl s \bg} \phi(x) + Q(x)
+\end{equation}
+
+By injecting in the equations (\ref{syst}); we obtain the following coupled equations;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1}{\bl s \bg} \phi(x) = S(x). \\
+-\frac{\lambda_2 \bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) = \frac{1}{2}\frac{\lambda_1}{6}\frac{\bl s^2 \bg}{\bl s \bg} \nabla^2 \phi(x)
+\end{align}
+
+With the first equation, we can change the second. So we obtain;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1}{\bl s \bg} \phi(x) = S(x). \\
+\end{equation}
+
+\begin{multline}
+-\frac{\lambda_2 \bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) \\= \frac{1}{2}\left[-\frac{\lambda_1}{6}\frac{\bl s^2 \bg}{\bl s \bg} \nabla^2\left(\frac{2v(x)}{1+\beta_1(1-c)}\right) + \frac{\lambda_1}{\bl s \bg}\phi(x)\frac{1}{1+\beta_1(1-c)}-S(x)\frac{\lambda_1}{1+\beta_1(1-c)}\right]
+\end{multline}
+
+These equations can be written like the following;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]\phi(x)+ 2v(x)\right] + \frac{1}{\bl s \bg} \phi(x) = S(x). \\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \nabla^2 \left[v(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} v(x) \\= \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)}\left[\frac{\phi}{\bl s \bg} - S(x)\right]
+\end{align}
+
+We must find $G_0$ and $G_2$, the Green functions associated to this system. These functions are solutions of the system;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]G_0(x)+ 2G_2(x)\right] + \frac{1}{\bl s \bg}G_0(x) = \delta(x). \\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \nabla^2 \left[G_2(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} G_2(x) \\= \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)}\left[\frac{G_0}{\bl s \bg} - \delta(x)\right]
+\end{align}
+
+For $x>0$; we obtain;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\left[1+\beta_1(1-c)\right]G_0(x)+ 2G_2(x)\right] + \frac{1}{\bl s \bg}G_0(x) = 0. \\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \nabla^2 \left[G_2(x)\right] + \frac{1-\beta_2(1-c)}{\bl s \bg} G_2(x) - \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)}\left[\frac{G_0}{\bl s \bg}\right] = 0.
+\end{align}
+
+The Green function must respect these boundary condition;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6\bl s \bg} \underset{\epsilon \rightarrow 0}{lim} \left[4\pi \epsilon^2\left(\frac{\partial G_0(\epsilon)}{\partial r} + 2\frac{\partial G_2(\epsilon)}{\partial r} \right)\right]=1.\\
+-\frac{\bl s^2 \bg}{6\bl s \bg}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right) \underset{\epsilon \rightarrow 0}{lim} \left(4\pi \epsilon^2 \frac{\partial G_2(\epsilon)}{\partial r}\right) = \frac{-1}{2}\frac{\lambda_1}{1+\beta_1(1-c)}
+\end{align}
+
+We are looking for the Green function having the following form;
+
+\begin{align}
+G_0 = \frac{e^{-\alpha r}}{4\pi r}\\
+G_2 = a\frac{e^{-\alpha r}}{4\pi r}
+\end{align}
+
+We know that;
+\begin{equation}
+\nabla^2 G_0 = \alpha^2 G_0
+\end{equation}
+
+By injection in the system, we obtain;
+
+\begin{align}
+-\frac{\bl s^2 \bg}{6} \left[\left[1+\beta_1(1-c)\right]\alpha^2+ 2a\alpha^2\right] + 1 = 0. \\
+-\frac{\bl s^2 \bg}{6}\left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right)\alpha^2a+ (1-\beta_2(1-c))a - \frac{1}{2} \frac{\lambda_1}{1+\beta_1(1-c)} = 0.
+\end{align}
+
+with the second equation, we find $a$;
+
+\begin{equation}
+a = \frac{\frac{1}{2}\frac{\lambda_1}{1+\beta_1(1-c)}}{(1-\beta_2(1-c)) - \frac{\bl s^2 \bg}{6} \left(\lambda_2 - \frac{\lambda_1}{1+\beta_1(1-c)}\right)\alpha^2 } 
+\end{equation}
+
+We define;
+
+\begin{align}
+z_1 = 1+\beta_1(1-c)\\
+z_2 = 1- \beta_2(1-c)
+\end{align}
+
+By injecting $a$ in the first equation, we obtain;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6} \left[z_1+\frac{\frac{\lambda_1}{z_1}}{{z_2 - \frac{\bl s^2 \bg}{6} \left(\lambda_2 - \frac{\lambda_1}{z_1}\right)\alpha^2 }}  \right]\alpha^2 + 1 = 0
+\end{equation}
+
+After some manipulations, we obtain the following equation;
+
+\begin{equation}
+-\frac{\bl s^2 \bg}{6} z_1z_2 \alpha^2 - \left(\frac{\bl s^2 \bg}{6}\right)^2z_1\left(\lambda_2-\frac{\lambda_1}{z_1}\right)\alpha^4-\frac{\bl s^2 \bg}{6}\frac{\lambda_1}{z_1}\alpha^2+\left(z_2-\frac{\bl s^2 \bg}{6}(\lambda_2-\frac{\lambda_1}{z_1})\alpha^2\right)=0
+\end{equation}
+
+we can regroup each terms according to the power of $\alpha$.
+
+\begin{equation}
+-\left(\frac{\bl s^2 \bg}{6}\right)^2z_1\left(\lambda_2-\frac{\lambda_1}{z_1}\right)\alpha^4-\frac{\bl s^2 \bg}{6}\left(\lambda_2+z_1z_2\right)\alpha^2+z_2 = 0.
+\end{equation}
+
+We define;
+
+\begin{equation}
+\gamma^2 = \frac{\bl s^2 \bg}{2}\alpha^2
+\end{equation}
+
+This gives;
+
+\begin{equation}
+\frac{1}{9}\left(\lambda_2z_1-\lambda_1\right)\gamma^4-\frac{1}{3}\left(\lambda_2+z_1z_2\right)\gamma^2+z_2 = 0.
+\end{equation}
+
+We can find the two solutions;
+
+\begin{equation}
+\left(\gamma^{\pm}\right)^2= \frac{\frac{1}{3}(\lambda_2+z_1z_2) \pm \sqrt{\frac{1}{9}(\lambda_2+z_1z_2) - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}}{ \frac{2}{9}(\lambda_2z_1-\lambda_1)}
+\end{equation}
+
+So;
+
+\begin{equation}
+\left(\alpha^{\pm}\right)^2= \frac{2}{\bl s^2 \bg} \frac{\frac{1}{3}(\lambda_2+z_1z_2) \pm \sqrt{\frac{1}{9}(\lambda_2+z_1z_2) - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}}{ \frac{2}{9}(\lambda_2z_1-\lambda_1)}
+\end{equation}
+We can deduce the expression for $a$; two solutions (accepted) are possible;
+
+\begin{equation}
+a^+ = \frac{\frac{1}{2}\frac{\lambda_1}{z_1}}{z_2-\frac{3}{2z_1}\left(\frac{1}{3}\left(\lambda_2+z_1z_2\right) + \sqrt{\frac{1}{9}(\lambda_2+z_1z_2)^2 - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}\right)}
+\end{equation}
+
+\begin{equation}
+a^- = \frac{\frac{1}{2}\frac{\lambda_1}{z_1}}{z_2-\frac{3}{2z_1}\left(\frac{1}{3}\left(\lambda_2+z_1z_2\right) - \sqrt{\frac{1}{9}(\lambda_2+z_1z_2)^2 - \frac{4}{9}(\lambda_2z_1-\lambda_1)z_2}\right)}
+\end{equation}
+
+To be able to find the most general equation, we take the superposition of the different possibilities;
+
+\begin{equation}
+G_0(r) = \frac{A^+}{\bl s \bg} \left(\frac{e^{-\alpha^+ r}}{4\pi r}\right) +  \frac{A^-}{\bl s \bg} \left(\frac{e^{-\alpha^- r}}{4\pi r}\right)
+\end{equation}
+
+\begin{equation}
+G_2(r) = \frac{A^+a^+}{\bl s \bg} \left(\frac{e^{-\alpha^+ r}}{4\pi r}\right) +  \frac{A^-a^-}{\bl s \bg} \left(\frac{e^{-\alpha^- r}}{4\pi r}\right)
+\end{equation}
+
+We must find $A^+$ and $A^-$. We use the boundary conditions for the Green function;
+
+\begin{align}
+A^+a^+ + A^-a^- = \frac{-\lambda_1 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}}{\lambda_2z_1-\lambda_1}\\
+A^+ + A^- = \left( 1 + \frac{\lambda_1}{\lambda_2z_1-\lambda_1} \right)6\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}
+\end{align}
+
+We define;
+
+\begin{align}
+A'^+ = A^+ 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+A'^- = A^- 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+\end{align}
+
+So we obtain;
+
+\begin{align}
+A'^+a^+ + A'^-a^- = \frac{-\lambda_1}{\lambda_2z_1-\lambda_1}\\
+A'^+ + A'^- = 2\left( 1 + \frac{\lambda_1}{\lambda_2z_1-\lambda_1} \right)
+\end{align}
+
+We define;
+
+\begin{equation}
+b = \frac{\lambda_1}{\lambda_2z_1-\lambda_1}
+\end{equation}
+
+So, we obtain;
+
+\begin{align}
+A'^+a^+ + A'^-a^- =-b\\
+A'^+ + A'^- = 2\left( 1 + b \right)
+\end{align}
+
+The solution of this is;
+
+\begin{align}
+A'^- = \frac{2a^+(1+b)+b}{a^+-a^-}\\
+A'^+ = \frac{2a^-(1+b)+b}{a^--a^+}
+\end{align}
+
+And thus;
+\begin{align}
+A^- = \frac{2a^+(1+b)+b}{a^+-a^-} 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+A^+ = \frac{2a^-(1+b)+b}{a^--a^+} 3\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}
+\end{align}
+
+We note;
+
+\begin{align}
+A^- = \eta\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}\\
+A^+ = \mu\frac{\left({\bl s \bg}\right)^2}{{{\bl s^2 \bg}}}
+\end{align}
+
+Finally the Green function that we search is given by this;
+
+\begin{equation}
+G_0(r) = \frac{1}{4\pi r} \frac{{\bl s \bg}}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ r} + \eta e^{-\alpha^- r} \right]
+\end{equation}
+
+We can write the density;
+
+\begin{equation}
+f(x) = \frac{\phi(x)}{{\bl s \bg}} = \frac{1}{{\bl s \bg}} \int G_0(|x-x'|) S(x') dV' 
+\end{equation}
+
+With the expression of $G_0$, it gives;
+
+\begin{equation}
+f(x) = \int \frac{1}{4\pi |x-x'|^2} \frac{|x-x'|}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ |x-x'|} + \eta e^{-\alpha^- |x-x'|} \right]  S(x') dV' 
+\end{equation}
+
+We can deduce the expression of $p(s)$;
+
+\begin{equation}
+p(s) = \frac{s}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ s} + \eta e^{-\alpha^- s}\right]
+\end{equation}
+
+
+We can deduce the total cross section;
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s')ds'}
+\end{equation}
+
+With $p(s)$, it gives;
+
+\begin{equation}
+\Sigma_t(s) = \frac{\frac{s}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ s} + \eta e^{-\alpha^- s}\right]}{\left[\mu \left( \frac{1+ \alpha^+\frac{s}{{{\bl s^2 \bg}}}}{\left(\alpha^+\right)}\right)e^{-\alpha^+ s} + \eta \left( \frac{1+ \alpha^-\frac{s}{{{\bl s^2 \bg}}}}{\left(\alpha^-\right)}\right)e^{-\alpha^- s}\right]}
+\end{equation}
+
+The mean-free path is given by;
+
+\begin{equation}
+{\bl s\bg} = \int_0^\infty sp(s) ds = \frac{2}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^3} + \frac{\eta}{\left(\alpha^-\right)^3}\right]
+\end{equation}
+
+The m-moment of $s$ is given by;
+
+\begin{equation}
+{\bl s^m \bg} = \int_0^\infty s^m p(s) ds = \frac{(m+1)!}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{(m+2)}} + \frac{\eta}{\left(\alpha^-\right)^{(m+2)}}\right]
+\end{equation}
+
+The second moment is the following;
+
+\begin{equation}
+{\bl s^2 \bg} = \frac{6}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{4}} + \frac{\eta}{\left(\alpha^-\right)^{4}}\right]
+\end{equation}
+
+The fourth moment is the following;
+
+\begin{equation}
+{\bl s^4 \bg} = \frac{120}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{6}} + \frac{\eta}{\left(\alpha^-\right)^{6}}\right]
+\end{equation}
+
+The sixth moment is the following;
+
+\begin{equation}
+{\bl s^6 \bg} = \frac{5040}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{8}} + \frac{\eta}{\left(\alpha^-\right)^{8}}\right]
+\end{equation}
+
+In the classical case;
+
+\begin{multline}
+\\
+(\gamma^+)^2 \approx 2.94 \\
+(\gamma^-)^2 \approx 1.16 \\
+a^+ \approx -0.33 \\
+a^- \approx 0.61 \\
+b \approx 1.037 \\
+\mu \approx 0.98\\
+\eta \approx 11.24 \\
+\end{multline}
+
+\section{Discussion}\label{sec6}
+\setcounter{section}{4}
+
+
+\setcounter{equation}{0} 
+
+We have shown that the nonclassical diffusion equation for an infinite homogeneous medium can be represented exactly by the nonclassical linear Boltzmann equation with the correct choice of $\Sigma_t(s)$ and $p(s)$. We derived explicit expressions for these quantities and showed that, while the first moment of the path length distribution $p(s)$ only approximates the true mean free path $\bl s\bg$, its second moment \textit{preserves} the true mean-squared free path $\bl s^2\bg$. This result provides a deeper understanding of the results presented in \cite{siap15} for the second moment of the path-length distributions for classical diffusion approximations.
+
+The work on this paper allows us to construct $p(s)$ and $\Sigma_t(s)$ that yield the correct solution for the nonclassical Boltzmann equation \eqref{eq1.1} in a diffusive system. The only parameter necessary for this is the true mean-squared free path $\bl s^2\bg$. This paves the road to the possibility of using this easy-to-obtain $p(s)$ to approximate the solutions of the nonclassical Boltzmann equation as the system moves away from the diffusive limit. Further work needs to be done to investigate how well such approach would perform; this task, however, must be left for future work.   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgments}
+
+This paper was prepared by Richard Vasques under award number NRC-HQ-84-14-G-0052 from the Nuclear Regulatory Commission. The statements, findings, conclusions, and recommendations are those of the author and do not necessarily reflect the view of the US Nuclear Regulatory Commission.
+
+\begin{thebibliography}{00}
+
+\begin{small}
+
+\bibitem{larsen_11}
+E.W. Larsen, R. Vasques. A generalized linear Boltzmann equation for non-classical particle transport. \textit{J. Quant. Spectrosc. Radiat. Transfer} 2011; 112:619--631.\vspace{-8pt}
+
+\bibitem{frank_10}
+M. Frank, T. Goudon. On a generalized Boltzmann equation for non-classical particle transport. \textit{Kin. Rel. Models} 2010; 3:395--407.\vspace{-8pt}
+
+\bibitem{vasques_14a}
+R. Vasques, E.W. Larsen. Non-classical particle transport with angular-dependent path- length distributions. I: Theory. \textit{Ann. Nucl. Energy} 2014, 70:292--300.\vspace{-8pt}
+
+\bibitem{vasques_13}
+R. Vasques. Estimating anisotropic diffusion of neutrons near the boundary of a Pebble Bed random system. \textit{Proceedings of the international conference on mathematics and computational methods applied to nuclear science \& engineering - M\&C 2013 [CD-ROM]}. La Grange Park, IL: American Nuclear Society; 2013. pp. 1736--1747.\vspace{-8pt}
+
+\bibitem{vasques_14b}
+R. Vasques, E.W. Larsen. Non-classical particle transport with angular-dependent path- length distributions. II: Application to pebble bed reactor cores. \textit{Ann. Nucl. Energy} 2014, 70:301--311.\vspace{-8pt}
+
+\bibitem{golse_12}
+F. Golse. Recent results on the periodic Lorentz gas. In X. Cabr\' e and J. Soler, eds., \textit{Nonlinear
+Partial Differential Equations}, Springer Basel, New York, 2012. pp. 39--99.\vspace{-8pt}
+
+\bibitem{marklof_11}
+J. Marklof, A. Str\" ombergsson. The Boltzmann-Grad limit of the periodic Lorentz gas.
+\textit{Ann. of Math.} 2011, 174:225--298.\vspace{-8pt}
+
+\bibitem{marklof_15}
+J. Marklof, A. Str\" ombergsson. Generalized linear Boltzmann equations for particle
+transport in polycrystals. \textit{Applied Mathematics Research eXpress} 2015, 2:274--295.\vspace{-8pt}
+
+\bibitem{grosjean_51}
+C. Grosjean, The exact mathematical theory of multiple scattering of particles in an infinite medium.
+\textit{Verh. Vlaamsche Akad. Wet. Lett. Schoone Kunsten Belgi\" e} 36, Paleis der
+Academi\" en, Brussels, 1951.\vspace{-8pt}
+
+\bibitem{siap15}
+M. Frank, K. Krycki, E.W. Larsen, R. Vasques. The nonclassical Boltzmann equation and diffusion-based approximations to the Boltzmann equation. \textit{SIAM J. Appl. Math.} 2015, 75:1329--1345.\vspace{-8pt}
+
+\bibitem{mcclarren_11}
+R.G. McClarren. Theoretical aspects of the simplified $P_n$ equations. \textit{Transport Theory Statist. Phys.} 2011, 39:73--109.\vspace{-8pt}
+
+
+
+
+
+
+
+
+  \end{small}
+
+
+
+\end{thebibliography}
+
+\pagebreak
+
+\begin{figure}
+    \centering
+        \includegraphics[scale=0.3]{fig1}
+        \caption{Total cross section as a function of $s$}
+        \label{fig1}
+\end{figure}
+\begin{figure}
+    \centering
+        \includegraphics[scale=0.3]{fig2}
+        \caption{Path length distribution function $p(s)$}
+        \label{fig2}
+\end{figure}
+
+
+
+\pagebreak
+
+
+
+\end{document}
