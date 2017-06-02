@@ -1,0 +1,23 @@
+*******************************************************
+List of system and material parameters:
+
+            Model: CLASSICAL
+
+         Total cross section: 1.0
+     Absorbing cross section: 0.09999999999999998
+            Scattering ratio: 0.9
+                      Source: 1.0
+               Source region: 1.0
+
+  Total length of the system: 100.0
+     Left boundary condition: 0.0
+    Right boundary condition: 0.0
+
+     Number of cells in mesh: 10000
+            Iterative solver: 'lgmres'
+                Name of file: 'testout_sp'
+*******************************************************
+
+*******************************************************
+Solver 'lgmres' was SUCCESSFUL in solving SP1 system
+Solver 'lgmres' was SUCCESSFUL in solving SP2 system
