@@ -36,5 +36,6 @@
 module load python
 module load numpy
 module load scipy
+module load matplotlib
 python PonctualSP1.py
         
