@@ -18,30 +18,31 @@ def main():
     #Initialisation des parametree de la simulation
 
     #Blindage
-    thickness = int(input("Thickness of the blindage (integer form) : "));
+    thickness = 100;
 
     #Cross-sections
-    sigmaabs = float(input("Absorption cross-section [thickness^-1] : "));
-    sigmascat = float(input("Scattering cross-section [thickness^-1] : "));
+    c= 0.01
+    sigmaabs = 1-c;
+    sigmascat =c;
     sigmatot=sigmaabs+sigmascat;
     global lamb;
     if (sigmatot !=0):
         lamb = 1.042533/sigmatot; #mean-free path
     #Source (discrete)
 
-    Q = float(input("Difusion source (discrete) [neutrons.thickness^-1.s^-1] = "));
+    Q = 1;
     
     #Number of path
 
-    n = int(input("Number of path : "));
+    n = 10000;
 
     #Step
 
-    step = float(input("Number of the step for flux: "));
+    step = 0.1;
                 
     #Output file
 
-    filename = str(input("Name of the output file : "));
+    filename = 'realend3';
     file = open(filename + ".txt", "w")              
     fluxPSP3 = open("fluxPSP3.txt","w")
     coordPSP3 = open("coordPSP3.txt","w")
@@ -81,10 +82,12 @@ def main():
     flux_track =0;
     freepath =0;
     for i in range(1,n+1):
+        if (i%1000 == 0):
+            print(str(i/n*100) + "% of the running code done")
          #x0=0;
         #y0=0;
         randnum = randomGen();
-        z0=thickness/2+(2*randnum-1)/2-1; #thickness
+        z0=thickness/2+(2*randnum-1)/2; #thickness
         randnum = randomGen();
         theta = 180*randnum;
         #u0=math.sin(math.pi/180*theta);
@@ -109,7 +112,7 @@ def main():
         while((ilost+iesc+ideath)==0):
             randnum=randomGen();
             if (sigmatot !=0):
-                freepath = scipy.optimize.brentq(f,0.0,100,args=((randnum)))/sigmatot
+                freepath = scipy.optimize.brentq(f,0,100,args=((randnum)))/sigmatot
                                                     
                     #freepath = secante(0,1,1e-6,randnum,sigmatot)/(sigmatot)
                 s[0] = s[0] + freepath;
@@ -193,9 +196,11 @@ def main():
     print(" ");
     print("Variance of flux = ",test)  
     print(" ");
-    print("Standart deviation of flux = ", test2)
+    print('max of the flux = ', max(flux_local))
+    print("average on bins max = ", (flux_local[flux_local.index(max(flux_local))]+flux_local[flux_local.index(max(flux_local))+1])/2)
+   # print("Standart deviation of flux = ", test2)
     print(" ");
-    print("Maximum for the standart deviation = "+ str(max(test2)) + " at the position " + str(test2.index(max(test2))) )     
+   # print("Maximum for the standart deviation = "+ str(max(test2)) + " at the position " + str(test2.index(max(test2))) )     
     plt.plot(flux_local)
     plt.ylabel('Flux(z)')
     plt.show()
@@ -292,7 +297,7 @@ def main():
     file.write(" --- Z ---         ---FLUX(Z)--- \n")
     z=0;
     for i in range(len(flux_local)):
-        file.write("   "+ str(round(z,4))+ " "*(6-len(str(round(z,2)))) + "          " + str(round(flux_local[i],6))+" "*(12-len(str(round(z,4)))) +str(round(test2[i],6)) +"\n");
+       # file.write("   "+ str(round(z,4))+ " "*(6-len(str(round(z,2)))) + "          " + str(round(flux_local[i],6))+" "*(12-len(str(round(z,4)))) +str(round(test2[i],6)) +"\n");
         z = z + step
     file.close();
     for i in range(len(flux_local)):

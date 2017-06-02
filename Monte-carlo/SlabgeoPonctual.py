@@ -14,11 +14,13 @@ def main():
     #Initialisation des parametree de la simulation
 
     #Blindage
-    thickness = int(input("Thickness of the blindage (integer form) : "));
+    thickness = 100;
 
     #Cross-sections
-    sigmaabs = float(input("Absorption cross-section [thickness^-1] : "));
-    sigmascat = float(input("Scattering cross-section [thickness^-1] : "));
+    c = 0.95
+    
+    sigmaabs = 1-c;
+    sigmascat = c;
     sigmatot=sigmaabs+sigmascat;
     global lamb;
     if (sigmatot !=0):
@@ -26,7 +28,7 @@ def main():
 
     #Number of path
 
-    n = int(input("Number of path : "));
+    n =100000;
 
 
     # Parametres particule incidente
@@ -57,6 +59,8 @@ def main():
     flux_track =0;
     freepath =0;
     for i in range(1,n+1):
+        if (i%1000 == 0):
+            print(str(i/n*100) + "% of the running code done")
          #x0=0;
     #y0=0;
         z0=thickness/2;

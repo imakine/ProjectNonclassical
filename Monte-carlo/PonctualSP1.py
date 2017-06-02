@@ -12,198 +12,151 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.optimize 
 
+def main(c):
+    ############################################################
+    # INPUT
+    #
+    # c : the scattering ratio of the media
+    #
+    #
+    # OUTPUT
+    # Flux SP123
+    #
+    #############################################################
 
-def randomGen():
-    xi = random.random()
-    xi = float(xi);
-    return xi
-
-def main():
-
-    print("1D code is running with theta AND phi");
-
-    #Initialisation des parametree de la simulation
-
-    #Blindage
-    thickness = int(input("Thickness of the blindage (integer form) : "));
-
-    #Cross-sections
-    sigmaabs = float(input("Absorption cross-section [thickness^-1] : "));
-    sigmascat = float(input("Scattering cross-section [thickness^-1] : "));
-    sigmatot=sigmaabs+sigmascat;
-    global lamb;
+    #Initialisation of the parameters of the simulation
+    thickness = 100;                    #Thickness of the mediq
+    sigmaabs = 1-c;                     #Absorption cross-section of the media
+    sigmascat = c;                      #Scattering cross-section of the media
+    sigmatot=sigmaabs+sigmascat;        #Total cross-section of the media
+    global lamb;                        #Lamb is the mean free path
     if (sigmatot !=0):
-        lamb = 2/((3)**(0.5)*sigmatot); #mean-free path
-        print("lamb",lamb)
-    #Source (discrete)
-
-    Q = float(input("Difusion source (discrete) [neutrons.thickness^-1.s^-1] = "));
-    
-    #Number of path
-
-    n = int(input("Number of path : "));
-
-    #step
-
-    step = float(input("Number of step for flux: (0.01, 0.1, 1) = "))
+        lamb = 2/((3)**(0.5)*sigmatot); #mean-free path of SP1
+    Q = 1                               #Source of neutrons
+    n = 1000000;                          #Number of path
+    step = 0.005;                       #Step for bins Number of bins will be Length/step
 
     #Output file
-
-    filename = str(input("Name of the output file : "));
+    filename = 'realend';
     file = open(filename + ".txt", "w") 
     fluxPSP1 = open("fluxPSP1.txt","w")
     coordPSP1 = open("coordPSP1.txt","w")
     variancePSP1 = open("variancePSP1.txt","w");
     deviationPSP1 = open("deviationPSP1.txt","w");
     
-    # Parametres particule incidente
+    # Time starts
 
     initialtime = time.time();
    
 
-    #Initialisation nombres particules perdues, absorbees ou emises */
-    global numlost;
-    global numabs;
-    global numesc;
-    global numdeath;
-    global numscattot;
-    global flux_col;
-    global flux_abs;
-    global flux_track;
-    global freepath;
-    global flux_local
-    global s
-    global bybin;
-    global variance;
-    global deviation;
-    global variancepic;
-    global deviationpic;
-    test = test2 = fluxpic= variancepic = [0]*(int(thickness/step));
-    deviation = [0]*(int(thickness/step));
-    variance = [0]*(int(thickness/step));
-    bybin = [0]*(int(thickness/step));
+    # All parameters to count
+    
+    global numlost;                                                     #Number of particles lost by the left side (z < 0)
+    global numesc;                                                      #Number of particle lost by the rifht side (z > Thickness)
+    global numdeath;                                                    #Number of particles absorbed in the media
+    global numscattot;                                                  #Number of collisions for ALL particles
+    global freepath;                                                    #The distance giving by the sampling
+    global flux_local;                                                  #List of an estimator of the flux in the media ; collision between 0 and 1 is in first place, between 1 and 2 is second ...
+    global s;                                                           #List of the 6 first moments of s                                                
+    global variancepic;                                                 #List of the sum of the square of each scattering                              
+    global deviationpic;                                                #List of the sum of each scattering
+    test = [0]*(int(thickness/step));                                   #List of the variance of each element in flux_local 
+    test2 = [0]*(int(thickness/step));                                  #List of the standart deviation of each element in flux_local
+    fluxpic = [0]*(int(thickness/step));
+    variancepic = [0]*(int(thickness/step));
     s =[0]*6;
-    flux_local = [0]*(int(thickness/step)); # collision between 0 and 1 is in first place, between 1 and 2 is second ...
+    flux_local = [0]*(int(thickness/step));  
     numlost=0;
-    numabs=0;
     numesc=0;
     numdeath =0;
     numscattot = 0;
-    flux_col = 0;
-    flux_abs =0;
-    flux_track =0;
     freepath =0;
+    
+    # Loop on each history
+    
     for i in range(1,n+1):
-         #x0=0;
-        #y0=0;
-        randnum = randomGen();
-        z0=thickness/2+(2*randnum-1)/2-1; #thickness
-        randnum = randomGen();
-        theta = 180*randnum;
-        #u0=math.sin(math.pi/180*theta);
-        #v0=0;
-        w0=math.cos(math.pi/180*theta);
-        #x=x0;
-        #y=y0;
-        z=z0;
-        #u=u0;
-        #v=v0;
-        w=w0;
-        ilost=0;
-        iesc=0;
-        ideath=0;
-        iscat=0;
-        iflux_col = 0;
-        iflux_abs =0 ;
-        iflux_track =0;
-        ivariancepic = [0]*(int(thickness/step));
-        iflux = [0]*(int(thickness/step));
-        #weight= 1;
+        # Interface with user
+        if (i%1000 == 0):
+            print(str(i/n*100) + "% of the running code done")
+        randnum = random.random();
+        z0=thickness/2+(2*randnum-1)/2;                                 #Initial rqndom position of particles according to the regional source : Source = Q between -0.5 + thickness/2 and +0.5 + thickness/2
+        randnum = random.random()
+        theta = 180*randnum;                                            #Initial random angle for the particle
+        w0=math.cos(math.pi/180*theta);                                 #Initial direction of the particle
+        z=z0;                                                           # position z follows the particle
+        w=w0;                                                           # direction w follows the particle 
+        ilost=0;                                                        #Event escape by left side value 0 --> particle does not escape by the left side, value 1 --> particle has escaped by the left side
+        iesc=0;                                                         #Event escape by right side value 0 --> particle does not escape by the right side, value 1 --> particle has escaped by the right side                                    
+        ideath=0;                                                       #Event absorption by the media value 0 --> particle is not absorpbed, value 1 --> particle has been absorbed 
+        iscat=0;                                                        #Number of collision by particle                
+        ivariancepic = [0]*(int(thickness/step));                       #Number of collision squared by particle
+        iflux = [0]*(int(thickness/step));                              #Number of collision by particle 
+        
+        #loop on the life of the particle 
+        
         while((ilost+iesc+ideath)==0):
-            randnum=randomGen();                
+            randnum=random.random();               
             if (sigmatot !=0):
-                freepath = scipy.optimize.brentq(fsp,0.0,100.0,args=(randnum))/((3**0.5)*sigmatot)
-                #freepath= secante(0,1,1e-7,randnum,sigmatot);
-                s[0] = s[0] + freepath;
-                s[1] = s[1] + freepath**2;
-                s[2] = s[2] + freepath**3;
-                s[3] = s[3] + freepath**4;
-                s[4] = s[4] + freepath**5;
-                s[5] = s[5] + freepath**6;
-            #x1=x+u*freepath;
-            #y1=y+v*freepath;
-            z1=z+w*freepath;
-            if(z1 >= thickness or sigmatot==0):
+                freepath = scipy.optimize.brentq(fsp,0.0,100.0,args=(randnum))/((3**0.5)*sigmatot) #Sampling of the distance travelled
+                s[0] = s[0] + freepath;                                 #First moment estimator
+                s[1] = s[1] + freepath**2;                              #Second moment estimator
+                s[2] = s[2] + freepath**3;                              #Third moment estimator    
+                s[3] = s[3] + freepath**4;                              #..
+                s[4] = s[4] + freepath**5;                              #..
+                s[5] = s[5] + freepath**6;                              #.
+            z1=z+w*freepath;                                            #Update of the position
+            if(z1 >= thickness or sigmatot==0):                         #Check if the particle is lost in left side
                 iesc=1;
-            elif(z1 < 0.):
+            elif(z1 < 0.):                                              ##Check if the particle is lost in right side                                              
                 ilost=1; 
             else:
-                xi = randomGen();
-                if (xi < sigmascat/sigmatot): #that's a scattering
-                    index = int(z1/step)+1;
-                    flux_local[index-1] = flux_local[index-1] + 1;  
-                    iflux[index-1] = iflux[index-1] +1;
-                    ivariancepic[index-1] = ivariancepic[index-1] + 1;          
-                    iscat = iscat + 1;
-                    iflux_col = iflux_col + 1
-                    iflux_track =iflux_track + freepath
-                    #x=x1;
-                    #y=y1;
-                    z=z1;
-                    #randnum=randomGen();
-                    #phi=2*math.pi*randnum;
-                    randnum=randomGen();
+                xi = random.random();
+                if (xi < sigmascat/sigmatot):                           #Check if it's a scattering with a probability of Sigmascat/sigmatot
+                    index = int(z1/step)+1;                             #Count in the bins
+                    flux_local[index-1] = flux_local[index-1] + 1;      #Increment event for flux
+                    iflux[index-1] = iflux[index-1] +1;                 #Increment event for flux
+                    ivariancepic[index-1] = ivariancepic[index-1] + 1;  #Increment event for flux        
+                    iscat = iscat + 1;                                  #Increment of the number of scattering for the particle 
+                    z=z1;                                               #Save the new position
+                    randnum=random.random()                             #Isotropic collision, direction random
                     w=2*randnum-1;
-                    #thet=math.acos(w);
-                    #u=math.sqrt(thet)*math.cos(phi);
-                    #v=math.sin(thet)*math.sin(phi);
-                if (sigmaabs !=0 and xi > sigmascat/sigmatot): #that's an absorption
-                    index = int(z1/step) + 1;
-                    flux_local[index-1] = flux_local[index-1] + 1;
-                    iflux[index-1] = iflux[index-1] +1;
-                    ivariancepic[index-1] = ivariancepic[index-1] + 1;          
-                    ideath = 1; 
-                    iflux_abs = iflux_abs + 1; 
+                if (sigmaabs !=0 and xi > sigmascat/sigmatot):          #Check if it's an absorption with a probability Sigmaabs/sigmatot
+                    index = int(z1/step) + 1;                           #Count in the bins
+                    flux_local[index-1] = flux_local[index-1] + 1;      #Increment event for flux
+                    iflux[index-1] = iflux[index-1] +1;                 #Increment event for flux
+                    ivariancepic[index-1] = ivariancepic[index-1] + 1;  #Increment event for flux          
+                    ideath = 1;                                         #Kill the particle
                 else:
-                    ideath = 0; 
+                    ideath = 0;                                         #No absorption 
+        #Computation of the flux and the variance            
         for i in range(len(fluxpic)):            
-            fluxpic[i] = fluxpic[i] + iflux[i];            
-            variancepic[i] = variancepic[i] + ivariancepic[i]**2;                      
-        flux_track = flux_track + iflux_track;                    
-        flux_abs = flux_abs + iflux_abs;                    
-        flux_col = flux_col + iflux_col;                    
-        numlost=numlost+ilost;
-        numesc=numesc+iesc;
-        numdeath=numdeath+ideath;
-        numscattot = numscattot + iscat;
-    flux_track = flux_track/n;    
-    flux_col = flux_col/n;
-    flux_abs = flux_abs/n;
+            fluxpic[i] = fluxpic[i] + iflux[i];                         #We add the collision of each particle for flux          
+            variancepic[i] = variancepic[i] + ivariancepic[i]**2;       #We add the square power of each particle for variance                                          
+        numlost=numlost+ilost;                                          #Update of the number of lost in right side
+        numesc=numesc+iesc;                                             #Update of the number of lost in left side
+        numdeath=numdeath+ideath;                                       #Update of the number of qbsorption
+        numscattot = numscattot + iscat;                                #Update of the number of scattering            
     for i in range(len(fluxpic)):
-        variancepic[i] = variancepic[i]/(n-1)*((Q*thickness)/step/sigmatot)**2;
-        fluxpic[i] = fluxpic[i]/n*(Q*thickness)/step/sigmatot;                                                  
-        test[i] = variancepic[i]-(fluxpic[i])**2;
-        test2[i] = test[i]**(0.5);
-    flux_local[:] = [(x/n)*(Q)/step/sigmatot for x in flux_local];
-    s[:] = [x / (numscattot+numdeath+numesc+numlost) for x in s];     
+        variancepic[i] = variancepic[i]/(n-1);                          #Average number of collision on the sample
+        fluxpic[i] = fluxpic[i]/n;                                      #Average number of collision square on the sample            
+        test[i] = variancepic[i]-(fluxpic[i])**2;                       #Variance
+        test2[i] = test[i]**(0.5);                                      #Standart deviation
+    flux_local[:] = [(x/n)*(Q)/step/sigmatot for x in flux_local];      #Average flux with good normalisation The integral of the source appears Q*1 (because Q is constant in a distance = 1)
+    s[:] = [x / (numscattot+numdeath+numesc+numlost) for x in s];       #Average of the moments     
     finaltime = time.time();
-    lon = thickness//2;
-    source = sigmaabs*(flux_local[lon-2]+flux_local[lon-1] + flux_local[lon] +flux_local[lon+1]+flux_local[lon+2])/5;
     print("n =",n);
     print("numscattot = ", numscattot);
     print("numlost =",numlost);
     print("numabs =",numdeath);
     print("numesc=",numesc);
-    print("flux_col = " ,flux_col);
-    print("flux_abs = " ,flux_abs);
-    print("flux_track = " ,flux_track);
     print("flux(z) = ",flux_local);
     print("s = ",s);   
-    print("source = ",source);
     print("Time elapsed during the running of the code : ",finaltime - initialtime, "seconds");
     print(" ");
     print("Variance of flux = ",test)  
     print(" ");
+    print('max of the flux = ', max(flux_local))
+    print("average on bins max = ", (flux_local[flux_local.index(max(flux_local))]+flux_local[flux_local.index(max(flux_local))+1])/2)
     #print("Standart deviation of flux = ", test2)
     print(" ");    
     #print("Maximum for the standart deviation = "+ str(max(test2)) + " at the position " + str(test2.index(max(test2))) )
@@ -317,32 +270,17 @@ def main():
     fluxPSP1.close();
     coordPSP1.close();          
     return flux_local
-
-def col(liste):
-    for i in range(len(liste)):
-        try:
-            split_num = str(float(liste[i])).split('.');
-            int_part = str(split_num[0]);
-            decimal_part = str(split_num[1]);
-            print(int_part + "," + decimal_part);
-        except:     
-            print("0,0");
              
-def fsp(x,xi): # function xi - (1+z)exp(-z)
+def fsp(x,xi):                          # function xi - (1+z)exp(-z)
     return  xi - (1+x)*np.exp(-x)             
-             
-             
-def f(s,xi,sigmatot):
-    return xi - (1-(1+(3)**(0.5)*sigmatot*s)*(math.e)**(-(3)**(0.5)*sigmatot*s))
 
-def secante(a,b,prec,xi,sigmatot):
-    while f(a,xi,sigmatot) > prec:
-        
-        c=a;
-        a = a-f(a,xi,sigmatot)*(b-a)/(f(b,xi,sigmatot)-f(a,xi,sigmatot))
-        b = c;  
-    return a
-
-        
+listC = [0.01,0.1,0.2,0.25,0.4,0.5,0.6,0.75,0.8,0.9,0.95,0.99]
+for i in range(len(listC)):
+    a = main(listC[i]);
+    filename = str(listC[i])
+    file = open(filename + '.txt', 'w') 
+    file.write('max of the flux = ' +  str(max(a)) + '\n')
+    file.write("average on bins max = "+  str((a[a.index(max(a))]+a[a.index(max(a))+1])/2))
+    file.close()
             
 print("---------------------------------Program-------Ends-----------------------------")

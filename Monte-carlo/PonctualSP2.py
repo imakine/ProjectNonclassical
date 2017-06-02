@@ -11,18 +11,18 @@ def randomGen():
     xi = float(xi);
     return xi
 
-def main():
+def main(c):
 
     print("1D code is running with theta AND phi");
 
     #Initialisation des parametree de la simulation
 
     #Blindage
-    thickness = int(input("Thickness of the blindage (integer form) : "));
+    thickness = 100;
 
     #Cross-sections
-    sigmaabs = float(input("Absorption cross-section [thickness^-1] : "));
-    sigmascat = float(input("Scattering cross-section [thickness^-1] : "));
+    sigmaabs =1-c;
+    sigmascat = c;
     sigmatot=sigmaabs+sigmascat;
     global lamb;
     if (sigmatot !=0):
@@ -30,19 +30,19 @@ def main():
     print("Lamb = ", lamb)    
     #Source (discrete)
 
-    Q = float(input("Difusion source (discrete) [neutrons.thickness^-1.s^-1] = "));
+    Q = 1;
     
     #Number of path
 
-    n = int(input("Number of path : "));
+    n = 50000;
 
     #step
 
-    step = float(input("Number of step for flux: (0.01, 0.1, 1) = "))
+    step = 0.005
     
     #Output file
 
-    filename = str(input("Name of the output file : "));
+    filename = 'realend2';
     file = open(filename + ".txt", "w") 
     fluxPSP2 = open("fluxPSP2.txt","w")
     coordPSP2 = open("coordPSP2.txt","w")
@@ -81,10 +81,12 @@ def main():
     flux_track =0;
     freepath =0;
     for i in range(1,n+1):
+        if (i%1000 == 0):
+            print(str(i/n*100) + "% of the running code done")
          #x0=0;
         #y0=0;
         randnum = randomGen();
-        z0=thickness/2+(2*randnum-1)/2-1; #thickness
+        z0=thickness/2+(2*randnum-1)/2; #thickness
         randnum = randomGen();
         theta = 180*randnum;
         #u0=math.sin(math.pi/180*theta);
@@ -195,9 +197,11 @@ def main():
     print(" ");
     print("Variance of flux = ",test)  
     print(" ");
-    print("Standart deviation of flux = ", test2)
+    print('max of the flux = ', max(flux_local))
+    print("average on bins max = ", (flux_local[flux_local.index(max(flux_local))]+flux_local[flux_local.index(max(flux_local))+1])/2)
+    #print("Standart deviation of flux = ", test2)
     print(" ");
-    print("Maximum for the standart deviation = "+ str(max(test2)) + " at the position " + str(test2.index(max(test2))) )     
+    #print("Maximum for the standart deviation = "+ str(max(test2)) + " at the position " + str(test2.index(max(test2))) )     
     plt.plot(flux_local)
     plt.ylabel('Flux(z)')
     plt.show()
@@ -291,7 +295,7 @@ def main():
     file.write(" --- Z ---         ---FLUX(Z)--- \n")
     z=0;
     for i in range(len(flux_local)):
-        file.write("   "+ str(round(z,4))+ " "*(6-len(str(round(z,2)))) + "          " + str(round(flux_local[i],6))+" "*(12-len(str(round(z,4)))) +str(round(test2[i],6)) +"\n");
+        #file.write("   "+ str(round(z,4))+ " "*(6-len(str(round(z,2)))) + "          " + str(round(flux_local[i],6))+" "*(12-len(str(round(z,4)))) +str(round(test2[i],6)) +"\n");
         z = z + step
     file.close();
     for i in range(len(flux_local)):
@@ -327,6 +331,14 @@ def secante(a,b,prec,xi,sigmatot):
 		a = a-f(a,xi,sigmatot)*(b-a)/(f(b,xi,sigmatot)-f(a,xi,sigmatot))
 	return a
 
+listC = [0.01,0.1,0.2,0.25,0.4,0.5,0.6,0.75,0.8,0.9,0.95,0.99]
+for i in range(len(listC)):
+    a = main(listC[i]);
+    filename = str(listC[i])
+    file = open(filename + '.txt', 'w') 
+    file.write('max of the flux = ' +  str(max(a)) + '\n')
+    file.write("average on bins max = "+  str((a[a.index(max(a))]+a[a.index(max(a))+1])/2))
+    file.close()
         
             
 print("---------------------------------Program-------Ends-----------------------------")
