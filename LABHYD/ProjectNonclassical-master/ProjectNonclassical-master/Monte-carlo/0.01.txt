@@ -1,0 +1,2 @@
+max of the flux = 0.58
+average on bins max = 0.554
