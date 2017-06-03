@@ -622,9 +622,9 @@ In the classical case, we can find a value for the different constants introduce
 \lambda_2 = \frac{11}{7}
 \end{align}
 
-\section{Density probability function for classical case}
+\section{Density probability function}
 
-The GLBE is a very powerful equation because we can obtain classical transport, classical $SP_1$, $SP_2$ and $SP_3$ with a proper choice of $p(s)$, the density probability function. In this section, we are interested for the classical case, the next section expand this theory at nonclassical $SP_1$, $SP_2$ and $SP_3$. This analysis was not done before, the obtained results are new.
+The GLBE is a very powerful equation because we can obtain classical transport, $SP_1$, $SP_2$ and $SP_3$ with a proper choice of $p(s)$, the density probability function. In this section, we are interested for the general case, the nonclassical $SP_1$, $SP_2$ and $SP_3$. This analysis was not done before, the obtained results are new. We are going to show that with some assumptions, the results of this section is the same than the work done before for the classical case.
 
 The general expression of $p(s)$ is given by;
 
@@ -632,7 +632,7 @@ The general expression of $p(s)$ is given by;
 p(s) = \Sigma_t(s) e^{-\int_0^s \Sigma_t(s')ds'} 
 \end{equation}
 
-To find the expression for each cases, we are going to try to write the collision rate density like this;
+To find the expression for each cases, we are going to try to write the collision rate density like the following;
 
 \begin{equation}\label{123}
 f(\vec{x}) = \int S(\vec{x}') \frac{p(|\vec{x}-\vec{x}'|)}{4\pi|\vec{x}-\vec{x}'|^2}dV'
@@ -674,360 +674,12 @@ $\bl s^4 \bg$ &$ \frac{4!}{\Sigma_t^4}$ & 24.000\\ \hline
 $\bl s^5 \bg$ &$ \frac{5!}{\Sigma_t^5}$ & 120.0000 \\ \hline
 $\bl s^6 \bg$ &$ \frac{6!}{\Sigma_t^6}$ & 720.0000 \\ \hline
 \end{tabular}
-\caption{\label{momenttransport} Table of the theoretical value of the moment of $s$ (until sixth). for transport equation}
+\caption{\label{momenttransport} Table of the theoretical value of the moment of $s$ (until sixth). for transport equation.}
 \end{center}
 \end{table}
 \end{center}
-
-
-\subsection{Classical $SP_1$}
-
-We start from the equation of classical $SP_1$ given by the equation (\ref{eqsp1}), we write $\Sigma_a = \Sigma_t - \Sigma_s$; giving;
-
-\begin{equation}
--\frac{1}{3\Sigma_t}\Delta \phi(\vec{x}) + \Sigma_t \phi (\vec{x}) = \Sigma_s \phi (\vec{x}) + Q(\vec{x}).
-\end{equation}
-
-We define the right-hand side like;
-
-\begin{equation}
-S(\vec{x}) = \Sigma_s \phi (\vec{x}) + Q(\vec{x}).
-\end{equation}
-
-The diffusion equation can be rewritten like this;
-
-\begin{equation}
--\Delta \phi(\vec{x}) + \Sigma_t^2 \lambda^2 \phi (\vec{x}) = 3\Sigma_t S(\vec{x}).
-\end{equation}
-
-Where;
-
-$$\lambda^2 = 3$$
-
-The Green function of the operator in the left-hand side has the following expression;
-
-\begin{equation}
-G(|\vec{x}-\vec{x}'|) = \frac{e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|}
-\end{equation}
-
-Therefore, the solution of the diffusion equation is the following;
-
-\begin{equation}
-\phi(\vec{x}) = \int G(|\vec{x}-\vec{x}'|) 3 \Sigma_t S(\vec{x}') dV'
-\end{equation}
-
-By injecting the expression of $G$ in this equation, we obtain;
-
-\begin{equation}
-\phi(\vec{x}) = \int \frac{3\Sigma_t e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|} S(\vec{x}')dV' = \int \frac{3\Sigma_t |\vec{x}-\vec{x}'| e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|^2} S(\vec{x}') dV'
-\end{equation}
-
-And the collision rate density is;
-
-\begin{equation}
-f(\vec{x}) = \Sigma_t \phi(\vec{x}) = \int \frac{3\Sigma_t^2 |\vec{x}-\vec{x}'| e^{-\sqrt{3}\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi |\vec{x}-\vec{x}'|^2} S(\vec{x}') dV'
-\end{equation}
-
-If we compare this expression with equation (\ref{123}), we conclude that;
-
-\begin{equation}
-p(s) = 3\Sigma_t^2 se^{-\sqrt{3}\Sigma_t s}
-\end{equation}
-
-We can verify that this expression is really a probability density function, because it is always positive and its integral over $s$ is equal to 1.
-
-From this expression, we can deduce the $s$-dependant cross-section $\Sigma_t(s)$ given by;
-
-\begin{equation}
-\Sigma_t(s) = \frac{p(s)}{1-\int_0^s p(s')ds'} = \frac{3 \Sigma_t^2 s}{1+ \sqrt{3}\Sigma_t s}
-\end{equation}
-
-The	m-moment of $s$ for this pdf\footnote{probability density function} is given by this expression;
-
-\begin{equation}
-\bl s^m \bg = \int_0^\infty s^m p(s)ds =  \int_0^\infty s^m 3\Sigma_t^2 se^{-\sqrt{3}\Sigma_t s} ds = \frac{(m+1)!}{\left(\sqrt{3}\Sigma_t\right)^m}
-\end{equation}
-
-The table (\ref{momentsp1}) gives the theoretical values of the different moment of $s$ (until the sixth).
-\begin{center}
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-moment & value & exact value if $\Sigma_t = 1$ \\ \hline
-$\bl s \bg$ &$ \frac{2}{\sqrt{3}\Sigma_t}$ & 1.1547  \\ \hline
-$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
-$\bl s^3 \bg$ &$ \frac{8}{\sqrt{3}\Sigma_t^3}$ & 4.6188\\ \hline
-$\bl s^4 \bg$ &$ \frac{40}{3 \Sigma_t^4}$ & 13.3333\\ \hline
-$\bl s^5 \bg$ &$ \frac{80}{\sqrt{3}\Sigma_t^5}$ & 46.1880 \\ \hline
-$\bl s^6 \bg$ &$ \frac{560}{3 \Sigma_t^6}$ & 186.6667 \\ \hline
-\end{tabular}
-\caption{\label{momentsp1} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_1$ equation.}
-\end{center}
-\end{table}
-\end{center}
-
-The sampling of this function gives;
-
-\begin{equation}
-\xi = \int_0^s p(s') ds' = \int_0^s 3\Sigma_t s' e^{-\sqrt{3}\Sigma_t s'} ds' = 1 - (1 + \sqrt{3}\Sigma_t s)e^{-\sqrt{3}\Sigma_t s}
-\end{equation}
-
-We define the following function;
-
-\begin{equation}
-f(z) = (1+z)e^{-z}
-\end{equation}
-
-So we obtain the following expression from the sampling;
-
-\begin{equation}
-s = \frac{1}{\sqrt{3}\Sigma_t}f^{-1}(\xi)
-\end{equation}
-
-\subsection{Classical $SP_2$}
-
-We start from the equation of classical $SP_2$ given by the equation (\ref{eqsp2}). We remind the equation;
-
-\begin{equation}
--\frac{1}{3\Sigma_t}\Delta \left[ \phi(x) + \frac{4}{5\Sigma_t}(\Sigma_a \phi(x) - Q) \right] + \Sigma_a\phi(x) = Q
-\end{equation}
-
-By manipulating on this expression; we have the following development;
-
-$$
--\frac{1}{3\Sigma_t}\Delta \left[ 1 + \frac{4\Sigma_a}{5\Sigma_t} \right]\phi(x) + \Sigma_t\phi(x) = (\Sigma_s\phi(x) + Q) -\frac{4}{15\Sigma_t^2}\Delta Q
-$$
-
-$$
-= S - \frac{4}{15\Sigma_t^2}\Delta ((Q+\Sigma_s \phi(x)) - \Sigma_s\phi(x)) = S - \frac{4}{15\Sigma_t^2}\Delta S + \frac{4\Sigma_s \Delta\phi(x)}{15\Sigma_t^2}
-$$
-
-\begin{equation}
--\frac{3}{5\Sigma_t}\Delta \phi(x) + \Sigma_t\phi(x) =  S - \frac{4}{15\Sigma_t^2}\Delta S
-\end{equation}
-
-We multiply this expression by $\frac{5\Sigma_t}{3}$, we obtain;
-
-\begin{equation}
--\Delta \phi(x) + \frac{5}{3}\Sigma_t^2\phi(x) = \frac{5}{3}\Sigma_t S + \frac{4}{9\Sigma_t}\left[ \Delta S + \frac{5\Sigma_t^2}{3}S -\frac{5\Sigma_t^2}{3}S  \right]
-\end{equation}
-
-By defining;
-
-\begin{equation}
-\lambda^2 = \frac{5}{3}
-\end{equation}
-
-We obtain finally, the following expression;
-
-\begin{equation}
-(-\Delta + \Sigma_t^2 \lambda^2)\phi(x) = \frac{25}{27}\Sigma_t S + \frac{4}{9\Sigma_t}(-\Delta + \Sigma_t^2 \lambda^2)S
-\end{equation}
-
-We know the Green function of the operator $-\Delta + \Sigma_t^2 \lambda^2$. By using this Green function, we obtain;
-
-\begin{equation}
-\phi(x) = \frac{25\Sigma_t}{27} \int G(|\vec{x}-\vec{x}'|) S(\vec{x}') dV' + \frac{4}{9\Sigma_t}S
-\end{equation}
-
-The collision rate density is given by the following expression;
-
-\begin{equation}
-f(x) = \Sigma_t \phi = \frac{5}{9}(\Sigma_t \lambda)^2 \int G(|\vec{x}-\vec{x}'|) S(\vec{x}') dV' +  \frac{4}{9}S 
-\end{equation}
-
-We must work on the second term of the right-hand side;
-
-\begin{equation}
-S(\vec{x}) = \int S(\vec{x}+s\vec{\Omega}) \delta(s) ds = \frac{1}{4\pi} \int_{4\pi} \int S(\vec{x}+s\vec{\Omega})\delta(s) dsd\vec{\Omega} = \int_{4\pi} \int \frac{\delta(|\vec{x}-\vec{x}'|)S(\vec{x}')}{4\pi |\vec{x}-\vec{x}'|^2}dV'
-\end{equation}
-
-The expression of the collision rate density becomes;
-
-\begin{equation}
-f(\vec{x}) = \int \left[\frac{5}{9}(\Sigma_t \lambda)^2 \frac{|\vec{x}-\vec{x}'| e^{-\Sigma_t|\vec{x}-\vec{x}'|}}{4\pi|\vec{x}-\vec{x}'|^2} + \frac{4}{9} \frac{\delta(|\vec{x}-\vec{x}'|)}{4\pi |\vec{x}-\vec{x}'|^2}\right]S(\vec{x}')dV'
-\end{equation}
-
-If we compare this expression with equation (\ref{123}), we conclude that;
-
-\begin{equation}
-p(s) =\frac{5}{9} \Sigma_t^2 \lambda^2 s e^{-\Sigma_t \lambda s} + \frac{4}{9} \delta(s)
-\end{equation}
-
-where
-
-\begin{equation}
-\lambda = \sqrt{\frac{5}{3}}
-\end{equation}
-
-We can deduce the expression of $s$-dependant cross-section;
-
-\begin{equation}
-\Sigma_t(s) = \frac{\frac{4}{9}\delta(s)+ (\Sigma_t \lambda)^2s}{1+\Sigma_t \lambda s}
-\end{equation}
-
-The	m-moment of $s$ for this pdf\footnote{probability density function} is given by this expression;
-
-\begin{equation}
-\bl s^m \bg = \int_0^\infty s^m p(s)ds =  \frac{5}{9}\frac{(m+1)!}{(\sqrt{\frac{5}{3}})^m \Sigma_t^m}
-\end{equation}
-
-The table (\ref{momentsp2}) gives the theoretical values of the different moment of $s$ (until the sixth).
-\begin{center}
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-moment & value & exact value if $\Sigma_t = 1$ \\ \hline
-$\bl s \bg$ &$ \frac{\sqrt{20}}{\sqrt{27}\Sigma_t}$ & 0.8606  \\ \hline
-$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
-$\bl s^3 \bg$ &$ \frac{8\sqrt{3}}{\sqrt{5}\Sigma_t^3}$ & 6.1968\\ \hline
-$\bl s^4 \bg$ &$ \frac{24}{ \Sigma_t^4}$ & 24.0000\\ \hline
-$\bl s^5 \bg$ &$ \frac{144\sqrt{3}}{\sqrt{5}\Sigma_t^5}$ & 111.5419 \\ \hline
-$\bl s^6 \bg$ &$ \frac{3024}{5 \Sigma_t^6}$ & 604.8000 \\ \hline
-\end{tabular}
-\caption{\label{momentsp2} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_2$ equation. }
-\end{center}
-\end{table}
-\end{center}
-
-The sampling for this function is given by the following expression;
-
-\begin{equation}
-\xi = \int_0^s p(s')ds' = \int_0^s \left[ \frac{4}{9}\delta(s') + \frac{5}{9}(\Sigma_t \lambda)^2s'e^{-\Sigma_t \lambda s'} \right]ds' = 1 - \frac{5}{9}f(\Sigma_t \lambda s)
-\end{equation}
-Where $f$ is the same function than for the $SP_1$ case.
-
-For $\xi \in [0,4/9]$, $s= 0$ and for $\xi > 4/9$; the previous expression gives us:
-
-\begin{equation}
-s = \frac{\sqrt{3}}{\sqrt{5}}\frac{1}{\Sigma_t}f^{-1}\left(\frac{9}{5}(1-\xi)\right)
-\end{equation}
-In summary, we have;
-\begin{center}
-\begin{equation}
-s = \begin{cases}
- 0  \ \ \text{ for } 0 < \xi < \frac{4}{9} \\ 
- \frac{\sqrt{3}}{\sqrt{5}}\frac{1}{\Sigma_t}f^{-1}\left(\frac{9}{5}(1-\xi)\right) \ \ \text{ for }  \xi > \frac{4}{9} 
-\end{cases}
-\end{equation}
-\end{center}
-\subsection{Classical $SP_3$}
-By defining $S(x) = \Sigma_s \phi(x) + Q(x)$; we transform the SP3 equations (equation (\ref{eqsp3})) in the following form;
-
-\begin{align}
--\left(\frac{1}{3\Sigma_t}\right)\Delta\phi_0 -  \left(\frac{2}{3\Sigma_t}\right)\Delta\phi_2 + \Sigma_t \phi_0 = S(x)\\
--\left(\frac{9}{35\Sigma_1}\right)\Delta\phi_2  + \Sigma_t \phi_2 = \frac{2}{5}(\Sigma_t \phi_0 - S(x))
-\end{align}
-
-The Green functions of this system must be found; these functions are given by this system;
-
-\begin{align}
--\left(\frac{1}{3\Sigma_t}\right)\Delta G_0 -  \left(\frac{2}{3\Sigma_t}\right)\Delta G_2 + \Sigma_t G_0 = \delta(x)\\
--\left(\frac{9}{35\Sigma_1}\right)\Delta G_2  + \Sigma_t G_2 - \frac{2}{5}\Sigma_t G_0 = -\frac{2}{5} \delta(x)
-\end{align}
-
-In a spherical geometry, these equation become;
-
-\begin{align}
--\left(\frac{1}{3\Sigma_t}\right)\frac{1}{r^2} \partial_r r^2 \partial_r (G_0+2G_2) + \Sigma_t G_0 = 0\\
--\left(\frac{9}{35\Sigma_1}\right)\frac{1}{r^2} \partial_r r^2 \partial_r  G_2  + \Sigma_t G_2 - \frac{2}{5}\Sigma_t G_0 =0
-\end{align}
-
-The form of these functions is the following;
-
-\begin{equation}
-G_0 = \frac{e^{-\Sigma_t \lambda r}}{4\pi r} \ \text{and} \ G_2 = a\frac{e^{-\Sigma_t \lambda r}}{4\pi r}
-\end{equation}
-
-By injecting these expressions in the system and after some simplifications, we obtain the following system (where $a$ and $\lambda$ are unknown).
-
-\begin{align}
--\frac{1}{3}(1+2a)\lambda^2 + 1 = 0 \\
--\frac{9}{35}a\lambda^2 + a = \frac{2}{5}
-\end{align}
-
-This system gives two acceptable solutions, respectively $(a^+,\lambda^+)$ and $(a^-,\lambda^-)$;
-
-The solutions are;
-
-\begin{equation}
-(a^+ = -0.326619,\lambda^+ = 2.94164) \ \text{and} \ (a^- = 0.612334,\lambda^- = 1.161256)
-\end{equation}
-
-We deduce the global solution by using the linear combination of these solution;
-
-\begin{align}
-G_0 = A^+\frac{e^{-\Sigma_t \lambda^+ r}}{4\pi r} + A^- \frac{e^{-\Sigma_t \lambda^- r}}{4\pi r} \\
-G_2 = A^+a^+\frac{e^{-\Sigma_t \lambda^+ r}}{4\pi r} + A^-a^-\frac{e^{-\Sigma_t \lambda^- r}}{4\pi r}
-\end{align} 
-
-To determine $A^+$ and $A^-$ we use the following conditions;
-
-\begin{align}
--\frac{1}{3\Sigma_t} \underset{\epsilon \rightarrow 0}{lim}\left[ (4\pi \epsilon^2) \left( \partial_r G_0(\epsilon) + 2\partial_r G_2(\epsilon) \right)\right] = 1 \\
- -\frac{9}{35\Sigma_t} \underset{\epsilon \rightarrow 0}{lim}\left[ (4\pi \epsilon^2) \partial_r G_2(\epsilon) \right] = -\frac{2}{5}
-\end{align}
-
-By injecting the general solutions in these equations, we obtain;
-
-\begin{equation}
-A^+ = 5.642025\ \ \text{and}\ \ A^- = 0.469086 
-\end{equation}
-
-Thus the main Green function ($G_0$) is known, and we deduce the value of collision rate density;
-
-\begin{equation}
-\Sigma_t \phi(x) = \int \Sigma_t^2 |x-x'| G_0(|x-x'|)\frac{S(x')}{4\pi |x-x'|^2}dV'
-\end{equation}
-
-Finally, we deduce the expression of $p(s)$ for the distribution of mean-free-path;
-
-\begin{equation}
-p(s) = \Sigma_t^2s \left(A^+ e^{-\Sigma_t \lambda^+ s} + A^- e^{-\Sigma_t \lambda^- s}  \right)
-\end{equation}
-
-We deduce the expression of the cross section;
-
-\begin{equation}
-\Sigma_t(s) = \frac{p(s)}{1-\int_0^sp(s')ds'} = \frac{A^+(\Sigma_t^2s)e^{-\Sigma_t \lambda^+ s} + A^-(\Sigma_t^2s)e^{-\Sigma_t \lambda^- s} }{A^+(\frac{1+\Sigma_t\lambda^+s}{(\lambda^+)^2})e^{-\Sigma_t \lambda^+ s} + A^-(\frac{1+\Sigma_t\lambda^-s}{(\lambda^-)^2})e^{-\Sigma_t \lambda^- s}}
-\end{equation}
-
-The different moment associated at this expression of $p(s)$ is given in the table \ref{eqsp3}.
-
-\begin{center}
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-moment & value & exact value if $\Sigma_t = 1$ \\ \hline
-$\bl s \bg$ &$ \frac{1.042533}{\Sigma_t}$ & 1.042533  \\ \hline
-$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
-$\bl s^3 \bg$ &$ \frac{5.94625}{\Sigma_t^3}$ & 5.94625\\ \hline
-$\bl s^4 \bg$ &$ \frac{24}{ \Sigma_t^4}$ & 24.0000\\ \hline
-$\bl s^5 \bg$ &$ \frac{120.734028}{\Sigma_t^5}$ & 120.734028 \\ \hline
-$\bl s^6 \bg$ &$ \frac{720}{ \Sigma_t^6}$ & 720.0000 \\ \hline
-\end{tabular}
-\caption{\label{momentsp3} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
-\end{center}
-\end{table}
-\end{center}
-
-The sampling of this pdf is given by;
-
-\begin{equation}
-\xi = \int_0^s p(\tau) d\tau = \frac{A^+}{(\lambda^+)^2}\left[1 - (1+\Sigma_t\lambda^+s)e^{-\Sigma_t\lambda^+s} \right] + \frac{A^-}{(\lambda^-)^2}\left[1 - (1+\Sigma_t\lambda^-s)e^{-\Sigma_t\lambda^-s} \right] = F(\Sigma_t s) 
-\end{equation}
-
-Thus,
-
-\begin{equation}
- s = \frac{1}{\Sigma_t} F^{-1}(\xi)
-\end{equation}
-\section{Density probability function for nonclassical case}
-\subsection{Nonclassical $SP_1$}
-We start from the nonclassical diffusion equation giving by equation (\ref{eq1.6}). For the general case in which $p(s)$ is \textit{not} assumed to be an exponential, we define 
+\subsection{General equation of the diffusion : $SP_1$}
+We start from the nonclassical diffusion equation giving by equation (\ref{eq1.6}). We define:
 
 \begin{equation}
 S(x) = c\bl s\bg^{-1}\phi(x)+Q(x)
@@ -1063,13 +715,27 @@ This result agrees with equation (\ref{123}) if and only if;
 \label{eq3.6}
 p(s) = \lambda^2se^{-\lambda s}=\frac{6se^{-\sqrt{6/<s^2>}s}}{\bl s^2\bg}.
 \end{equation}
-It is easy to verify that is always positive and its integral over $s$ is equal to 1.
-This distribution implies;
+
+With the good assumptions, this result is concordant with the classical probability function given by the following expression;
+
+\begin{equation}
+p(s) = 3\Sigma_t^2 se^{-\sqrt{3}\Sigma_t s}
+\end{equation}
+
+It is easy to verify that these two functions are always positive and their integral over $s$ is equal to 1.
+The general distribution implies;
 \begin{equation}
 \label{eq3.8}
 \Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s')ds'} = \frac{\lambda^2 s}{1+\lambda s}.
 \end{equation}
-This shows that the nonclassical transport equation reproduces the nonclassical diffusion approximation given by equation  (\ref{eq1.6}) if $p(s)$ and $\Sigma_t(s)$ are defined by equations (\ref{eq3.6}) and (\ref{eq3.8}) respectively. Moreover, if $p(s)$ is exponential, this results agrees with the $p(s)$ and $\Sigma_t(s)$ obtained for the classical diffusion equation.  
+This shows that the nonclassical transport equation reproduces the nonclassical diffusion approximation given by equation  (\ref{eq1.6}) if $p(s)$ and $\Sigma_t(s)$ are defined by equations (\ref{eq3.6}) and (\ref{eq3.8}) respectively. Moreover, if $p(s)$ is exponential, this results agrees with the $p(s)$ and $\Sigma_t(s)$ obtained for the classical diffusion equation.
+
+We remind here the expression of the classical cross-section;
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{1-\int_0^s p(s')ds'} = \frac{3 \Sigma_t^2 s}{1+ \sqrt{3}\Sigma_t s}
+\end{equation}
+  
 
 The m-moment of $s$ is given by;
 \begin{subequations}\label{eq3.9}
@@ -1079,27 +745,66 @@ The m-moment of $s$ is given by;
 \end{subequations}
 The first moment of $p(s)$ only approximates the mean free path $\bl s \bg$, as can be seen in equation (\ref{eq3.9a}).
 
-The different moment associated at this expression of $p(s)$ is given in the table \ref{momentnsp1}. If we replace $\bl s^2 \bg$ by its classical value, we come back to the classical table given in Table \ref{momentsp1}.
+The different moment associated at this expression of $p(s)$ is given in the table \ref{momentnsp1}. In this table, we can also find the expression of classical expression which is concordant to the general expression with good assumptions.
 
 \begin{center}
 \begin{table}
 \begin{center}
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-moment & value  \\ \hline
-$\bl s \bg$ &$ \frac{2}{\sqrt{6}}{\bl s^2 \bg}^{1/2}$  \\ \hline
-$\bl s^2 \bg$ & $\bl s^2 \bg$ (conserved) \\ \hline
-$\bl s^3 \bg$ &$ \frac{4}{\sqrt{6}}{\bl s^2 \bg^{3/2}}$ \\ \hline
-$\bl s^4 \bg$ &$ \frac{10}{3}\bl s^2 \bg^2$ \\ \hline
-$\bl s^5 \bg$ &$ \frac{10\sqrt{6}}{3}{\bl s^2 \bg^{5/2}}$ \\ \hline
-$\bl s^6 \bg$ &$ \frac{70}{3}\bl s^2 \bg^3$  \\ \hline
+moment & General expression & Classical expression & Classical value ($\Sigma_t=1$)  \\ \hline
+$\bl s \bg_{out}$ &$ \frac{2}{\sqrt{6}}{\bl s^2 \bg_{in}}^{1/2}$ &$ \frac{2}{\sqrt{3}\Sigma_t}$ & 1.1547 \\ \hline
+$\bl s^2 \bg_{out}$ & $\bl s^2 \bg_{in}$ (conserved)& $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg_{out}$ &$ \frac{4}{\sqrt{6}}{\bl s^2 \bg_{in}^{3/2}}$&$ \frac{8}{\sqrt{3}\Sigma_t^3}$ & 4.6188 \\ \hline
+$\bl s^4 \bg_{out}$ &$ \frac{10}{3}\bl s^2 \bg_{in}^2$&$ \frac{40}{3 \Sigma_t^4}$ & 13.3333 \\ \hline
+$\bl s^5 \bg_{out}$ &$ \frac{10\sqrt{6}}{3}{\bl s^2 \bg_{in}^{5/2}}$  &$ \frac{80}{\sqrt{3}\Sigma_t^5}$ & 46.1880 \\ \hline
+$\bl s^6 \bg_{out}$ &$ \frac{70}{3}\bl s^2 \bg_{in}^3$&$ \frac{560}{3 \Sigma_t^6}$ & 186.6667   \\ \hline
 \end{tabular}
-\caption{\label{momentnsp1} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
+\caption{\label{momentnsp1} Table of the theoretical general and classical values of the moment of $s$ (until sixth) for $SP_1$. }
 \end{center}
 \end{table}
 \end{center}
 
-\subsection{Nonclassical $SP_2$}
+We remind also the expression of the classical m-moments which is given by the following expression;
+
+\begin{equation}
+\bl s^m \bg = \int_0^\infty s^m p(s)ds =  \int_0^\infty s^m 3\Sigma_t^2 se^{-\sqrt{3}\Sigma_t s} ds = \frac{(m+1)!}{\left(\sqrt{3}\Sigma_t\right)^m}
+\end{equation}
+
+The sampling of the probability density function gives;
+
+\begin{equation}
+\xi = \int_0^s p(s') ds' = \int_0^s \lambda^2 s' e^{-\lambda s'} ds' = 1 - (1 + \lambda s)e^{-\lambda s} = 1 - \left[1 + \left(\frac{\sqrt{6}}{\sqrt{\bl s^2 \bg_{in}}}\right) s\right]exp_e\left[\left(-\frac{\sqrt{6}}{\sqrt{\bl s^2 \bg_{in}}}\right) s\right]
+\end{equation}
+
+We define the following function;
+
+\begin{equation}
+f(z) = (1+z)e^{-z}
+\end{equation}
+
+So we obtain the following expression from the sampling;
+
+\begin{equation}
+s = \frac{1}{\lambda}f^{-1}(\xi) = \frac{\sqrt{\bl s^2 \bg_{in}}}{\sqrt{6}}f^{-1}(\xi)
+\end{equation}
+
+The classical expression for the sampling agrees with this expression,
+
+The sampling for the classical case is;
+
+\begin{equation}
+\xi = \int_0^s p(s') ds' = \int_0^s 3\Sigma_t s' e^{-\sqrt{3}\Sigma_t s'} ds' = 1 - (1 + \sqrt{3}\Sigma_t s)e^{-\sqrt{3}\Sigma_t s}
+\end{equation}
+
+So we obtain the following expression from the sampling;
+
+\begin{equation}
+s = \frac{1}{\sqrt{3}\Sigma_t}f^{-1}(\xi)
+\end{equation}
+
+
+\subsection{Correction to the diffusion : $SP_2$}
 The nonclassical $SP_2$ formulation is presented by the following equation;
 \begin{equation}\label{sp2}
 -\frac{\bl s^2 \bg}{6\bl s \bg} \nabla^2 \left[\phi(x)+\lambda_1\left[(1-c)\phi(x) - \bl s \bg Q(x)\right]\right] + \frac{1-c}{\bl s \bg}\left[1-\beta_1(1-c)\right] \phi(x) = \left[1-\beta_1(1-c)\right]Q(x).
@@ -1181,11 +886,13 @@ Thus, we obtain the expression of $p(s)$;
 p(s) = \frac{\alpha^2 se^{-\alpha s}}{1+\lambda_1} + \frac{\lambda_1}{1+\lambda_1}\delta(s)
 \end{equation}
 
-We can verify that this equation is normalized;
+The classical probability density function agrees this previous expression. We good assumptions, we arrive to the following expression;
 
 \begin{equation}
-\int_0^\infty p(s) ds = \frac{1}{1+\lambda_1} + \frac{\lambda_1}{1+\lambda_1} = 1.
+p(s) =\frac{5}{9} \Sigma_t^2 \lambda^2 s e^{-\Sigma_t \lambda s} + \frac{4}{9} \delta(s)
 \end{equation}
+
+These functions are always positive and normalized (integral over s is 1).
 
 The m-moment of $s$ is given by the following expression
 
@@ -1193,67 +900,32 @@ The m-moment of $s$ is given by the following expression
 \bl s^m \bg = \int_0^\infty s^m p(s) ds = \frac{(m+1)!}{\alpha^m (1+\lambda_1)}
 \end{equation}
 
-The different moment associated at this expression of $p(s)$ is given in the table \ref{momentnsp2}. If we replace $\bl s^2 \bg$ by its classical value, we come back to the classical table given in Table \ref{momentsp2}.
+The different moment associated at this expression of $p(s)$ is given in the table \ref{momentnsp2} and also their classical expressions (with proper assumptions). The classical expression of m-moment is concordant with this general expression. We remind the classical expression;
+
+\begin{equation}
+\bl s^m \bg = \int_0^\infty s^m p(s)ds =  \frac{5}{9}\frac{(m+1)!}{(\sqrt{\frac{5}{3}})^m \Sigma_t^m}
+\end{equation}
 
 \begin{center}
 \begin{table}
 \begin{center}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-moment & value & with solution $\lambda_1,\beta_1$ \\ \hline
-$\bl s \bg$ &$ \frac{2\sqrt{\bl s^2 \bg}}{\sqrt{6}\sqrt{1+\lambda_1}\sqrt{1-\beta_1(1-c)}}$& $ \frac{2}{3}{\bl s^2 \bg}^{1/2}$ \\ \hline
-$\bl s^2 \bg$ & $\dfrac{\bl s^2 \bg}{1-\beta_1(1-c)}$ &$\bl s^2 \bg$\\ \hline
-$\bl s^3 \bg$ &$ \frac{4\sqrt{1+\lambda_1}}{\sqrt{6}\sqrt{(1-\beta_1(1-c))^3}}{\bl s^2 \bg^{3/2}}$&$ 2{\bl s^2 \bg^{3/2}}$ \\ \hline
-$\bl s^4 \bg$ &$ \frac{10(1+\lambda_1)}{3(1-\beta_1(1-c))^2}\bl s^2 \bg^2$& $ 5\bl s^2 \bg^2$ \\ \hline
-$\bl s^5 \bg$ &$ \frac{10\sqrt{6}(1+\lambda_1)^{3/2}}{3(1-\beta_1(1-c))^{5/2}}\bl s^2 \bg^{5/2}$& $ 15\bl s^2 \bg^{5/2}$ \\ \hline
-$\bl s^6 \bg$ &$ \frac{70(1+\lambda_1)^{2}}{3(1-\beta_1(1-c))^{3}}\bl s^2 \bg^3$&$\frac{105}{2}\bl s^2 \bg^3$  \\ \hline
+Moment & Theoretical expression & Classical expression & Classical value (if $\Sigma_t = 1$)  \\ \hline
+$\bl s \bg_{out}$ &$ \frac{2\sqrt{\bl s^2 \bg_{in}}}{\sqrt{6}\sqrt{1+\lambda_1}\sqrt{1-\beta_1(1-c)}}$ &$ \frac{\sqrt{20}}{\sqrt{27}\Sigma_t}$ & 0.8606 \\ \hline
+$\bl s^2 \bg_{out}$ & $\dfrac{\bl s^2 \bg_{in}}{1-\beta_1(1-c)}$& $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg_{out}$ &$ \frac{4\sqrt{1+\lambda_1}}{\sqrt{6}\sqrt{(1-\beta_1(1-c))^3}}{\bl s^2 \bg_{in}^{3/2}}$ &$ \frac{8\sqrt{3}}{\sqrt{5}\Sigma_t^3}$ & 6.1968\\ \hline
+$\bl s^4 \bg_{out}$ &$ \frac{10(1+\lambda_1)}{3(1-\beta_1(1-c))^2}\bl s^2 \bg_{in}^2$&$ \frac{24}{ \Sigma_t^4}$ & 24.0000\\ \hline
+$\bl s^5 \bg_{out}$ &$ \frac{10\sqrt{6}(1+\lambda_1)^{3/2}}{3(1-\beta_1(1-c))^{5/2}}\bl s^2 \bg_{in}^{5/2}$&$ \frac{144\sqrt{3}}{\sqrt{5}\Sigma_t^5}$ & 111.5419 \\ \hline
+$\bl s^6 \bg_{out}$ &$ \frac{70(1+\lambda_1)^{2}}{3(1-\beta_1(1-c))^{3}}\bl s^2 \bg_{in}^3$ &$ \frac{3024}{5 \Sigma_t^6}$ & 604.8000 \\ \hline
 \end{tabular}
-\caption{\label{momentnsp2} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
+\caption{\label{momentnsp2} Table of the theoretical and classical expression of the moments of $s$ (until sixth) for $SP_2$ equation. }
 \end{center}
 \end{table}
 \end{center}
 
-With these expressions of the moments, we can find the values of $\beta_1$ and $\lambda_1$ which is given by the following expressions;
-
-\begin{equation}
-\beta_1 = \frac{1}{3} \frac{\bl s^3 \bg}{\bl s^2 \bg\bl s \bg} - 1
-\end{equation}
-
-And;
-
-\begin{equation}
-\lambda_1 = \frac{3}{10} \frac{\bl s^4 \bg}{\left(\bl s^2 \bg \right)^2} - \frac{1}{3} \frac{\bl s^3 \bg}{\bl s^2 \bg\bl s \bg}
-\end{equation}
-
-By injecting the precedent expressions in these equations, we obtain;
-
-\begin{equation}
-\beta_1 = \frac{2}{3}(1+\lambda_1) - 1
-\end{equation}
-
-\begin{equation}
-\lambda_1 = \frac{1}{3}(1+\lambda_1) 
-\end{equation}
-
-The solution of these equations is;
-
-\begin{equation}
-(\beta_1,\lambda_1) = (0,1/2)
-\end{equation}
-
 We can determine the total cross section depending of the path travelled.
-
-\begin{equation}
-\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s') ds'}
-\end{equation}
-
 For $s>0$, we obtain;
-
-\begin{equation}
-\int_s^\infty p(s')ds' = \left(\frac{\alpha^2}{1+\lambda_1}\right)\left(\frac{-1}{\alpha}\right)\left[se^{-\alpha s}\right]_s^\infty + \left(\frac{\alpha^2}{1+\lambda_1}\right)\left(\frac{-1}{\alpha^2}\right)\left[e^{-\alpha s}\right]_s^\infty 
-\end{equation}
-
-Finally, we can write;
 
 \begin{equation}\label{1}
 \Sigma_t(s>0) = \frac{\alpha^2s}{1+\alpha s}
@@ -1269,6 +941,12 @@ By adding the equations (\ref{1}) and (\ref{22});
 
 \begin{equation}
 \Sigma_t(s) = \frac{\frac{\lambda_1}{\lambda_1 + 1}\delta(s) + \alpha^2 s}{1+\alpha s}
+\end{equation}
+
+The classical expression is concordant with this general expression. We remind its expression;
+
+\begin{equation}
+\Sigma_t(s) = \frac{\frac{4}{9}\delta(s)+ (\Sigma_t \lambda)^2s}{1+\Sigma_t \lambda s}
 \end{equation}
 
 The sampling for this function is the following;
@@ -1299,7 +977,25 @@ s = \begin{cases}
 \end{cases}
 \end{equation}
 \end{center}
-\subsection{Nonclassical $SP_3$}
+
+The sampling of the classical probability density function is concordant with this expression;
+
+\begin{equation}
+\xi = \int_0^s p(s')ds' = \int_0^s \left[ \frac{4}{9}\delta(s') + \frac{5}{9}(\Sigma_t \lambda)^2s'e^{-\Sigma_t \lambda s'} \right]ds' = 1 - \frac{5}{9}f(\Sigma_t \lambda s)
+\end{equation}
+
+\begin{center}
+\begin{equation}
+s = \begin{cases}
+ 0  \ \ \text{ for } 0 < \xi < \frac{4}{9} \\ 
+ \frac{\sqrt{3}}{\sqrt{5}}\frac{1}{\Sigma_t}f^{-1}\left(\frac{9}{5}(1-\xi)\right) \ \ \text{ for }  \xi > \frac{4}{9} 
+\end{cases}
+\end{equation}
+\end{center}
+
+
+
+\subsection{Coupled equations for diffusion : $SP_3$}
 
 We start with the nonclassical $SP_3$ coupled equations presented in equation (\ref{eqsp3}).
 We use the same definition than the precedent cases ($S(x) = c\bl s \bg^{-1} \phi(x) + Q(x)$).
@@ -1519,17 +1215,23 @@ We can deduce the expression of $p(s)$;
 p(s) = \frac{s}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ s} + \eta e^{-\alpha^- s}\right]
 \end{equation}
 
-
-We can deduce the total cross section;
+This expression is concordant with the classical probability density function which is the following;
 
 \begin{equation}
-\Sigma_t(s) = \frac{p(s)}{\int_s^\infty p(s')ds'}
+p(s) = \Sigma_t^2s \left(A^+ e^{-\Sigma_t \lambda^+ s} + A^- e^{-\Sigma_t \lambda^- s}  \right)
 \end{equation}
 
-With $p(s)$, it gives;
+
+We can also deduce the total cross section;
 
 \begin{equation}
 \Sigma_t(s) = \frac{\frac{s}{{{\bl s^2 \bg}}} \left[\mu e^{-\alpha^+ s} + \eta e^{-\alpha^- s}\right]}{\left[\mu \left( \frac{1+ \alpha^+\frac{s}{{{\bl s^2 \bg}}}}{\left(\alpha^+\right)}\right)e^{-\alpha^+ s} + \eta \left( \frac{1+ \alpha^-\frac{s}{{{\bl s^2 \bg}}}}{\left(\alpha^-\right)}\right)e^{-\alpha^- s}\right]}
+\end{equation}
+
+This expression is consistent with the classical expression with good assumptions;
+
+\begin{equation}
+\Sigma_t(s) = \frac{p(s)}{1-\int_0^sp(s')ds'} = \frac{A^+(\Sigma_t^2s)e^{-\Sigma_t \lambda^+ s} + A^-(\Sigma_t^2s)e^{-\Sigma_t \lambda^- s} }{A^+(\frac{1+\Sigma_t\lambda^+s}{(\lambda^+)^2})e^{-\Sigma_t \lambda^+ s} + A^-(\frac{1+\Sigma_t\lambda^-s}{(\lambda^-)^2})e^{-\Sigma_t \lambda^- s}}
 \end{equation}
 
 The mean-free path is given by;
@@ -1544,22 +1246,42 @@ The m-moment of $s$ is given by;
 {\bl s^m \bg} = \int_0^\infty s^m p(s) ds = \frac{(m+1)!}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{(m+2)}} + \frac{\eta}{\left(\alpha^-\right)^{(m+2)}}\right]
 \end{equation}
 
-The second moment is the following;
+The table \ref{momentsp3} gives all the classical expression for the moment. The general expression is not given because each expressions are very big but still consistent with classical expressions.
+
+\begin{center}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+moment & value & exact value if $\Sigma_t = 1$ \\ \hline
+$\bl s \bg$ &$ \frac{1.042533}{\Sigma_t}$ & 1.042533  \\ \hline
+$\bl s^2 \bg$ & $\frac{2}{\Sigma_t^2}$ & 2.0000 \\ \hline
+$\bl s^3 \bg$ &$ \frac{5.94625}{\Sigma_t^3}$ & 5.94625\\ \hline
+$\bl s^4 \bg$ &$ \frac{24}{ \Sigma_t^4}$ & 24.0000\\ \hline
+$\bl s^5 \bg$ &$ \frac{120.734028}{\Sigma_t^5}$ & 120.734028 \\ \hline
+$\bl s^6 \bg$ &$ \frac{720}{ \Sigma_t^6}$ & 720.0000 \\ \hline
+\end{tabular}
+\caption{\label{momentsp3} Table of the theoretical value of the moment of $s$ (until sixth) for classical $SP_3$. }
+\end{center}
+\end{table}
+\end{center}
+
+The sampling of this pdf is given by;
 
 \begin{equation}
-{\bl s^2 \bg} = \frac{6}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{4}} + \frac{\eta}{\left(\alpha^-\right)^{4}}\right]
+\xi = \int_0^s p(\tau) d\tau = \frac{\mu}{(\alpha^+)^2}\left[1 - (1+\alpha+s)e^{-\alpha^+s} \right] + \frac{\eta}{(\alpha^-)^2}\left[1 - (1+\alpha^-s)e^{-\alpha^-s} \right]
 \end{equation}
 
-The fourth moment is the following;
+which is consistent with the classical value given by;
 
 \begin{equation}
-{\bl s^4 \bg} = \frac{120}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{6}} + \frac{\eta}{\left(\alpha^-\right)^{6}}\right]
+\xi = \int_0^s p(\tau) d\tau = \frac{A^+}{(\lambda^+)^2}\left[1 - (1+\Sigma_t\lambda^+s)e^{-\Sigma_t\lambda^+s} \right] + \frac{A^-}{(\lambda^-)^2}\left[1 - (1+\Sigma_t\lambda^-s)e^{-\Sigma_t\lambda^-s} \right] = F(\Sigma_t s) 
 \end{equation}
 
-The sixth moment is the following;
+Thus,
 
 \begin{equation}
-{\bl s^6 \bg} = \frac{5040}{{\bl s^2 \bg}}\left[\frac{\mu}{\left(\alpha^+\right)^{8}} + \frac{\eta}{\left(\alpha^-\right)^{8}}\right]
+ s = \frac{1}{\Sigma_t} F^{-1}(\xi)
 \end{equation}
 
 In the classical case;
@@ -1571,9 +1293,10 @@ In the classical case;
 a^+ \approx -0.33 \\
 a^- \approx 0.61 \\
 b \approx 1.037 \\
-\mu \approx 0.98\\
-\eta \approx 11.24 \\
+\mu \approx 0.98  \rightarrow A^+ \approx 0.49\\
+\eta \approx 11.24 \rightarrow A^- \approx 5.72\\
 \end{multline} 
+
 
 \chapter{Numerical results}
 
