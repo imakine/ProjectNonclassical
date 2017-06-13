@@ -5,7 +5,7 @@ Created on Thu Jun  8 12:36:40 2017
 @author: TH Lab
 """
 
-def averageSample(fluxpic,variancepic,std,ERRORpic,n,Q,step,sigmatot,flux_local,s,variance,numscattot,numdeath,numesc):
+def averageSample(fluxpic,variancepic,std,ERRORpic,n,Q,step,sigmatot,flux_local,s,variance,numscattot,numdeath,numesc,region,thickness):
     '''
     Knowing the contribution of the n particles, a average can be done on that. This function realized that.
     
@@ -56,6 +56,9 @@ def averageSample(fluxpic,variancepic,std,ERRORpic,n,Q,step,sigmatot,flux_local,
         std[i] = variance[i]**(0.5);                                      #Standart deviation
         if (fluxpic[i]!=0.):
             ERRORpic[i] = 2*std[i]/(fluxpic[i]*n**(0.5))              #STATISTICAL RELATIVE ERROR ON THE AVERAGE FLUX WITH 95% CONFIDENCE
-    flux_local[:] = [(x/n)*(Q)/step/sigmatot for x in flux_local];      #Average flux with good normalisation The integral of the source appears Q*1 (because Q is constant in a distance = 1)
+    if region:
+        flux_local[:] = [(x/n)*(Q)/step/sigmatot for x in flux_local];      #Average flux with good normalisation The integral of the source appears Q*1 (because Q is constant in a distance = 1)
+    else:
+        flux_local[:] = [(x/n)*(Q)/step/sigmatot*thickness for x in flux_local];
     s[:] = [x / (numscattot+numdeath+numesc) for x in s];       #Average of the moments
     return fluxpic,variancepic,std,ERRORpic,flux_local,s

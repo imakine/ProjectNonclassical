@@ -7,6 +7,10 @@ Created on Thu Jun  8 12:34:19 2017
 import matplotlib.pyplot as plt
 
 def output(s1,s2,s3,s4,s5,s6,s,finaltime,initialtime,flux_local,thickness,sigmaabs,sigmascat,sigmatot,Q,n,step,numscattot,numesc,numdeath,ERRORpic,std,variancepic):
+    '''
+    This file generate the output files
+    '''
+    
     filename = 'realend';
     file = open(filename + ".txt", "w")
     fluxPSP1 = open("fluxPSP1.txt","w")
@@ -21,6 +25,7 @@ def output(s1,s2,s3,s4,s5,s6,s,finaltime,initialtime,flux_local,thickness,sigmaa
     print("average on bins max = ", (flux_local[flux_local.index(max(flux_local))]+flux_local[flux_local.index(max(flux_local))+1])/2)
     print(" ");
     print("Maximum for the standart deviation = "+ str(max(std)) + " at the position " + str(std.index(max(std))) )
+    print("s = ",s)
     plt.plot(flux_local)
     plt.ylabel('Flux(z)')
     plt.show()
@@ -66,7 +71,7 @@ def output(s1,s2,s3,s4,s5,s6,s,finaltime,initialtime,flux_local,thickness,sigmaa
     file.write("   ---------------------------------------------------------------------------------------\n")
     file.write("   |                  |                    |                      |                      |\n")
     file.write("   |      s^m         | Theoretical values | Computational values |        Errors        |\n")
-    file.write("   |                  |                    |                      |                      |\n")
+    file.write("   |                  |    (Classical)     |                      |                      |\n")
     file.write("   ---------------------------------------------------------------------------------------\n")
     file.write("   |                  |                    |                      |                      |\n")
     file.write("   |      s^1         | "+str(s1)+" "*(22-len(str(s1))) +         " |"      +    str(s[0])+" "*(22-len(str(s[0])))+"|"          +str((s[0]- s1)/s1) + " "*(22-len(str((s[0]- s1)/s1)))+     "|\n")

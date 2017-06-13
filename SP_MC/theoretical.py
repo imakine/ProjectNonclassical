@@ -6,6 +6,13 @@ Created on Thu Jun  8 15:20:15 2017
 """
 
 def theoretical(sp,sigmatot):
+    '''
+    This function gives the theoretical moments for the SPn equations - These results come from computation
+    
+    sp : Choice of the user for SP1 or SP2 or SP3 - Integer 1 or 2 or 3
+    
+    sigmatot : total cross section of the media, if it is equal to 0, it is like a case without media - float
+    '''
     if sp==1:
         s1 = 1.1547/sigmatot;
         s2 = 2/sigmatot**2;
